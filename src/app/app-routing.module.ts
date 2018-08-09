@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import {GalleryComponent} from '../gallery/gallery.component';
-
+import {HomeComponent} from './gallery/home/home.component'
 
 const routes: Routes = [
-  { path: '', component: GalleryComponent }
+  { path: '', component: HomeComponent },
+  { path: 'cms', loadChildren: './cms/cms.module#CmsModule' },
 ]
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers: []
+  providers: [],
 })
 export class AppRoutingModule {}
