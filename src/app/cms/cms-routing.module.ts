@@ -2,18 +2,27 @@ import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import { LoginComponent } from './login/login.component'
 import { CmsComponent } from './cms.component'
+import { DashboardComponent } from './dashboard/dashboard.component'
+import { AuthGuard } from './state/auth/auth.guard'
 
 const routes: Routes = [
   {
     path: '',
     component: CmsComponent,
-    children: [{ path: 'login', component: LoginComponent }],
+    children: [
+      { path: 'login', component: LoginComponent },
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
+        canLoad: [AuthGuard],
+      },
+    ],
   },
 ]
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [],
+  providers: [AuthGuard]
 })
 export class CmsRoutingModule {}

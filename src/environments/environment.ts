@@ -3,8 +3,16 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
-};
+  production: false,
+  firebase: {
+    apiKey: 'AIzaSyBLk2bdC3waMeuHGM6AuUJRCKV5LPwpbww',
+    authDomain: 'analog-pics-a1a3b.firebaseapp.com',
+    databaseURL: 'https://analog-pics-a1a3b.firebaseio.com',
+    projectId: 'analog-pics-a1a3b',
+    storageBucket: 'analog-pics-a1a3b.appspot.com',
+    messagingSenderId: '851287805520',
+  },
+}
 
 /*
  * In development mode, to ignore zone related error stack frames such as

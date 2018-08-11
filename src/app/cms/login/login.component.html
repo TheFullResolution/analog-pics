@@ -1,5 +1,17 @@
-<h3>LOGIN</h3>
-<div class="button-row">
-  <button mat-flat-button color="primary">Primary</button>
-  <button mat-flat-button color="accent">Accent</button>
-</div>
+<section>
+  <form #f="ngForm"
+        (ngSubmit)="onSubmit(f)">
+    <mat-form-field>
+      <input type="email" placeholder="Your Email" ngModel name="email" email required
+             #emailInput="ngModel" matInput>
+      <mat-error *ngIf="!emailInput.hasError('required')">Email is invalid.</mat-error>
+      <mat-error *ngIf="emailInput.hasError('required')">Filed must not be empty</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="password" matInput placeholder="Your Password" ngModel
+             name="password" required>
+      <mat-error>Filed must not be empty</mat-error>
+    </mat-form-field>
+    <button type="submit" mat-raised-button color="primary" [disabled]="f.invalid">Submit</button>
+  </form>
+</section>

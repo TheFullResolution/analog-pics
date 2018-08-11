@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core'
-import { CommonModule } from '@angular/common'
 import { HomeComponent } from './home/home.component'
 import { GridComponent } from './grid/grid.component'
 import { HeaderComponent } from './common/header/header.component'
@@ -13,6 +12,6 @@ import { GalleryRoutingModule } from './gallery-routing.module'
     GridComponent,
     GalleryComponent,
   ],
-  imports: [CommonModule, GalleryRoutingModule],
+  imports: [GalleryRoutingModule],
 })
 export class GalleryModule {}
