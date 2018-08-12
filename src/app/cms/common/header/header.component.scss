@@ -1,0 +1,23 @@
+@import "src/variables.scss";
+
+.heading {
+  margin: {
+    bottom: 0;
+    right: auto;
+  }
+  text-decoration: none;
+  color: black;
+
+  &:hover {
+    color: $accent;
+  }
+
+  h1 {
+    align-items: center;
+    display: flex;
+
+    i {
+      margin-right: 6px;
+    }
+  }
+}

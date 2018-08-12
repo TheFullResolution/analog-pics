@@ -1,17 +1,24 @@
+<app-header-cms></app-header-cms>
 <section>
   <form #f="ngForm"
-        (ngSubmit)="onSubmit(f)">
-    <mat-form-field>
-      <input type="email" placeholder="Your Email" ngModel name="email" email required
-             #emailInput="ngModel" matInput>
+        (ngSubmit)="onSubmit(f)" class="form">
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input type="email" placeholder="email@email.com" ngModel name="email" email
+             required
+             #emailInput="ngModel" matInput autocomplete="email">
       <mat-error *ngIf="!emailInput.hasError('required')">Email is invalid.</mat-error>
-      <mat-error *ngIf="emailInput.hasError('required')">Filed must not be empty</mat-error>
+      <mat-error *ngIf="emailInput.hasError('required')">Filed must not be empty
+      </mat-error>
     </mat-form-field>
-    <mat-form-field>
-      <input type="password" matInput placeholder="Your Password" ngModel
-             name="password" required>
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input type="password" matInput ngModel
+             name="password" required autocomplete="current-password">
       <mat-error>Filed must not be empty</mat-error>
     </mat-form-field>
-    <button type="submit" mat-raised-button color="primary" [disabled]="f.invalid">Submit</button>
+    <button type="submit" mat-raised-button color="primary" [disabled]="f.invalid">
+      Submit
+    </button>
   </form>
 </section>

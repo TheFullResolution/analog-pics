@@ -11,22 +11,12 @@ import { StoreModule } from '@ngrx/store'
 import { reducers } from './state/cms.reducer';
 import { DashboardComponent } from './dashboard/dashboard.component'
 import { AuthService } from './services/auth.service'
-import { AngularFireAuthModule } from 'angularfire2/auth'
-
-const environment = {
-  production: false,
-  firebase: {
-    apiKey: 'AIzaSyBLk2bdC3waMeuHGM6AuUJRCKV5LPwpbww',
-    authDomain: 'analog-pics-a1a3b.firebaseapp.com',
-    databaseURL: 'https://analog-pics-a1a3b.firebaseio.com',
-    projectId: 'analog-pics-a1a3b',
-    storageBucket: 'analog-pics-a1a3b.appspot.com',
-    messagingSenderId: '851287805520',
-  },
-}
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { HeaderComponent } from './common/header/header.component'
+import {environment} from '../../environments/environment'
 
 @NgModule({
-  declarations: [LoginComponent, CmsComponent, DashboardComponent],
+  declarations: [LoginComponent, CmsComponent, DashboardComponent, HeaderComponent],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,

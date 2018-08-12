@@ -1,0 +1,22 @@
+img {
+  border-radius: 5%;
+  max-width: 100px;
+}
+
+section {
+  padding: {
+    left: 2.5%;
+    right: 2.5%;
+  }
+}
+
+.form {
+  max-width: 500px;
+  margin: {
+    top: 30px;
+    left: auto;
+    right: auto;
+  }
+  display: flex;
+  flex-direction: column;
+}
