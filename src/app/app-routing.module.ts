@@ -4,7 +4,7 @@ import {HomeComponent} from './gallery/home/home.component'
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'cms', loadChildren: './cms/cms.module#CmsModule' },
+  { path: 'cms/login', loadChildren: './cms/cms.module#CmsModule' },
 ]
 
 @NgModule({
