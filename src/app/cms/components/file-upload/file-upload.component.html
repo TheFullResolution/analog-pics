@@ -11,7 +11,8 @@
     <label class="file-label">
 
 
-      <input class="file-input" type="file" (change)="startUpload($event.target.files)">
+      <input class="file-input" type="file" (change)="startUpload($event.target.files)"
+             multiple>
 
 
       <span class="file-cta">
@@ -27,29 +28,48 @@
 </div>
 
 
-<div *ngIf="percentage | async as pct">
-
-  <progress class="progress is-info"
-            [value]="pct"
+<div *ngIf="$percentage.length > 0">
+  <ul>
+    <li *ngFor="let progress of $percentage">
+      <span *ngIf="progress | async">
+          <progress
+            class="progress is-info"
+            [value]="progress"
             max="100">
-  </progress>
+          </progress>
+        {{ progress | number | async }}%
+      </span>
+    </li>
+  </ul>
+  <span>
 
-  {{ pct | number }}%
 
+
+  </span>
 </div>
 
 
-<div *ngIf="snapshot | async as snap">
-  {{ snap.bytesTransferred | fileSize }} of {{ snap.totalBytes | fileSize }}
+<div *ngIf="$snapshot.length > 0">
+  <ul>
+    <li *ngFor="let snap of $snapshot">
+      <span *ngIf="snap | async">
+        {{ snap.bytesTransferred | fileSize}} of
+        {{ snap.totalBytes | fileSize }}
+      </span>
+    </li>
+  </ul>
 
-  <div *ngIf="downloadURL | async as url">
-    <h3>Results!</h3>
-    <img [src]="url"><br>
-    <a [href]="url" target="_blank" rel="noopener">Download Me!</a>
-  </div>
 
-  <button (click)="task.pause()" class="button is-warning" [disabled]="!isActive(snap)">Pause</button>
-  <button (click)="task.cancel()" class="button is-danger" [disabled]="!isActive(snap)">Cancel</button>
-  <button (click)="task.resume()" class="button is-info"   [disabled]="!(snap?.state === 'paused')">Resume</button>
+  <button (click)="task.pause()" class="button is-warning"
+          [disabled]="!isActive($snapshot)">
+    Pause
+  </button>
+  <button (click)="task.cancel()" class="button is-danger"
+          [disabled]="!isActive($snapshot)">
+    Cancel
+  </button>
+  <button (click)="task.resume()" class="button is-info"
+          [disabled]="!(snap?.state === 'paused')">Resume
+  </button>
 
 </div>
