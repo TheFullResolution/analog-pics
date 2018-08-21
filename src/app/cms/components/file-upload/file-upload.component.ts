@@ -1,11 +1,19 @@
 import { Component, OnInit } from '@angular/core'
 import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage'
-import { Observable } from 'rxjs'
+import {concat, forkJoin, from, Observable, zip} from 'rxjs'
 import { AngularFirestore } from 'angularfire2/firestore'
-import { tap } from 'rxjs/operators'
-import { UploadTaskSnapshot } from '../../../../../node_modules/angularfire2/storage/interfaces'
+import {
+  concatMap,
+  flatMap,
+  map, mergeMap,
+  switchMap,
+  tap,
+  toArray,
+} from 'rxjs/operators'
 
-type SnapShot = Observable<UploadTaskSnapshot>[]
+interface HTMLInputEvent extends Event {
+  target: HTMLInputElement & EventTarget
+}
 
 @Component({
   selector: 'app-file-upload',
@@ -13,15 +21,8 @@ type SnapShot = Observable<UploadTaskSnapshot>[]
   styleUrls: ['./file-upload.component.scss'],
 })
 export class FileUploadComponent {
-  // Main task
-  task: AngularFireUploadTask
-
-  // Progress monitoring
-  $percentage: Observable<number>[] = []
-
-  $snapshot: SnapShot = []
-
-  // State for dropzone CSS toggling
+  tasks: Observable<AngularFireUploadTask>
+  progresses$: any
   isHovering: boolean
 
   constructor(
@@ -33,54 +34,58 @@ export class FileUploadComponent {
     this.isHovering = event
   }
 
-  startUpload(fileList: FileList) {
+  startUpload(event: HTMLInputEvent) {
     // The File object
+    const files = Array.from(event.target.files)
 
-    for (let i = 0; i < fileList.length; i++) {
-      const file = fileList.item(i)
+    // @ts-ignore
+    this.tasks = from(files).pipe(
+      map(file => {
+        const path = `test/${new Date().getTime()}_${file.name}`
+        const customMetadata = { app: 'My AngularFire-powered PWA!' }
 
-      if (file.type.split('/')[0] !== 'image') {
-        console.error('unsupported file type :( ')
-        return
-      }
+        return this.storage.upload(path, file, { customMetadata })
+      }),
+    )
 
-      // The storage path
-      const path = `test/${new Date().getTime()}_${file.name}`
-
-      // Totally optional metadata
-      const customMetadata = { app: 'My AngularFire-powered PWA!' }
-
-      // The main task
-      const task = this.storage.upload(path, file, { customMetadata })
-
-      // Progress monitoring
-      this.$percentage.push(task.percentageChanges())
-      this.$snapshot.push(
-        task.snapshotChanges().pipe(
-          tap(snap => {
-            console.log(path)
-            if (snap.bytesTransferred === snap.totalBytes) {
-              // Update firestore on completion
-              this.db.collection('photos').add({ path, size: snap.totalBytes })
-            }
-          }),
-        ),
+    this.progresses$ = this.tasks
+      .pipe(
+        map(task => task.percentageChanges()),
+        toArray(),
+        mergeMap(tasks => {
+          return zip(...tasks)
+        }),
       )
-    }
+
+    console.log(this.progresses$)
+
+    // // Progress monitoring
+    // this.$percentage.push(task.percentageChanges())
+    // this.$snapshot.push(
+    //   task.snapshotChanges().pipe(
+    //     tap(snap => {
+    //       console.log(path)
+    //       if (snap.bytesTransferred === snap.totalBytes) {
+    //         // Update firestore on completion
+    //         this.db.collection('photos').add({ path, size: snap.totalBytes })
+    //       }
+    //     }),
+    //   ),
+    // )
 
     // Client-side validation example
   }
 
   // Determines if the upload task is active
-  isActive = $snapshot => {
-    let active = false
-
-    $snapshot.forEach(snap => {
-      if (snap.state === 'running' && snap.bytesTransferred < snap.totalBytes) {
-        active = true
-      }
-    })
-
-    return active
-  }
+  // isActive = $snapshot => {
+  //   let active = false
+  //
+  //   $snapshot.forEach(snap => {
+  //     if (snap.state === 'running' && snap.bytesTransferred < snap.totalBytes) {
+  //       active = true
+  //     }
+  //   })
+  //
+  //   return active
+  // }
 }

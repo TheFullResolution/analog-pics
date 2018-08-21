@@ -11,7 +11,7 @@
     <label class="file-label">
 
 
-      <input class="file-input" type="file" (change)="startUpload($event.target.files)"
+      <input class="file-input" type="file" (change)="startUpload($event)"
              multiple>
 
 
@@ -28,48 +28,41 @@
 </div>
 
 
-<div *ngIf="$percentage.length > 0">
+<div>
   <ul>
-    <li *ngFor="let progress of $percentage">
-      <span *ngIf="progress | async">
+    <li *ngFor="let progress of progresses$ | async">
           <progress
             class="progress is-info"
             [value]="progress"
             max="100">
           </progress>
-        {{ progress | number | async }}%
-      </span>
+        {{progress | number }}%
     </li>
   </ul>
-  <span>
-
-
-
-  </span>
 </div>
 
 
-<div *ngIf="$snapshot.length > 0">
-  <ul>
-    <li *ngFor="let snap of $snapshot">
-      <span *ngIf="snap | async">
-        {{ snap.bytesTransferred | fileSize}} of
-        {{ snap.totalBytes | fileSize }}
-      </span>
-    </li>
-  </ul>
+<!--<div *ngIf="$snapshot.length > 0">-->
+  <!--<ul>-->
+    <!--<li *ngFor="let snap of $snapshot">-->
+      <!--<span *ngIf="snap | async">-->
+        <!--{{ snap.bytesTransferred | fileSize}} of-->
+        <!--{{ snap.totalBytes | fileSize }}-->
+      <!--</span>-->
+    <!--</li>-->
+  <!--</ul>-->
 
 
-  <button (click)="task.pause()" class="button is-warning"
-          [disabled]="!isActive($snapshot)">
-    Pause
-  </button>
-  <button (click)="task.cancel()" class="button is-danger"
-          [disabled]="!isActive($snapshot)">
-    Cancel
-  </button>
-  <button (click)="task.resume()" class="button is-info"
-          [disabled]="!(snap?.state === 'paused')">Resume
-  </button>
+  <!--<button (click)="tasks.pause()" class="button is-warning"-->
+          <!--[disabled]="!isActive($snapshot)">-->
+    <!--Pause-->
+  <!--</button>-->
+  <!--<button (click)="tasks.cancel()" class="button is-danger"-->
+          <!--[disabled]="!isActive($snapshot)">-->
+    <!--Cancel-->
+  <!--</button>-->
+  <!--<button (click)="tasks.resume()" class="button is-info"-->
+          <!--[disabled]="!(snap?.state === 'paused')">Resume-->
+  <!--</button>-->
 
-</div>
+<!--</div>-->
