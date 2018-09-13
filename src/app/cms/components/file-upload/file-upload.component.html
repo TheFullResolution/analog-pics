@@ -30,13 +30,13 @@
 
 <div>
   <ul>
-    <li *ngFor="let progress of progresses$ | async">
+    <li *ngFor="let progress of progresses">
           <progress
             class="progress is-info"
-            [value]="progress"
+            [value]="progress | async"
             max="100">
           </progress>
-        {{progress | number }}%
+        {{progress | async | number }}%
     </li>
   </ul>
 </div>
