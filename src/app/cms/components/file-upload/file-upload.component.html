@@ -30,39 +30,50 @@
 
 <div>
   <ul>
-    <li *ngFor="let progress of progresses">
-          <progress
-            class="progress is-info"
-            [value]="progress | async"
-            max="100">
-          </progress>
-        {{progress | async | number }}%
+    <li *ngFor="let progress of progresses$ | async">
+      <progress
+        class="progress is-info"
+        [value]="progress | async"
+        max="100">
+      </progress>
+      {{progress | async | number }}%
+    </li>
+  </ul>
+
+</div>
+
+<div>
+  <ul>
+    <li *ngFor="let snap of snapshots$ | async">
+      <p *ngIf="snap | async">
+        {{ snap.bytesTransferred | async | fileSize }} of
+        {{ snap.totalBytes | async | fileSize }}
+      </p>
     </li>
   </ul>
 </div>
 
-
 <!--<div *ngIf="$snapshot.length > 0">-->
-  <!--<ul>-->
-    <!--<li *ngFor="let snap of $snapshot">-->
-      <!--<span *ngIf="snap | async">-->
-        <!--{{ snap.bytesTransferred | fileSize}} of-->
-        <!--{{ snap.totalBytes | fileSize }}-->
-      <!--</span>-->
-    <!--</li>-->
-  <!--</ul>-->
+<!--<ul>-->
+<!--<li *ngFor="let snap of $snapshot">-->
+<!--<span *ngIf="snap | async">-->
+<!--{{ snap.bytesTransferred | fileSize}} of-->
+<!--{{ snap.totalBytes | fileSize }}-->
+<!--</span>-->
+<!--</li>-->
+<!--</ul>-->
 
 
-  <!--<button (click)="tasks.pause()" class="button is-warning"-->
-          <!--[disabled]="!isActive($snapshot)">-->
-    <!--Pause-->
-  <!--</button>-->
-  <!--<button (click)="tasks.cancel()" class="button is-danger"-->
-          <!--[disabled]="!isActive($snapshot)">-->
-    <!--Cancel-->
-  <!--</button>-->
-  <!--<button (click)="tasks.resume()" class="button is-info"-->
-          <!--[disabled]="!(snap?.state === 'paused')">Resume-->
-  <!--</button>-->
+<!--<button (click)="tasks.pause()" class="button is-warning"-->
+<!--[disabled]="!isActive($snapshot)">-->
+<!--Pause-->
+<!--</button>-->
+<!--<button (click)="tasks.cancel()" class="button is-danger"-->
+<!--[disabled]="!isActive($snapshot)">-->
+<!--Cancel-->
+<!--</button>-->
+<!--<button (click)="tasks.resume()" class="button is-info"-->
+<!--[disabled]="!(snap?.state === 'paused')">Resume-->
+<!--</button>-->
 
 <!--</div>-->
