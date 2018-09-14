@@ -46,8 +46,8 @@
   <ul>
     <li *ngFor="let snap of snapshots$ | async">
       <p *ngIf="snap | async">
-        {{ snap.bytesTransferred | async | fileSize }} of
-        {{ snap.totalBytes | async | fileSize }}
+        {{ (snap | async)?.bytesTransferred | fileSize }} of
+        {{ (snap | async)?.totalBytes | fileSize }}
       </p>
     </li>
   </ul>

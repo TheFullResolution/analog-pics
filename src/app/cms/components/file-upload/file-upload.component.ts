@@ -45,7 +45,8 @@ export class FileUploadComponent {
         files.map(file =>
           file.snapshotChanges(),
         ),
-      ),
+
+      )
     )
 
     this.progresses$ = this.tasks$.pipe(
