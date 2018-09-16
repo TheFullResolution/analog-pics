@@ -5,10 +5,7 @@ import { AngularFirestore } from 'angularfire2/firestore'
 import { concatMap, catchError } from 'rxjs/operators'
 import { checkFileType } from './utils/checkFileType'
 import UploadTaskSnapshot = firebase.storage.UploadTaskSnapshot
-
-interface HTMLInputEvent extends Event {
-  target: HTMLInputElement & EventTarget
-}
+import { HTMLFileInputEvent } from '../../../utils/drop-zone.directive'
 
 @Component({
   selector: 'app-file-upload',
@@ -34,7 +31,7 @@ export class FileUploadComponent {
     this.isHovering = event
   }
 
-  startUpload(event: HTMLInputEvent) {
+  startUpload(event: HTMLFileInputEvent) {
     const files = Array.from(event.target.files)
 
     this.totalSize = files.reduce((acc, file) => acc + file.size, 0)

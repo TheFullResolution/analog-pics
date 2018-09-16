@@ -4,14 +4,14 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core'
   selector: 'app-input-file',
   template: `
     <div class="file">
-      <label class="file-label" for="file-input">
-        <i class="material-icons">cloud_upload</i>
-        <span>or choose a file…</span>
-      </label>
-      <input class="file-input" id="file-input"
+      <input id="fileInput"
              type="file"
              (change)="changed.emit($event)"
              multiple>
+      <label for="fileInput">
+        <i class="material-icons">cloud_upload</i>
+        <span>or choose a file…</span>
+      </label>
     </div>
   `,
   styleUrls: ['./input-file.component.scss'],

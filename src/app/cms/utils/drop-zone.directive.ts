@@ -5,12 +5,17 @@ import {
   EventEmitter,
 } from '@angular/core'
 
+export interface HTMLFileInputEvent extends Event {
+  target: HTMLInputElement & EventTarget
+}
+
+
 @Directive({
   selector: '[appDropZone]',
 })
 export class DropZoneDirective {
   @Output()
-  dropped = new EventEmitter<FileList>()
+  dropped = new EventEmitter<HTMLFileInputEvent>()
   @Output()
   hovered = new EventEmitter<boolean>()
 
