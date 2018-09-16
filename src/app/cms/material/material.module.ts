@@ -5,6 +5,7 @@ import {
   MatFormFieldModule,
   MatGridListModule,
   MatInputModule,
+  MatProgressBarModule,
   MatToolbarModule,
 } from '@angular/material'
 
@@ -16,6 +17,7 @@ import {
     MatInputModule,
     MatFormFieldModule,
     MatToolbarModule,
+    MatProgressBarModule,
   ],
   exports: [
     MatButtonModule,
@@ -24,6 +26,7 @@ import {
     MatInputModule,
     MatFormFieldModule,
     MatToolbarModule,
+    MatProgressBarModule,
   ],
 })
 export class MaterialModule {}

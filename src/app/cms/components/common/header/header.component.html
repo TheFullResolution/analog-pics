@@ -7,7 +7,7 @@
       </h1>
     </a>
     <nav *ngIf="(isAuth$ | async)">
-      <button mat-raised-button color="accent" (click)="logOut()">
+      <button mat-raised-button color="warn" (click)="logOut()">
         <i class="material-icons">exit_to_app</i>
         Logout
       </button>

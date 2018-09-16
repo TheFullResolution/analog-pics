@@ -1,0 +1,13 @@
+@import "~src/_variables.scss";
+
+.file {
+  label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    i {
+      margin-right: $marginS;
+    }
+  }
+}

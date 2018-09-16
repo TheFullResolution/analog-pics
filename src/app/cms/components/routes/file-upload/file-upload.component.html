@@ -1,0 +1,34 @@
+<div class="dropzone mat-typography"
+     appDropZone
+     (hovered)="toggleHover($event)"
+     (dropped)="startUpload($event)"
+     [class.hovering]="isHovering">
+
+
+  <h3>AnalogPics Drop Zone</h3>
+
+  <app-input-file (changed)="startUpload($event)"></app-input-file>
+  
+</div>
+
+
+<div *ngIf="snapshot$ | async as snap">
+
+  <mat-progress-bar mode="determinate" [value]="progress"></mat-progress-bar>
+  {{progress | number }}%
+
+  <p>{{transferredData | fileSize}}/{{totalSize | fileSize}}</p>
+
+  <button (click)="task$.pause()" mat-raised-button color="accent"
+          [disabled]="!isActive(snap)">
+    Pause
+  </button>
+  <button (click)="task$.cancel()" mat-raised-button color="warn"
+          [disabled]="!isActive(snap)">
+    Cancel
+  </button>
+  <button (click)="task$.resume()" mat-raised-button color="primary"
+          [disabled]="!(snap?.state === 'paused')">
+    Resume
+  </button>
+</div>

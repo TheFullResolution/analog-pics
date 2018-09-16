@@ -1,0 +1,10 @@
+@import '~src/_variables.scss';
+
+.main {
+  padding: {
+    bottom: $marginL;
+    top: $marginL;
+    left: $paddingPageSide;
+    right: $paddingPageSide;
+  };
+}
