@@ -1,6 +1,5 @@
 @import '~src/_variables.scss';
 
-
 .file {
   input {
     width: 0.1px;
@@ -9,32 +8,16 @@
     overflow: hidden;
     position: absolute;
     z-index: -1;
+  }
 
-    &:focus {
-      + label {
-        background-color: $primary;
-        outline: 1px dotted #000;
-        outline: -webkit-focus-ring-color auto 5px;
-      }
-    }
+  button {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
 
-    + label {
-      align-items: center;
-      border-radius: $marginXS;
-      border: 2px solid $primary;
-      cursor: pointer;
-      display: flex;
-      justify-content: center;
-      padding: $marginM;
-      transition: background-color 500ms $transition;
-
-      &:hover {
-        background-color: $primary;
-      }
-
-      i {
-        margin-right: $marginS;
-      }
+    i {
+      margin-right: $marginS;
     }
   }
 }
