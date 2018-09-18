@@ -1,0 +1,20 @@
+@import '~src/_variables.scss';
+
+.progress {
+  margin-bottom: $marginM;
+  padding: {
+    bottom: $marginM;
+    top: $marginM;
+  }
+}
+
+.details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: $marginS;
+
+  span + span {
+    margin-left: $marginXS;
+  }
+}

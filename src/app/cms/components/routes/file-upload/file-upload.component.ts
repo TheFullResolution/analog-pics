@@ -4,8 +4,15 @@ import { from, Observable, of, Subscription } from 'rxjs'
 import { AngularFirestore } from 'angularfire2/firestore'
 import { concatMap, catchError } from 'rxjs/operators'
 import { checkFileType } from './utils/checkFileType'
-import UploadTaskSnapshot = firebase.storage.UploadTaskSnapshot
 import { HTMLFileInputEvent } from '../../../utils/drop-zone.directive'
+import { UploadTaskSnapshot } from '@angular/fire/storage/interfaces'
+import { Controls, Upload } from './file-upload.types'
+
+const defaultState = {
+  progress: 0,
+  size: 0,
+  transferred: 0,
+}
 
 @Component({
   selector: 'app-file-upload',
@@ -15,26 +22,33 @@ import { HTMLFileInputEvent } from '../../../utils/drop-zone.directive'
 export class FileUploadComponent {
   task$: AngularFireUploadTask
   tasks$: Subscription
-  progress = 0
-  snapshot$: any
-  totalSize = 0
-  transferredData = 0
+  snapshot$: Observable<UploadTaskSnapshot>
+  fileProgress$: Observable<number>
+  uploadState: Upload
   isHovering: boolean
   error: string
 
   constructor(
     private storage: AngularFireStorage,
     private db: AngularFirestore,
-  ) {}
+  ) {
+    this.uploadState = defaultState
+  }
 
   toggleHover(event: boolean) {
     this.isHovering = event
   }
 
   startUpload(event: HTMLFileInputEvent) {
+    this.task$ = null
+    this.uploadState = defaultState
+
     const files = Array.from(event.target.files)
 
-    this.totalSize = files.reduce((acc, file) => acc + file.size, 0)
+    this.uploadState = {
+      ...this.uploadState,
+      size: files.reduce((acc, file) => acc + file.size, 0),
+    }
 
     this.tasks$ = from(files)
       .pipe(
@@ -44,9 +58,15 @@ export class FileUploadComponent {
       )
       .subscribe(
         el => {
-          this.transferredData = this.transferredData + el.bytesTransferred
+          const newTransferred =
+            this.uploadState.transferred + el.bytesTransferred
+          const newTotal = (newTransferred / this.uploadState.size) * 100
 
-          this.progress = (this.transferredData / this.totalSize) * 100
+          this.uploadState = {
+            ...this.uploadState,
+            transferred: newTransferred,
+            progress: newTotal,
+          }
         },
         error => {
           this.error = error
@@ -59,8 +79,8 @@ export class FileUploadComponent {
       const path = `test/${new Date().getTime()}_${file.name}`
 
       this.task$ = this.storage.upload(path, file)
-
       this.snapshot$ = this.task$.snapshotChanges()
+      this.fileProgress$ = this.task$.percentageChanges()
 
       this.task$
         .then(snap => {
@@ -74,7 +94,17 @@ export class FileUploadComponent {
     })
   }
 
-  isActive = snapshot =>
-    snapshot.state === 'running' &&
-    snapshot.bytesTransferred < snapshot.totalBytes
+  controlTask(command: Controls) {
+    switch (command) {
+      case Controls.pause:
+        this.task$.pause()
+        break
+      case Controls.cancel:
+        this.task$.cancel()
+        break
+      case Controls.resume:
+        this.task$.resume()
+        break
+    }
+  }
 }

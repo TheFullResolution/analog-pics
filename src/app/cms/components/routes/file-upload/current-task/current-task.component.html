@@ -1,0 +1,38 @@
+<mat-card *ngIf="snapshot$ | async as snap">
+  <mat-card-content>
+
+    <div class="progress">
+      <div class="details">
+        <span>Current File: {{snap?.ref?.name}}</span>
+        <span>Processed: {{fileProgress$ | async | number }}%</span>
+        <span>Transferred: {{ snap.bytesTransferred | fileSize }} of {{ snap.totalBytes | fileSize }}</span>
+      </div>
+      <mat-progress-bar mode="determinate" [value]="fileProgress$ | async"></mat-progress-bar>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="progress">
+      <div class="details">
+        <span>Total Progress:</span>
+        <span>Processed:{{uploadState.progress | number }}%</span>
+        <span>Transferred: {{uploadState.transferred | fileSize}} of
+          {{uploadState.size | fileSize}}</span></div>
+      <mat-progress-bar mode="determinate" [value]="uploadState.progress"></mat-progress-bar>
+    </div>
+
+
+    <button (click)="control.emit(controls.pause)" mat-raised-button color="accent"
+      [disabled]="!isActive(snap)">
+      Pause
+    </button>
+    <button (click)="control.emit(controls.cancel)" mat-raised-button color="warn"
+      [disabled]="!isActive(snap)">
+      Cancel
+    </button>
+    <button (click)="control.emit(controls.resume)" mat-raised-button color="primary"
+      [disabled]="!isPaused(snap)">
+      Resume
+    </button>
+  </mat-card-content>
+</mat-card>

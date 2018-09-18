@@ -18,10 +18,7 @@ export class AuthService {
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.store.dispatch(new Auth.SetAuthenticated())
-
-        this.router.navigate(['cms/dashboard'])
       } else {
-
         this.store.dispatch(new Auth.SetUnauthenticated())
 
         this.router.navigate(['cms/login'])
@@ -29,10 +26,12 @@ export class AuthService {
     })
   }
 
-
   login(authData: AuthData) {
     this.afAuth.auth
       .signInWithEmailAndPassword(authData.email, authData.password)
+      .then(() => {
+        this.router.navigate(['cms/dashboard'])
+      })
       .catch(error => {
         console.log(error)
       })

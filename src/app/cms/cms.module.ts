@@ -20,6 +20,7 @@ import { AngularFireStorageModule } from 'angularfire2/storage'
 import { CmsComponent } from './components/cms-root/cms.component'
 import { InputFileComponent } from './components/common/input-file/input-file.component';
 import { SidenavListComponent } from './components/common/sidenav-list/sidenav-list.component';
+import { CurrentTaskComponent } from './components/routes/file-upload/current-task/current-task.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { SidenavListComponent } from './components/common/sidenav-list/sidenav-l
     FileSizePipe,
     InputFileComponent,
     SidenavListComponent,
+    CurrentTaskComponent,
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
