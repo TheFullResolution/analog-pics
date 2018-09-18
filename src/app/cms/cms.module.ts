@@ -17,7 +17,7 @@ import { DashboardComponent } from './components/routes/dashboard/dashboard.comp
 import { HeaderComponent } from './components/common/header/header.component'
 import { DropZoneDirective } from './utils/drop-zone.directive'
 import { AngularFireStorageModule } from 'angularfire2/storage'
-import {CmsComponent} from './components/cms-root/cms.component';
+import { CmsComponent } from './components/cms-root/cms.component'
 import { InputFileComponent } from './components/common/input-file/input-file.component'
 
 @NgModule({
