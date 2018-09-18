@@ -18,7 +18,8 @@ import { HeaderComponent } from './components/common/header/header.component'
 import { DropZoneDirective } from './utils/drop-zone.directive'
 import { AngularFireStorageModule } from 'angularfire2/storage'
 import { CmsComponent } from './components/cms-root/cms.component'
-import { InputFileComponent } from './components/common/input-file/input-file.component'
+import { InputFileComponent } from './components/common/input-file/input-file.component';
+import { SidenavListComponent } from './components/common/sidenav-list/sidenav-list.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { InputFileComponent } from './components/common/input-file/input-file.co
     FileUploadComponent,
     FileSizePipe,
     InputFileComponent,
+    SidenavListComponent,
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),

@@ -1,14 +1,18 @@
 <mat-toolbar color="primary">
-  <mat-toolbar-row>
+  <mat-toolbar-row class="row">
+    <button *ngIf="(isAuth$ | async)" (click)="onToggleSideNav()"
+      mat-icon-button class="nav">
+      <mat-icon>menu</mat-icon>
+    </button>
     <a routerLink="/" class="heading">
       <h1>
-        <i class="material-icons">camera_alt</i>
         <span>AnalogPics</span>
+        <mat-icon>camera_alt</mat-icon>
       </h1>
     </a>
     <nav *ngIf="(isAuth$ | async)">
       <button mat-raised-button color="warn" (click)="logOut()">
-        <i class="material-icons">exit_to_app</i>
+        <mat-icon>exit_to_app</mat-icon>
         Logout
       </button>
     </nav>

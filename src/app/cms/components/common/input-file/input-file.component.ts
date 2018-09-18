@@ -6,7 +6,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core'
     <div class="file">
       <input id="fileInput" type="file" (change)="changed.emit($event)" #photoInput multiple>
       <button mat-raised-button color="warn" (click)="photoInput.click()">
-         <i class="material-icons">cloud_upload</i>
+        <mat-icon>cloud_upload</mat-icon>
          <span>Select Files</span>
       </button>
     </div>

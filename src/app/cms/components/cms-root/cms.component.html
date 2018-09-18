@@ -1,5 +1,14 @@
-<app-header-cms></app-header-cms>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav role="navigation">
+    <app-sidenav-list (closeSidenav)="sidenav.close()"></app-sidenav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
 
-<main class="main">
-  <router-outlet></router-outlet>
-</main>
+    <app-header-cms (sidenavToggle)="sidenav.toggle()"></app-header-cms>
+
+    <main class="main">
+      <router-outlet></router-outlet>
+    </main>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

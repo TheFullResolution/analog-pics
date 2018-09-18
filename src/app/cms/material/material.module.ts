@@ -4,8 +4,10 @@ import {
   MatCardModule,
   MatFormFieldModule,
   MatGridListModule,
-  MatInputModule,
+  MatIconModule,
+  MatInputModule, MatListModule,
   MatProgressBarModule,
+  MatSidenavModule,
   MatToolbarModule,
 } from '@angular/material'
 
@@ -13,7 +15,10 @@ import {
   imports: [
     MatButtonModule,
     MatGridListModule,
+    MatSidenavModule,
+    MatListModule,
     MatCardModule,
+    MatIconModule,
     MatInputModule,
     MatFormFieldModule,
     MatToolbarModule,
@@ -23,7 +28,10 @@ import {
     MatButtonModule,
     MatGridListModule,
     MatCardModule,
+    MatSidenavModule,
     MatInputModule,
+    MatListModule,
+    MatIconModule,
     MatFormFieldModule,
     MatToolbarModule,
     MatProgressBarModule,

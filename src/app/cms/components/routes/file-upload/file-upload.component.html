@@ -1,13 +1,16 @@
-<div class="dropzone mat-typography" appDropZone (hovered)="toggleHover($event)"
-  (dropped)="startUpload($event)" [class.hovering]="isHovering">
+<mat-card>
+  <mat-card-content>
+    <div class="dropzone mat-typography" appDropZone (hovered)="toggleHover($event)"
+      (dropped)="startUpload($event)" [class.hovering]="isHovering">
 
 
-  <h3>AnalogPics Drop Zone</h3>
+      <h3>AnalogPics Drop Zone</h3>
 
-  <app-input-file (changed)="startUpload($event)"></app-input-file>
+      <app-input-file (changed)="startUpload($event)"></app-input-file>
 
-</div>
-
+    </div>
+  </mat-card-content>
+</mat-card>
 
 <div *ngIf="snapshot$ | async as snap">
 
