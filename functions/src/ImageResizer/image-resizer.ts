@@ -1,59 +1,85 @@
-import * as functions from 'firebase-functions';
+import * as functions from 'firebase-functions'
+import * as admin from 'firebase-admin'
+import * as Storage from '@google-cloud/storage'
+import * as sharp from 'sharp'
+import * as fs from 'fs-extra'
 
-import * as Storage from '@google-cloud/storage';
-const gcs = new Storage();
+const gcs = new Storage()
 
-import { tmpdir } from 'os';
-import { join, dirname } from 'path';
+import { tmpdir } from 'os'
+import { join, dirname } from 'path'
 
-import * as sharp from 'sharp';
-import * as fs from 'fs-extra';
+import { ImagesSizes, THUMB_PREFIX } from './ImagesConfig'
+
+admin.initializeApp()
 
 export const imageResizer = functions.storage
   .object()
   .onFinalize(async object => {
-    const bucket = gcs.bucket(object.bucket);
-    const filePath = object.name;
-    const fileName = filePath.split('/').pop();
-    const bucketDir = dirname(filePath);
+    const filePath = object.name
+    const fileName = filePath.split('/').pop()
 
-    const workingDir = join(tmpdir(), 'thumbs');
-    const tmpFilePath = join(workingDir, 'source.png');
-
-    if (fileName.includes('thumb@') || !object.contentType.includes('image')) {
-      console.log('exiting function');
-      return false;
+    if (
+      fileName.includes(THUMB_PREFIX) ||
+      !object.contentType.includes('image')
+    ) {
+      console.log('exiting function')
+      return false
     }
 
+    const bucket = gcs.bucket(object.bucket)
+    const bucketDir = dirname(filePath)
+
+    const workingDir = join(tmpdir(), 'thumbs')
+    const tmpFilePath = join(workingDir, 'source.png')
+
     // 1. Ensure thumbnail dir exists
-    await fs.ensureDir(workingDir);
+    await fs.ensureDir(workingDir)
 
     // 2. Download Source File
     await bucket.file(filePath).download({
-      destination: tmpFilePath
-    });
+      destination: tmpFilePath,
+    })
 
     // 3. Resize the images and define an array of upload promises
-    const sizes = [64, 128, 256];
 
-    const uploadPromises = sizes.map(async size => {
-      const thumbName = `thumb@${size}_${fileName}`;
-      const thumbPath = join(workingDir, thumbName);
+    const thumbObject = {}
 
+    const uploadPromises = Object.keys(ImagesSizes).map(async type => {
+      const thumbName = `${THUMB_PREFIX}${type}-${fileName}`
+      const thumbPath = join(workingDir, thumbName)
+      const size = ImagesSizes[type]
       // Resize source image
       await sharp(tmpFilePath)
         .resize(size, size)
-        .toFile(thumbPath);
+        .toFile(thumbPath)
+
+      const destination = join(bucketDir, thumbName)
+
+      thumbObject[type] = destination
 
       // Upload to GCS
       return bucket.upload(thumbPath, {
-        destination: join(bucketDir, thumbName)
-      });
-    });
+        destination,
+        contentType: object.contentType,
+        metadata: { contentType: object.contentType },
+      })
+    })
 
     // 4. Run the upload operations
-    await Promise.all(uploadPromises);
+    await Promise.all(uploadPromises)
+
+    // 5. Write to DataBase
+    await admin
+      .firestore()
+      .collection('photos')
+      .add({
+        name: fileName,
+        uploaded: admin.firestore.FieldValue.serverTimestamp(),
+        original: filePath,
+        thumbs: { ...thumbObject },
+      })
 
     // 5. Cleanup remove the tmp/thumbs from the filesystem
-    return fs.remove(workingDir);
-  });
+    return fs.remove(workingDir)
+  })

@@ -1,1 +1,1 @@
-// export {imageResizer} from './image-resizer'
+export {imageResizer} from './ImageResizer/image-resizer'
