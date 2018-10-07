@@ -30,7 +30,7 @@ export class AuthService {
     this.afAuth.auth
       .signInWithEmailAndPassword(authData.email, authData.password)
       .then(() => {
-        this.router.navigate(['cms/dashboard'])
+        return this.router.navigate(['cms/dashboard'])
       })
       .catch(error => {
         console.log(error)

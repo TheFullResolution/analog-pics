@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CurrentTaskComponent } from './current-task.component';
+import { ProgressCardComponent } from './progress-card.component';
 
-describe('CurrentTaskComponent', () => {
-  let component: CurrentTaskComponent;
-  let fixture: ComponentFixture<CurrentTaskComponent>;
+describe('ProgressCardComponent', () => {
+  let component: ProgressCardComponent;
+  let fixture: ComponentFixture<ProgressCardComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CurrentTaskComponent ]
+      declarations: [ ProgressCardComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CurrentTaskComponent);
+    fixture = TestBed.createComponent(ProgressCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

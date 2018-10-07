@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-content>
     <div class="dropzone mat-typography" appDropZone (hovered)="toggleHover($event)"
-      (dropped)="startUpload($event)" [class.hovering]="isHovering">
+         (dropped)="startUpload($event)" [class.hovering]="isHovering">
 
 
       <h2>AnalogPics Drop Zone</h2>
@@ -11,7 +11,3 @@
     </div>
   </mat-card-content>
 </mat-card>
-
-
-<app-current-task *ngIf="!!task$" (control)="controlTask($event)" [uploadState]="uploadState"
-  [snapshot$]="snapshot$" [fileProgress$]="fileProgress$"></app-current-task>

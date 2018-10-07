@@ -1,0 +1,30 @@
+@import '~src/_variables.scss';
+
+mat-card {
+  max-width: $pageWidth;
+  margin: {
+    bottom: $marginL;
+    left: auto;
+    right: auto;
+  }
+}
+
+.dropzone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 250px;
+  border: 2px dashed $accent;
+  border-radius: 5px;
+  margin: 10px 0;
+  background-color: transparent;
+  transition: background-color 500ms $transition, border 500ms $transition 200ms,
+    opacity 100ms $transition;
+
+  &.hovering {
+    border: 2px solid $accent;
+    opacity: 0.5;
+    background-color: $background;
+  }
+}

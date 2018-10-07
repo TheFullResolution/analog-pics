@@ -18,9 +18,12 @@ import { HeaderComponent } from './components/common/header/header.component'
 import { DropZoneDirective } from './utils/drop-zone.directive'
 import { AngularFireStorageModule } from 'angularfire2/storage'
 import { CmsComponent } from './components/cms-root/cms.component'
-import { InputFileComponent } from './components/common/input-file/input-file.component';
-import { SidenavListComponent } from './components/common/sidenav-list/sidenav-list.component';
-import { CurrentTaskComponent } from './components/routes/file-upload/current-task/current-task.component';
+import { InputFileComponent } from './components/common/input-file/input-file.component'
+import { SidenavListComponent } from './components/common/sidenav-list/sidenav-list.component'
+import { StorageService } from './components/routes/file-upload/service/storage.service';
+import { UploadCardComponent } from './components/routes/file-upload/components/upload-card/upload-card.component';
+import { ProgressCardComponent } from './components/routes/file-upload/components/progress-card/progress-card.component'
+import { UploadStateService } from './components/routes/file-upload/service/upload-state.service'
 
 @NgModule({
   declarations: [
@@ -33,7 +36,8 @@ import { CurrentTaskComponent } from './components/routes/file-upload/current-ta
     FileSizePipe,
     InputFileComponent,
     SidenavListComponent,
-    CurrentTaskComponent,
+    UploadCardComponent,
+    ProgressCardComponent,
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
@@ -46,6 +50,6 @@ import { CurrentTaskComponent } from './components/routes/file-upload/current-ta
     CommonModule,
     CmsRoutingModule,
   ],
-  providers: [AuthService],
+  providers: [AuthService, StorageService, UploadStateService],
 })
 export class CmsModule {}
