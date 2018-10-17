@@ -9,22 +9,21 @@ const gcs = new Storage()
 import { tmpdir } from 'os'
 import { join, dirname } from 'path'
 
-import { ImagesSizes, THUMB_PREFIX } from './ImagesConfig'
+import { ImagesSizes } from './ImageConfig'
 
 admin.initializeApp()
 
-export const imageResizer = functions.storage
+export const imageres = functions.storage
   .object()
   .onFinalize(async object => {
     const filePath = object.name
     const fileName = filePath.split('/').pop()
 
     if (
-      fileName.includes(THUMB_PREFIX) ||
       !object.contentType.includes('image')
     ) {
       console.log('exiting function')
-      return false
+      return null
     }
 
     const bucket = gcs.bucket(object.bucket)
