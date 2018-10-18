@@ -7,8 +7,11 @@ interface CheckIfImage {
 export const checkIfNotImage = function checkIfImageFunction({
   object,
 }: CheckIfImage): boolean {
+  const assertion = !object.contentType.includes('image')
 
-  console.log('This is not an image.');
+  if (assertion) {
+    console.log(`Not Image ${assertion}`)
+  }
 
-  return !object.contentType.includes('image')
+  return assertion
 }

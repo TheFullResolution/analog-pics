@@ -9,7 +9,7 @@ const gcs = new Storage()
 import { tmpdir } from 'os'
 import { join, dirname } from 'path'
 
-import { ImagesSizes } from './ImageConfig'
+import { ImagesSizes } from '../src/imageFunction/ImageConfig'
 
 admin.initializeApp()
 

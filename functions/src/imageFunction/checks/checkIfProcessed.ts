@@ -5,9 +5,14 @@ interface CheckIfProcessed {
   readonly object: ObjectMetadata
 }
 
-export const checkIfProcessed = function checkIfProcessedFunc({object}: CheckIfProcessed) {
+export const checkIfProcessed = function checkIfProcessedFunc({
+  object,
+}: CheckIfProcessed) {
+  const assertion = object.metadata && object.metadata[IS_PROCESSED]
 
-  console.log('This is processed.');
+  if (assertion) {
+    console.log(`Image Already Processed ${assertion}`)
+  }
 
-  return !!object.metadata && object.metadata[IS_PROCESSED]
+  return assertion
 }

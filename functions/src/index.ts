@@ -1,1 +1,1 @@
-export {imageFunction} from './imageFunction'
+export {imageFunction} from './imageFunction/index'

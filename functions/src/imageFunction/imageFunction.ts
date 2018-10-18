@@ -3,7 +3,7 @@ import * as Storage from '@google-cloud/storage'
 
 import { checkIfNotImage } from './checks/checkIfNotImage'
 import { checkIfProcessed } from './checks/checkIfProcessed'
-import { dirname, join } from 'path'
+import { join } from 'path'
 import { tmpdir } from 'os'
 import * as fs from 'fs-extra'
 import { createImageResize } from './imageResize'
@@ -18,13 +18,14 @@ export const imageFunction = functions.storage
     if (checkIfNotImage({ object })) return null
     if (checkIfProcessed({ object })) return null
 
+
     const filePath = object.name
     const newFileName = getFileName()
 
     const bucket = gcs.bucket(object.bucket)
 
-    const tempLocalFile = join(tmpdir(), filePath)
-    const tempLocalDir = dirname(tempLocalFile)
+    const tempLocalDir = join(tmpdir(), 'thumbs')
+    const tempLocalFile = join(tempLocalDir, filePath)
 
     // 1. Ensure thumbnail dir exists
     await fs.ensureDir(tempLocalDir)
@@ -44,5 +45,10 @@ export const imageFunction = functions.storage
 
     await Promise.all([
       imageResize(ImageFormats.jpeg),
+      imageResize(ImageFormats.webp)
     ])
+
+    await bucket.file(filePath).delete()
+
+    return fs.remove(tempLocalDir)
   })

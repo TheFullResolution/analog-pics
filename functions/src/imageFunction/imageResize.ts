@@ -1,8 +1,8 @@
 import {
   ImageFormatsTypes,
   ImagesSizes,
-  customMetaData,
   PATH,
+  IS_PROCESSED,
 } from './ImageConfig'
 import { join } from 'path'
 import * as sharp from 'sharp'
@@ -25,14 +25,14 @@ export const createImageResize = ({
   bucket,
 }: CreateImageResize) => async (format: ImageFormatsTypes) => {
   const uploadPromises = Object.keys(ImagesSizes).map(async type => {
-    const thumbName = `${type}-${newFileName}`
+    const thumbName = `${type}-${newFileName}.${format}`
     const thumbPath = join(tempLocalDir, thumbName)
 
     const size = ImagesSizes[type]
     // Resize source image
     await sharp(tempLocalFile)
       .toFormat(format)
-      .resize(size, size)
+      .resize(size, size, { fit: 'inside', withoutEnlargement: true })
       .toFile(thumbPath)
 
     const destination = join(PATH, thumbName)
@@ -40,8 +40,11 @@ export const createImageResize = ({
     // Upload to GCS
     return bucket.upload(thumbPath, {
       destination,
-      contentType: object.contentType,
-      metadata: { contentType: object.contentType, metadata: customMetaData },
+      contentType: `image/${format}`,
+      metadata: {
+        contentType: object.contentType,
+        metadata: { [IS_PROCESSED]: IS_PROCESSED },
+      },
     })
   })
 

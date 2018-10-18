@@ -7,7 +7,7 @@ import { Controls } from './file-upload.types'
 import { HTMLFileInputEvent } from '../../../../utils/drop-zone.directive'
 import { checkFileType } from '../utils/checkFileType'
 import { UploadStateService } from './upload-state.service'
-import { getPath } from '../utils/getPath'
+import { IS_PROCESSED } from '../../../../../../../functions/src/imageFunction/ImageConfig'
 
 @Injectable()
 export class StorageService {
@@ -58,7 +58,7 @@ export class StorageService {
         currentFileName: file.name,
       })
 
-      this._task$ = this.storage.upload(getPath(), file)
+      this._task$ = this.storage.upload(file.name, file)
 
       this.subscribeToTaskChanges()
 
