@@ -44,6 +44,5 @@ export const imageFunction = functions.storage
 
     await Promise.all([
       imageResize(ImageFormats.jpeg),
-      imageResize(ImageFormats.webp),
     ])
   })

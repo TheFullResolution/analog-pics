@@ -45,7 +45,7 @@ export const imageres = functions.storage
     const thumbObject = {}
 
     const uploadPromises = Object.keys(ImagesSizes).map(async type => {
-      const thumbName = `${THUMB_PREFIX}${type}-${fileName}`
+      const thumbName = `${''}${type}-${fileName}`
       const thumbPath = join(workingDir, thumbName)
       const size = ImagesSizes[type]
       // Resize source image
