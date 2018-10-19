@@ -10,7 +10,7 @@ export const checkIfNotImage = function checkIfImageFunction({
   const assertion = !object.contentType.includes('image')
 
   if (assertion) {
-    console.log(`Not Image ${assertion}`)
+    console.log(`Not Image: ${assertion}`)
   }
 
   return assertion

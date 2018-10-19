@@ -9,7 +9,7 @@ const gcs = new Storage()
 import { tmpdir } from 'os'
 import { join, dirname } from 'path'
 
-import { ImagesSizes } from '../src/imageFunction/ImageConfig'
+import { imagesSizes } from '../src/imageFunction/ImageConfig'
 
 admin.initializeApp()
 
@@ -44,10 +44,10 @@ export const imageres = functions.storage
 
     const thumbObject = {}
 
-    const uploadPromises = Object.keys(ImagesSizes).map(async type => {
+    const uploadPromises = Object.keys(imagesSizes).map(async type => {
       const thumbName = `${''}${type}-${fileName}`
       const thumbPath = join(workingDir, thumbName)
-      const size = ImagesSizes[type]
+      const size = imagesSizes[type]
       // Resize source image
       await sharp(tmpFilePath)
         .resize(size, size)

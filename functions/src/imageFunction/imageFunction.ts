@@ -6,9 +6,11 @@ import { checkIfProcessed } from './checks/checkIfProcessed'
 import { join } from 'path'
 import { tmpdir } from 'os'
 import * as fs from 'fs-extra'
-import { createImageResize } from './imageResize'
-import { getFileName } from './utils/getFileName'
-import { ImageFormats } from './ImageConfig'
+import { createImageResize } from './methods/createImageResize'
+import { getFileName } from './methods/getFileName'
+import { CONSTS, ImageFormats, imagesSizes } from './ImageConfig'
+import { generateFileNames } from './methods/generateFileNames'
+import { updateDatabase } from './methods/updateDatabase'
 
 const gcs = new Storage()
 
@@ -16,8 +18,10 @@ export const imageFunction = functions.storage
   .object()
   .onFinalize(async object => {
     if (checkIfNotImage({ object })) return null
-    if (checkIfProcessed({ object })) return null
 
+    if (checkIfProcessed({ object, IS_PROCESSED: CONSTS.IS_PROCESSED })) {
+      return null
+    }
 
     const filePath = object.name
     const newFileName = getFileName()
@@ -35,18 +39,29 @@ export const imageFunction = functions.storage
       destination: tempLocalFile,
     })
 
+    // 3. Generate function for Upload
     const imageResize = createImageResize({
       newFileName,
       tempLocalDir,
       tempLocalFile,
       object,
       bucket,
+      config: { PATH: CONSTS.PATH, IS_PROCESSED: CONSTS.IS_PROCESSED },
     })
 
-    await Promise.all([
-      imageResize(ImageFormats.jpeg),
-      imageResize(ImageFormats.webp)
-    ])
+    //4. Generate File list for upload
+    const filesToGenerate = generateFileNames({
+      imagesSizes,
+      newFileName,
+      formats: [ImageFormats.jpeg, ImageFormats.webp],
+    })
+
+    //5. Format and Upload all the files
+    const generateAndUpload = imageResize(filesToGenerate)
+
+    const uploadToDatabase = updateDatabase(filesToGenerate, newFileName)
+
+    await Promise.all([...generateAndUpload, uploadToDatabase])
 
     await bucket.file(filePath).delete()
 

@@ -1,4 +1,4 @@
-interface ImagesSizesInterface {
+export interface ImagesSizesInterface {
   xs: number
   sm: number
   md: number
@@ -6,12 +6,12 @@ interface ImagesSizesInterface {
   xl: number
 }
 
-export const ImagesSizes: ImagesSizesInterface = {
+export const imagesSizes: ImagesSizesInterface = {
   xs: 512,
   sm: 850,
   md: 1024,
   lg: 1420,
-  xl: 2200
+  xl: 2200,
 }
 
 export type ImageFormatsTypes = 'webp' | 'jpeg' | 'png'
@@ -22,9 +22,7 @@ export const enum ImageFormats {
   png = 'png',
 }
 
-
-export const IS_PROCESSED = 'isProcessed'
-export const customMetaData = {[IS_PROCESSED]: IS_PROCESSED}
-
-
-export const PATH = 'pictures'
+export const enum CONSTS {
+  IS_PROCESSED = 'isProcessed',
+  PATH = 'pictures',
+}
