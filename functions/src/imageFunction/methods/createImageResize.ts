@@ -2,6 +2,7 @@ import { join } from 'path'
 import * as sharp from 'sharp'
 import { Bucket } from '@google-cloud/storage'
 import { ObjectMetadata } from 'firebase-functions/lib/providers/storage'
+
 import { FilesArray } from './generateFileNames'
 import { CONSTS } from '../ImageConfig'
 
@@ -21,30 +22,23 @@ export const createImageResize = ({
   object,
   bucket,
   config: { PATH, IS_PROCESSED },
-}: CreateImageResize) => (filesArray: FilesArray) => {
-  return filesArray.map(async ({ format, files }) => {
+}: CreateImageResize) => (filesArray: FilesArray) =>
+  filesArray.map(async ({ thumbName, format, size }) => {
+    const thumbPath = join(tempLocalDir, thumbName)
+    const destination = join(PATH, thumbName)
 
-    const uploadPromises = files.map(async ({ thumbName, type, size }) => {
-      const thumbPath = join(tempLocalDir, thumbName)
-      const destination = join(PATH, thumbName)
+    // Resize source image
+    await sharp(tempLocalFile)
+      .toFormat(format)
+      .resize(size, size, { fit: 'inside', withoutEnlargement: true })
+      .toFile(thumbPath)
 
-      // Resize source image
-      await sharp(tempLocalFile)
-        .toFormat(format)
-        .resize(size, size, { fit: 'inside', withoutEnlargement: true })
-        .toFile(thumbPath)
-
-      // Upload to GCS
-      return bucket.upload(thumbPath, {
-        destination,
-        contentType: `image/${format}`,
-        metadata: {
-          metadata: { [IS_PROCESSED]: IS_PROCESSED },
-        },
-      })
+    // Upload to GCS
+    return bucket.upload(thumbPath, {
+      destination,
+      contentType: `image/${format}`,
+      metadata: {
+        metadata: { [IS_PROCESSED]: IS_PROCESSED },
+      },
     })
-
-    // 4. Run the upload operations
-    return Promise.all(uploadPromises)
   })
-}

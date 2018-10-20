@@ -1,5 +1,6 @@
 import * as functions from 'firebase-functions'
 import * as Storage from '@google-cloud/storage'
+import * as admin from 'firebase-admin'
 
 import { checkIfNotImage } from './checks/checkIfNotImage'
 import { checkIfProcessed } from './checks/checkIfProcessed'
@@ -13,6 +14,7 @@ import { generateFileNames } from './methods/generateFileNames'
 import { updateDatabase } from './methods/updateDatabase'
 
 const gcs = new Storage()
+admin.initializeApp()
 
 export const imageFunction = functions.storage
   .object()
@@ -59,9 +61,12 @@ export const imageFunction = functions.storage
     //5. Format and Upload all the files
     const generateAndUpload = imageResize(filesToGenerate)
 
-    const uploadToDatabase = updateDatabase(filesToGenerate, newFileName)
+    await Promise.all(generateAndUpload)
 
-    await Promise.all([...generateAndUpload, uploadToDatabase])
+    const fireStore = admin.firestore()
+    fireStore.settings({ timestampsInSnapshots: true })
+
+    await updateDatabase(filesToGenerate, newFileName, fireStore)
 
     await bucket.file(filePath).delete()
 
