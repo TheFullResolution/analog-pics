@@ -16,6 +16,9 @@ import { updateDatabase } from './methods/updateDatabase'
 const gcs = new Storage()
 admin.initializeApp()
 
+const fireStore = admin.firestore()
+fireStore.settings({ timestampsInSnapshots: true })
+
 export const imageFunction = functions.storage
   .object()
   .onFinalize(async object => {
@@ -62,11 +65,8 @@ export const imageFunction = functions.storage
     const generateAndUpload = imageResize(filesToGenerate)
 
     await Promise.all(generateAndUpload)
-
-    const fireStore = admin.firestore()
-    fireStore.settings({ timestampsInSnapshots: true })
-
-    await updateDatabase(filesToGenerate, newFileName, fireStore)
+    
+    await updateDatabase(filesToGenerate, newFileName, fireStore, CONSTS.PATH)
 
     await bucket.file(filePath).delete()
 
