@@ -1,6 +1,4 @@
 import * as functions from 'firebase-functions'
-import * as Storage from '@google-cloud/storage'
-import * as admin from 'firebase-admin'
 
 import { checkIfNotImage } from './checks/checkIfNotImage'
 import { checkIfProcessed } from './checks/checkIfProcessed'
@@ -12,14 +10,14 @@ import { getFileName } from './methods/getFileName'
 import { CONSTS, ImageFormats, imagesSizes } from './ImageConfig'
 import { generateFileNames } from './methods/generateFileNames'
 import { updateDatabase } from './methods/updateDatabase'
+import { Firestore, Storage } from '../index'
 
-const gcs = new Storage()
-admin.initializeApp()
+interface ImageFunction {
+  fireStore: Firestore,
+  storage: Storage
+}
 
-const fireStore = admin.firestore()
-fireStore.settings({ timestampsInSnapshots: true })
-
-export const imageFunction = functions.storage
+export const imageFunction = ({storage, fireStore}: ImageFunction) => functions.storage
   .object()
   .onFinalize(async object => {
     if (checkIfNotImage({ object })) return null
@@ -31,7 +29,7 @@ export const imageFunction = functions.storage
     const filePath = object.name
     const newFileName = getFileName()
 
-    const bucket = gcs.bucket(object.bucket)
+    const bucket = storage.bucket(object.bucket)
 
     const tempLocalDir = join(tmpdir(), 'thumbs')
     const tempLocalFile = join(tempLocalDir, filePath)
@@ -65,7 +63,7 @@ export const imageFunction = functions.storage
     const generateAndUpload = imageResize(filesToGenerate)
 
     await Promise.all(generateAndUpload)
-    
+
     await updateDatabase(filesToGenerate, newFileName, fireStore, CONSTS.PATH)
 
     await bucket.file(filePath).delete()

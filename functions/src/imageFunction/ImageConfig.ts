@@ -24,5 +24,5 @@ export const enum ImageFormats {
 
 export const enum CONSTS {
   IS_PROCESSED = 'isProcessed',
-  PATH = 'pictures',
+  PATH = 'images',
 }

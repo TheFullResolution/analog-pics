@@ -3,11 +3,12 @@ import * as merge from 'lodash.merge'
 
 import { FilesArray } from './generateFileNames'
 import { join } from "path"
+import { Firestore } from '../../index'
 
 export const updateDatabase = async (
   filesArray: FilesArray,
   fileName: string,
-  fireStore: admin.firestore.Firestore,
+  fireStore: Firestore,
   path: string
 ) => {
   const filesObject = filesArray.reduce(
