@@ -11,9 +11,9 @@ fireStore.settings({ timestampsInSnapshots: true })
 
 const storage =  fAdmin.storage()
 
-import {imageFunction} from './imageFunction'
+import {onImageUpload} from './storage/onImageUpload/onImageUpload'
 import {photos as photosFunction, images  as imagesFunction} from './http'
 
-export const imageProcess = imageFunction({storage, fireStore})
+export const imageProcess = onImageUpload({storage, fireStore})
 export const photos = photosFunction({admin})
 export const images = imagesFunction({storage})

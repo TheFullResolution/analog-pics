@@ -4,7 +4,7 @@ import { Bucket } from '@google-cloud/storage'
 import { ObjectMetadata } from 'firebase-functions/lib/providers/storage'
 
 import { FilesArray } from './generateFileNames'
-import { CONSTS } from '../ImageConfig'
+import { CONSTS } from '../../../config'
 
 interface CreateImageResize {
   readonly newFileName: string

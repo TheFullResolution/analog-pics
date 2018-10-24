@@ -1,23 +1,23 @@
 import * as functions from 'firebase-functions'
 
-import { checkIfNotImage } from './checks/checkIfNotImage'
-import { checkIfProcessed } from './checks/checkIfProcessed'
+import { checkIfNotImage } from '../checks/checkIfNotImage'
+import { checkIfProcessed } from '../checks/checkIfProcessed'
 import { join } from 'path'
 import { tmpdir } from 'os'
 import * as fs from 'fs-extra'
 import { createImageResize } from './methods/createImageResize'
 import { getFileName } from './methods/getFileName'
-import { CONSTS, ImageFormats, imagesSizes } from './ImageConfig'
+import { CONSTS, ImageFormats, imagesSizes } from '../../config'
 import { generateFileNames } from './methods/generateFileNames'
 import { updateDatabase } from './methods/updateDatabase'
-import { Firestore, Storage } from '../index'
+import { Firestore, Storage } from '../..'
 
-interface ImageFunction {
+interface OnImageUpload {
   fireStore: Firestore,
   storage: Storage
 }
 
-export const imageFunction = ({storage, fireStore}: ImageFunction) => functions.storage
+export const onImageUpload = ({storage, fireStore}: OnImageUpload) => functions.storage
   .object()
   .onFinalize(async object => {
     if (checkIfNotImage({ object })) return null

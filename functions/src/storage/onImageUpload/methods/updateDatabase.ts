@@ -3,7 +3,7 @@ import * as merge from 'lodash.merge'
 
 import { FilesArray } from './generateFileNames'
 import { join } from "path"
-import { Firestore } from '../../index'
+import { Firestore } from '../../..'
 
 export const updateDatabase = async (
   filesArray: FilesArray,
