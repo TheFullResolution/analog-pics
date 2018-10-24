@@ -68,6 +68,7 @@ export const onImageUpload = ({ storage, fireStore }: OnImageUpload) =>
       fileName: newFileName,
       fireStore,
       uploads,
+      PATH: CONSTS.PATH
     })
 
     await bucket.file(filePath).delete()

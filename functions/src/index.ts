@@ -14,10 +14,13 @@ const admin = fAdmin.initializeApp()
 const fireStore = admin.firestore()
 fireStore.settings({ timestampsInSnapshots: true })
 
-const storage =  fAdmin.storage()
+const storage = admin.storage()
 
 import * as storageFunctions from './storage'
-import {photos as photosFunction} from './http'
+import { photos as photosFunction } from './http'
 
-export const onImageUpload = storageFunctions.onImageUpload({storage, fireStore})
-export const photos = photosFunction({admin})
+export const onImageUpload = storageFunctions.onImageUpload({
+  storage,
+  fireStore,
+})
+export const photos = photosFunction({ admin })

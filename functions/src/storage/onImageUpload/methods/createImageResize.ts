@@ -1,5 +1,6 @@
-import { join } from 'path'
+import { extname, join } from 'path'
 import * as sharp from 'sharp'
+import * as mime from 'mime-types'
 
 import { FilesArray } from './generateFileNames'
 import { CONSTS } from '../../../config'
@@ -32,11 +33,14 @@ export const createImageResize = ({
       .resize(size, size, { fit: 'inside', withoutEnlargement: true })
       .toFile(thumbPath)
 
+    const contentType = mime.contentType(extname(thumbPath))
+
     // Upload to GCS
     return bucket.upload(thumbPath, {
       destination,
-      contentType: `image/${format}`,
+      contentType,
       metadata: {
+        cacheControl: 'public,max-age=3600',
         metadata: { [IS_PROCESSED]: IS_PROCESSED },
       },
     })
