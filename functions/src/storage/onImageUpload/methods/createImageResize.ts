@@ -1,17 +1,16 @@
 import { join } from 'path'
 import * as sharp from 'sharp'
-import { Bucket } from '@google-cloud/storage'
-import { ObjectMetadata } from 'firebase-functions/lib/providers/storage'
 
 import { FilesArray } from './generateFileNames'
 import { CONSTS } from '../../../config'
+import { Bucket, Metadata } from '../../../index'
 
 interface CreateImageResize {
   readonly newFileName: string
   readonly tempLocalDir: string
   readonly tempLocalFile: string
   readonly bucket: Bucket
-  readonly object: ObjectMetadata
+  readonly object: Metadata
   readonly config: typeof CONSTS
 }
 

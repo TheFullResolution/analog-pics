@@ -13,13 +13,12 @@ import { updateDatabase } from './methods/updateDatabase'
 import { Firestore, Storage } from '../..'
 
 interface OnImageUpload {
-  fireStore: Firestore,
+  fireStore: Firestore
   storage: Storage
 }
 
-export const onImageUpload = ({storage, fireStore}: OnImageUpload) => functions.storage
-  .object()
-  .onFinalize(async object => {
+export const onImageUpload = ({ storage, fireStore }: OnImageUpload) =>
+  functions.storage.object().onFinalize(async object => {
     if (checkIfNotImage({ object })) return null
 
     if (checkIfProcessed({ object, IS_PROCESSED: CONSTS.IS_PROCESSED })) {
@@ -62,9 +61,14 @@ export const onImageUpload = ({storage, fireStore}: OnImageUpload) => functions.
     //5. Format and Upload all the files
     const generateAndUpload = imageResize(filesToGenerate)
 
-    await Promise.all(generateAndUpload)
+    const uploads = await Promise.all(generateAndUpload)
 
-    await updateDatabase(filesToGenerate, newFileName, fireStore, CONSTS.PATH)
+    await updateDatabase({
+      filesArray: filesToGenerate,
+      fileName: newFileName,
+      fireStore,
+      uploads,
+    })
 
     await bucket.file(filePath).delete()
 
