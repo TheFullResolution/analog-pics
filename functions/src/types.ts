@@ -14,13 +14,12 @@ export const imagesSizes: ImagesSizesInterface = {
   xl: 2200,
 }
 
-export type ImageFormatsTypes = 'webp' | 'jpeg' | 'png'
-
 export const enum ImageFormats {
   webp = 'webp',
   jpeg = 'jpeg',
   png = 'png',
 }
+export type ImageFormatsTypes = ImageFormats.webp | ImageFormats.jpeg | ImageFormats.png
 
 export const enum CONSTS {
   IS_PROCESSED = 'isProcessed',

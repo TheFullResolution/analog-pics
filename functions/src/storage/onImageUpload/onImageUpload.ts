@@ -7,10 +7,11 @@ import { tmpdir } from 'os'
 import * as fs from 'fs-extra'
 import { createImageResize } from './methods/createImageResize'
 import { getFileName } from './methods/getFileName'
-import { CONSTS, ImageFormats, imagesSizes } from '../../config'
+import { CONSTS, ImageFormats, imagesSizes } from '../../types'
 import { generateFileNames } from './methods/generateFileNames'
 import { updateDatabase } from './methods/updateDatabase'
 import { Firestore, Storage } from '../..'
+import { updatePhotosDataBase, UpdateType, UpdateTypes } from '../../database'
 
 interface OnImageUpload {
   fireStore: Firestore
@@ -68,10 +69,12 @@ export const onImageUpload = ({ storage, fireStore }: OnImageUpload) =>
       fileName: newFileName,
       fireStore,
       uploads,
-      PATH: CONSTS.PATH
+      PATH: CONSTS.PATH,
     })
 
     await bucket.file(filePath).delete()
+
+    updatePhotosDataBase({ type: UpdateType.reset })
 
     return fs.remove(tempLocalDir)
   })

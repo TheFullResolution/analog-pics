@@ -1,5 +1,5 @@
 import { ObjectMetadata } from 'firebase-functions/lib/providers/storage'
-import { CONSTS } from '../../config'
+import { CONSTS } from '../../types'
 
 interface CheckIfProcessed {
   readonly object: ObjectMetadata

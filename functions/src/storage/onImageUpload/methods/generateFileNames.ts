@@ -1,4 +1,4 @@
-import { ImageFormatsTypes, ImagesSizesInterface } from '../../../config'
+import { ImageFormatsTypes, ImagesSizesInterface } from '../../../types'
 
 interface FilesInterface {
   thumbName: string

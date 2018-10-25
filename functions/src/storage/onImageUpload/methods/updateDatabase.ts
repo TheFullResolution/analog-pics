@@ -40,7 +40,7 @@ export const updateDatabase = async ({
       const file = paths.find(el => el.name === bucketName)
 
       return merge(previousObject, {
-        [format]: { [type]: { size, file } },
+        [format]: { [type]: { size, ...file } },
       })
     },
     {},
