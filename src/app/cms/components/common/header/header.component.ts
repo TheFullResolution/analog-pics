@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, EventEmitter, OnInit, Output } from '@angular/core'
 import { AuthService } from '../../../services/auth.service'
 import { Store } from '@ngrx/store'
 import * as fromCms from '../../../state/cms.reducer'
@@ -10,6 +10,7 @@ import { Observable } from 'rxjs'
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  @Output() sidenavToggle = new EventEmitter<void>()
   isAuth$: Observable<boolean>
 
   constructor(
@@ -19,6 +20,10 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.isAuth$ = this.store.select(fromCms.getIsAuth)
+  }
+
+  onToggleSideNav = () => {
+    this.sidenavToggle.emit()
   }
 
   logOut = () => {

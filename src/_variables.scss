@@ -1,9 +1,22 @@
+@import './palette';
 @import '~@angular/material/theming';
 
-$app-primary: mat-palette($mat-light-green, 600);
-$app-accent:  mat-palette($mat-deep-orange, 700, 400, 900);
-$app-warn:    mat-palette($mat-red);
+$app-primary: mat-palette($md-analog-green, 500, 300, 800);
+$app-accent: mat-palette($md-analog-blue, 500, 300, 800);
+$app-warn: mat-palette($mat-deep-orange, 500, 300, 800);
+
+$marginXS: 4px;
+$marginS: 8px;
+$marginM: 16px;
+$marginL: 24px;
+$pageWidth: 850px;
+$paddingPageSide: 3%;
 
 $primary: mat-color($app-primary);
 $accent: mat-color($app-accent);
 $warn: mat-color($app-warn);
+$background: #adcad6;
+$white: #ffffff;
+$black: #000000;
+
+$transition: cubic-bezier(0.23, 1, 0.32, 1);
