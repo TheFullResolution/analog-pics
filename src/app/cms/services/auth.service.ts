@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { Router } from '@angular/router'
 import { AuthData } from './auth-data.model'
-import { AngularFireAuth } from 'angularfire2/auth'
+import { AngularFireAuth } from '@angular/fire/auth'
 import { Store } from '@ngrx/store'
 import * as fromCms from '../state/cms.reducer'
 import * as Auth from '../state/auth/auth.actions'

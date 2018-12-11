@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage'
+import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage'
 import { from, Observable, of, Subject, Subscription } from 'rxjs'
 import { concatMap, catchError } from 'rxjs/operators'
 import { UploadTaskSnapshot } from '@angular/fire/storage/interfaces'
