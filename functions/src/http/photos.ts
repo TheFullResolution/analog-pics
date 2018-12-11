@@ -11,7 +11,7 @@ import {
 const cors = corsCreator({ origin: true })
 
 const ONE_HOUR_MS = 3600000
-const ONE_MINUTE_S = 600
+const ONE_MINUTE_S = 60
 const TEN_MINUTE_S = 10 * ONE_MINUTE_S
 const ONE_HOUR_S = 60 * ONE_MINUTE_S
 const ONE_DAY_S = 24 * ONE_HOUR_S
