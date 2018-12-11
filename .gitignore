@@ -41,3 +41,5 @@ Thumbs.db
 functions/node_modules/
 functions/lib/
 angular_material_schematics-9oSNMQ/
+
+functions/firebase-debug\.log
