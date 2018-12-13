@@ -20,18 +20,9 @@ export const updateDatabase = async ({
   uploads,
   PATH,
 }: UpdateDatabase) => {
-  const config = {
-    action: 'read',
-    expires: '03-01-2500',
-  }
-
-  const paths = await Promise.all(
-    uploads.map(async ([file]) => {
-      const downloadUrl = await file.getSignedUrl(config)
-
-      return { name: file.name, downloadUrl: downloadUrl[0] }
-    }),
-  )
+  const paths = uploads.map(([file]) => {
+    return { name: file.name }
+  })
 
   const filesObject = filesArray.reduce(
     (previousObject, { format, thumbName, size, type }) => {
