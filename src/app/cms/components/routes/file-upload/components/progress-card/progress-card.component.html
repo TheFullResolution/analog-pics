@@ -24,19 +24,20 @@
         </div>
       </mat-card-content>
       <div class="buttons">
-
-        <button (click)="control(controls.pause)" mat-raised-button color="accent"
-          [disabled]="!isActive(snap)">
-          Pause
-        </button>
-        <button (click)="control(controls.cancel)" mat-raised-button color="warn"
-          [disabled]="!isActive(snap)">
-          Cancel
-        </button>
-        <button (click)="control(controls.resume)" mat-raised-button color="primary"
-          [disabled]="!isPaused(snap)">
-          Resume
-        </button>
+        <ng-container *ngIf="((uploadState$ | async).progress !== 100)">
+          <button (click)="control(controls.pause)" mat-raised-button color="accent" [disabled]="!isActive(snap)">
+            Pause
+          </button>
+          <button (click)="control(controls.cancel)" mat-raised-button color="warn" [disabled]="!isActive(snap)">
+            Cancel
+          </button>
+          <button (click)="control(controls.resume)" mat-raised-button color="primary" [disabled]="!isPaused(snap)">
+            Resume
+          </button>
+        </ng-container>
+        <ng-container *ngIf="((uploadState$ | async).progress === 100)">
+          <button (click)="closePanel()" mat-raised-button color="primary">Close</button>
+        </ng-container>
       </div>
     </mat-card>
   </ng-container>

@@ -16,7 +16,10 @@ export class ProgressCardComponent implements OnInit {
   uploadState$: Observable<UploadState>
   controls: typeof Controls
 
-  constructor(private fileService: StorageService, private state: UploadStateService) {
+  constructor(
+    private fileService: StorageService,
+    private state: UploadStateService,
+  ) {
     this.controls = Controls
   }
 
@@ -31,6 +34,10 @@ export class ProgressCardComponent implements OnInit {
     snapshot.bytesTransferred < snapshot.totalBytes
 
   isPaused = (snapshot: UploadTaskSnapshot) => snapshot.state === 'paused'
+
+  closePanel = () => {
+    this.state.resetState()
+  }
 
   control = (command: Controls) => {
     this.fileService.controlTask(command)

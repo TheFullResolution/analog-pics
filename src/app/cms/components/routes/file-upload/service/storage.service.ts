@@ -45,9 +45,9 @@ export class StorageService {
         error => {
           this.error = error
         },
-        () => {
-          this.state.updateState({ active: false })
-        },
+        // () => {
+        //   this.state.updateState({ active: false })
+        // },
       )
   }
 
@@ -92,6 +92,7 @@ export class StorageService {
         break
       case Controls.cancel:
         this._task$.cancel()
+        this.state.resetState()
         break
       case Controls.resume:
         this._task$.resume()

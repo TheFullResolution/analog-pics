@@ -60,7 +60,7 @@ export class UploadStateService {
     this._uploadState$.next({ ...this.getCurrentState(), ...newData })
   }
 
-  private resetState = () => {
+  resetState = () => {
     this._uploadState$.next(defaultState)
   }
 
