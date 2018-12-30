@@ -1,5 +1,6 @@
 import * as fAdmin from 'firebase-admin'
 import { Bucket as BucketType, File as FileType } from '@google-cloud/storage'
+import { Response } from 'request'
 import { ObjectMetadata } from 'firebase-functions/lib/providers/storage'
 
 export type Admin = fAdmin.app.App
@@ -7,7 +8,8 @@ export type Firestore = fAdmin.firestore.Firestore
 export type Storage = fAdmin.storage.Storage
 export type Bucket = BucketType
 export type Metadata = ObjectMetadata
-export type BuckeFile = FileType
+export type BucketFile = FileType
+export type BucketResponse = Response
 
 const admin = fAdmin.initializeApp()
 

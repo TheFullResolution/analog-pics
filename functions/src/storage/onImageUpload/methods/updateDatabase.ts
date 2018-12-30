@@ -2,14 +2,14 @@ import * as admin from 'firebase-admin'
 import * as merge from 'lodash.merge'
 
 import { FilesArray } from './generateFileNames'
-import { BuckeFile, Firestore } from '../../../index'
+import { BucketFile, Firestore, BucketResponse } from '../../../index'
 import { join } from 'path'
 
 interface UpdateDatabase {
   filesArray: FilesArray
   fileName: string
   fireStore: Firestore
-  uploads: [BuckeFile][]
+  uploads: [BucketFile, BucketResponse][]
   PATH: string
 }
 
@@ -39,6 +39,7 @@ export const updateDatabase = async ({
 
   return fireStore.collection('photos').add({
     name: fileName,
+    published: false,
     uploaded: admin.firestore.FieldValue.serverTimestamp(),
     ...filesObject,
   })

@@ -25,7 +25,7 @@ const photosDataBaseReducer = ({ type, payload }: UpdatePhotosDataBase) => {
   }
 }
 
-export let photosDataBase
+export let photosDataBase: typeof photosDataBaseDefault
 
 export const initPhotosDataBase = () => {
   photosDataBase = { ...photosDataBaseDefault }
