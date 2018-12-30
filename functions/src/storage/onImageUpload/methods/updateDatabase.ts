@@ -1,10 +1,12 @@
+//@ts-ignore
+import * as merge from 'lodash.merge'
 import * as admin from 'firebase-admin'
-import merge = require('lodash.merge')
 
 import { FilesArray } from './generateFileNames'
-import { BucketFile, Firestore, BucketResponse } from '../../../index'
+import { BucketFile, Firestore, BucketResponse, CONSTS, SharedTypes } from '../../../index'
 import { join } from 'path'
-import { DataBaseImageFormats } from '../../../types';
+
+
 
 interface UpdateDatabase {
   filesArray: FilesArray
@@ -35,13 +37,15 @@ export const updateDatabase = async ({
         [format]: { [type]: { size, ...file } },
       })
     },
-    {} as DataBaseImageFormats,
+    {} as SharedTypes.DataBaseImageFormats,
   )
 
-  return fireStore.collection('photos').add({
+  const upload: SharedTypes.DataBaseEntry = {
     name: fileName,
     published: false,
     uploaded: admin.firestore.FieldValue.serverTimestamp(),
     ...filesObject,
-  })
+  }
+
+  return fireStore.collection(CONSTS.COLLECTION).add(upload)
 }

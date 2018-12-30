@@ -2,10 +2,15 @@ import * as fAdmin from 'firebase-admin'
 import { Bucket as BucketType, File as FileType } from '@google-cloud/storage'
 import { Response } from 'request'
 import { ObjectMetadata } from 'firebase-functions/lib/providers/storage'
+import * as SharedTypes from '../../_types_'
+import * as CONSTS from '../../_consts_'
 
+export { SharedTypes }
+export { CONSTS }
 export type Admin = fAdmin.app.App
 export type Firestore = fAdmin.firestore.Firestore
 export type Storage = fAdmin.storage.Storage
+export type FieldValue = fAdmin.firestore.FieldValue
 export type Bucket = BucketType
 export type Metadata = ObjectMetadata
 export type BucketFile = FileType

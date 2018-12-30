@@ -1,6 +1,6 @@
 import * as functions from 'firebase-functions'
 import * as corsCreator from 'cors'
-import { Admin } from '../index'
+import { Admin, CONSTS } from '../index'
 import {
   initPhotosDataBase,
   photosDataBase,
@@ -53,7 +53,7 @@ export const photos = ({ admin }: Photos) =>
 
       const collection = await admin
         .firestore()
-        .collection('photos')
+        .collection(CONSTS.COLLECTION)
         .where('published', '==', true)
         .get()
 

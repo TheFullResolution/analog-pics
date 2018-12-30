@@ -1,9 +1,14 @@
 <mat-nav-list>
   <h2 matSubheader>Navigation</h2>
-  <a mat-list-item [routerLink]="routes.dashboard" (click)="onClose()">
-    <mat-icon>data_usage</mat-icon>Dashboard
-  </a>
-  <a mat-list-item [routerLink]="routes.fileUpload" (click)="onClose()">
-    <mat-icon>cloud_upload</mat-icon>Picture Upload
-  </a>
+  <nav>
+    <a
+      mat-list-item
+      *ngFor="let route of routes"
+      [routerLink]="route.path"
+      (click)="onClose()"
+    >
+      <mat-icon>{{ route.icon }}</mat-icon
+      >{{ route.label }}
+    </a>
+  </nav>
 </mat-nav-list>
