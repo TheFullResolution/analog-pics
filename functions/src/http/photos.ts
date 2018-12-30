@@ -54,6 +54,7 @@ export const photos = ({ admin }: Photos) =>
       const collection = await admin
         .firestore()
         .collection('photos')
+        .where('published', '==', true)
         .get()
 
       const newData: any = []
