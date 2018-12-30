@@ -10,75 +10,87 @@ import { getFileName } from './methods/getFileName'
 import { CONSTS, ImageFormats, imagesSizes } from '../../types'
 import { generateFileNames } from './methods/generateFileNames'
 import { updateDatabase } from './methods/updateDatabase'
-import { Firestore, Storage } from '../..'
+import { Firestore, Storage, RuntimeOptions } from '../..'
 import { updatePhotosDataBase, UpdateType } from '../../database'
 
 interface OnImageUpload {
   fireStore: Firestore
   storage: Storage
+  runtimeOpts: RuntimeOptions
 }
 
 function isString(x: any): x is string {
   return typeof x === 'string'
 }
 
-export const onImageUpload = ({ storage, fireStore }: OnImageUpload) =>
-  functions.storage.object().onFinalize(async object => {
-    if (checkIfValid({ object })) return null
+export const onImageUpload = ({
+  storage,
+  fireStore,
+  runtimeOpts,
+}: OnImageUpload) =>
+  functions
+    .runWith(runtimeOpts)
+    .storage.object()
+    .onFinalize(async object => {
+      if (checkIfValid({ object })) return null
 
-    if (!isString(object.name)) return null
+      if (!isString(object.name)) return null
 
-    if (checkIfProcessed({ object, IS_PROCESSED: CONSTS.IS_PROCESSED })) {
-      return null
-    }
+      if (checkIfProcessed({ object, IS_PROCESSED: CONSTS.IS_PROCESSED })) {
+        return null
+      }
 
-    const filePath = object.name
-    const newFileName = getFileName()
+      const filePath = object.name
+      const newFileName = getFileName()
 
-    const bucket = storage.bucket(object.bucket)
+      const bucket = storage.bucket(object.bucket)
 
-    const tempLocalDir = join(tmpdir(), 'thumbs')
-    const tempLocalFile = join(tempLocalDir, filePath)
+      const tempLocalDir = join(tmpdir(), 'thumbs')
+      const tempLocalFile = join(tempLocalDir, filePath)
 
-    // 1. Ensure thumbnail dir exists
-    await fs.ensureDir(tempLocalDir)
+      // 1. Ensure thumbnail dir exists
+      await fs.ensureDir(tempLocalDir)
 
-    // 2. Download Source File
-    await bucket.file(filePath).download({
-      destination: tempLocalFile,
+      // 2. Download Source File
+      await bucket.file(filePath).download({
+        destination: tempLocalFile,
+      })
+
+      // 3. Generate function for Upload
+      const imageResize = createImageResize({
+        tempLocalDir,
+        tempLocalFile,
+        bucket,
+        config: { PATH: CONSTS.PATH, IS_PROCESSED: CONSTS.IS_PROCESSED },
+      })
+
+      //4. Generate File list for upload
+      const filesToGenerate = generateFileNames({
+        imagesSizes,
+        newFileName,
+        formats: [ImageFormats.jpeg, ImageFormats.webp],
+      })
+      console.log('Generate File list for upload')
+
+      //5. Format and Upload all the files
+      const generateAndUpload = imageResize(filesToGenerate)
+
+      const uploads = await Promise.all(generateAndUpload)
+
+      await updateDatabase({
+        filesArray: filesToGenerate,
+        fileName: newFileName,
+        fireStore,
+        uploads,
+        PATH: CONSTS.PATH,
+      })
+
+      await bucket.file(filePath).delete()
+      console.log('Format and Upload all the files')
+
+      //6. Update database
+      updatePhotosDataBase({ type: UpdateType.reset })
+      console.log('Update database')
+
+      return fs.remove(tempLocalDir)
     })
-
-    // 3. Generate function for Upload
-    const imageResize = createImageResize({
-      tempLocalDir,
-      tempLocalFile,
-      bucket,
-      config: { PATH: CONSTS.PATH, IS_PROCESSED: CONSTS.IS_PROCESSED },
-    })
-
-    //4. Generate File list for upload
-    const filesToGenerate = generateFileNames({
-      imagesSizes,
-      newFileName,
-      formats: [ImageFormats.jpeg, ImageFormats.webp],
-    })
-
-    //5. Format and Upload all the files
-    const generateAndUpload = imageResize(filesToGenerate)
-
-    const uploads = await Promise.all(generateAndUpload)
-
-    await updateDatabase({
-      filesArray: filesToGenerate,
-      fileName: newFileName,
-      fireStore,
-      uploads,
-      PATH: CONSTS.PATH,
-    })
-
-    await bucket.file(filePath).delete()
-
-    updatePhotosDataBase({ type: UpdateType.reset })
-
-    return fs.remove(tempLocalDir)
-  })
