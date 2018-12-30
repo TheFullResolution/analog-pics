@@ -25,3 +25,7 @@ export const enum CONSTS {
   IS_PROCESSED = 'isProcessed',
   PATH = 'images',
 }
+
+export type DataBaseImageFormats = {
+  [K in ImageFormats]?: ImagesSizesInterface
+}

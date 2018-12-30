@@ -22,10 +22,10 @@ export const generateFileNames = ({
 }: GenerateFileNames): FilesArray => {
   return formats.reduce<FilesArray>((previousArray, format) => {
 
-    const files = Object.keys(imagesSizes).map(type => ({
-      thumbName: `${type}-${newFileName}.${format}`,
-      size: imagesSizes[type],
-      type,
+    const files = Object.entries(imagesSizes).map(([key, value]) => ({
+      thumbName: `${key}-${newFileName}.${format}`,
+      size: value,
+      type: key,
       format,
     }))
 

@@ -1,9 +1,10 @@
 import * as admin from 'firebase-admin'
-import * as merge from 'lodash.merge'
+import merge = require('lodash.merge')
 
 import { FilesArray } from './generateFileNames'
 import { BucketFile, Firestore, BucketResponse } from '../../../index'
 import { join } from 'path'
+import { DataBaseImageFormats } from '../../../types';
 
 interface UpdateDatabase {
   filesArray: FilesArray
@@ -34,7 +35,7 @@ export const updateDatabase = async ({
         [format]: { [type]: { size, ...file } },
       })
     },
-    {},
+    {} as DataBaseImageFormats,
   )
 
   return fireStore.collection('photos').add({

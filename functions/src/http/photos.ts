@@ -56,7 +56,7 @@ export const photos = ({ admin }: Photos) =>
         .collection('photos')
         .get()
 
-      const newData = []
+      const newData: any = []
 
       collection.forEach(doc => {
         newData.push({ ...doc.data(), id: doc.id })

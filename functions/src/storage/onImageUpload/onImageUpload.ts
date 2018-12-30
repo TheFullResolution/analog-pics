@@ -1,26 +1,32 @@
 import * as functions from 'firebase-functions'
-
-import { checkIfNotImage } from '../checks/checkIfNotImage'
-import { checkIfProcessed } from '../checks/checkIfProcessed'
+import * as fs from 'fs-extra'
 import { join } from 'path'
 import { tmpdir } from 'os'
-import * as fs from 'fs-extra'
+
+import { checkIfValid } from '../checks/checkIfValid'
+import { checkIfProcessed } from '../checks/checkIfProcessed'
 import { createImageResize } from './methods/createImageResize'
 import { getFileName } from './methods/getFileName'
 import { CONSTS, ImageFormats, imagesSizes } from '../../types'
 import { generateFileNames } from './methods/generateFileNames'
 import { updateDatabase } from './methods/updateDatabase'
 import { Firestore, Storage } from '../..'
-import { updatePhotosDataBase, UpdateType, UpdateTypes } from '../../database'
+import { updatePhotosDataBase, UpdateType } from '../../database'
 
 interface OnImageUpload {
   fireStore: Firestore
   storage: Storage
 }
 
+function isString(x: any): x is string {
+  return typeof x === 'string'
+}
+
 export const onImageUpload = ({ storage, fireStore }: OnImageUpload) =>
   functions.storage.object().onFinalize(async object => {
-    if (checkIfNotImage({ object })) return null
+    if (checkIfValid({ object })) return null
+
+    if (!isString(object.name)) return null
 
     if (checkIfProcessed({ object, IS_PROCESSED: CONSTS.IS_PROCESSED })) {
       return null
@@ -44,10 +50,8 @@ export const onImageUpload = ({ storage, fireStore }: OnImageUpload) =>
 
     // 3. Generate function for Upload
     const imageResize = createImageResize({
-      newFileName,
       tempLocalDir,
       tempLocalFile,
-      object,
       bucket,
       config: { PATH: CONSTS.PATH, IS_PROCESSED: CONSTS.IS_PROCESSED },
     })

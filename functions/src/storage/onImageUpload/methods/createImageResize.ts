@@ -4,22 +4,18 @@ import * as mime from 'mime-types'
 
 import { FilesArray } from './generateFileNames'
 import { CONSTS } from '../../../types'
-import { Bucket, Metadata } from '../../../index'
+import { Bucket } from '../../../index'
 
 interface CreateImageResize {
-  readonly newFileName: string
   readonly tempLocalDir: string
   readonly tempLocalFile: string
   readonly bucket: Bucket
-  readonly object: Metadata
   readonly config: typeof CONSTS
 }
 
 export const createImageResize = ({
-  newFileName,
   tempLocalFile,
   tempLocalDir,
-  object,
   bucket,
   config: { PATH, IS_PROCESSED },
 }: CreateImageResize) => (filesArray: FilesArray) =>
@@ -36,12 +32,15 @@ export const createImageResize = ({
     const contentType = mime.contentType(extname(thumbPath))
 
     // Upload to GCS
-    return bucket.upload(thumbPath, {
-      destination,
-      contentType,
-      metadata: {
-        cacheControl: 'public,max-age=3600',
-        metadata: { [IS_PROCESSED]: IS_PROCESSED },
-      },
-    })
+    return bucket.upload(
+      thumbPath,
+      {
+        destination,
+        ...(contentType ? { contentType } : {}),
+        metadata: {
+          cacheControl: 'public,max-age=3600',
+          metadata: { [IS_PROCESSED]: IS_PROCESSED },
+        },
+      }
+    )
   })
