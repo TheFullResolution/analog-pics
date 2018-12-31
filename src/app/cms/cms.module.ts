@@ -23,8 +23,9 @@ import { SidenavListComponent } from './components/common/sidenav-list/sidenav-l
 import { StorageService } from './components/routes/file-upload/service/storage.service'
 import { UploadCardComponent } from './components/routes/file-upload/components/upload-card/upload-card.component'
 import { ProgressCardComponent } from './components/routes/file-upload/components/progress-card/progress-card.component'
-import { UploadStateService } from './components/routes/file-upload/service/upload-state.service';
+import { UploadStateService } from './components/routes/file-upload/service/upload-state.service'
 import { PublishComponent } from './components/routes/publish/publish.component'
+import { DatabaseService } from './services/database.service'
 
 @NgModule({
   declarations: [
@@ -52,6 +53,6 @@ import { PublishComponent } from './components/routes/publish/publish.component'
     CommonModule,
     CmsRoutingModule,
   ],
-  providers: [AuthService, StorageService, UploadStateService],
+  providers: [AuthService, StorageService, UploadStateService, DatabaseService],
 })
 export class CmsModule {}

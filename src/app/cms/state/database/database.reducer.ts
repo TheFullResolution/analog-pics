@@ -1,23 +1,29 @@
-import { SET_PHOTOS, DatabaseActions } from './database.actions'
+import {
+  SET_DATABASE,
+  DatabaseActions,
+  RESET_DATABASE,
+} from './database.actions'
 import { DataBaseEntry } from '_types_'
 
 export interface State {
-  photos: DataBaseEntry[]
+  data: DataBaseEntry[]
 }
 
 const initialState: State = {
-  photos: [],
+  data: [],
 }
 
 export function databaseReducer(state = initialState, action: DatabaseActions) {
   switch (action.type) {
-    case SET_PHOTOS:
+    case SET_DATABASE:
       return {
-        photos: action.payload,
+        data: action.payload,
       }
+    case RESET_DATABASE:
+      return initialState
     default:
       return state
   }
 }
 
-export const getPhotos = (state: State) => state.photos
+export const getDatabaseState = (state: State) => state.data

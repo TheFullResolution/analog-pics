@@ -13,12 +13,25 @@ export interface State {
 
 export const reducers: ActionReducerMap<State> = {
   auth: fromAuth.authReducer,
-  database: fromDatabase.databaseReducer
+  database: fromDatabase.databaseReducer,
 }
 
 export const getAuthState = createFeatureSelector<fromAuth.State>('auth')
+export const getDataBaseState = createFeatureSelector<fromDatabase.State>(
+  'database',
+)
 
 export const getIsAuth = createSelector(
   getAuthState,
   fromAuth.getIsAuthenticated,
+)
+
+export const getData = createSelector(
+  getDataBaseState,
+  fromDatabase.getDatabaseState,
+)
+
+export const getUnpublished = createSelector(
+  getData,
+  data => data.filter(el => !el.published),
 )
