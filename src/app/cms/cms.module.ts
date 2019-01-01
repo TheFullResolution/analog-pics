@@ -25,7 +25,8 @@ import { UploadCardComponent } from './components/routes/file-upload/components/
 import { ProgressCardComponent } from './components/routes/file-upload/components/progress-card/progress-card.component'
 import { UploadStateService } from './components/routes/file-upload/service/upload-state.service'
 import { PublishComponent } from './components/routes/publish/publish.component'
-import { DatabaseService } from './services/database.service'
+import { DatabaseService } from './services/database.service';
+import { ImageComponent } from './components/routes/publish/image/image.component'
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { DatabaseService } from './services/database.service'
     UploadCardComponent,
     ProgressCardComponent,
     PublishComponent,
+    ImageComponent,
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),

@@ -19,12 +19,10 @@ export const imagesSizes: ImagesSizesInterface = {
 export const enum ImageFormats {
   webp = 'webp',
   jpeg = 'jpeg',
-  png = 'png',
 }
 export type ImageFormatsTypes =
   | ImageFormats.webp
-  | ImageFormats.jpeg
-  | ImageFormats.png;
+  | ImageFormats.jpeg;
 
 export const enum CONSTS {
   IS_PROCESSED = 'isProcessed',
@@ -34,13 +32,15 @@ export const enum CONSTS {
 export interface DataBaseImageObject {
   name: string;
   size: number;
-  downloadLink?: string;
+  downloadUrl?: string;
 }
 
+export type DataBaseImageSizes = {
+  [T in keyof ImagesSizesInterface]: DataBaseImageObject
+};
+
 export type DataBaseImageFormats = {
-  [K in ImageFormats]?: {
-    [T in keyof ImagesSizesInterface]: DataBaseImageObject
-  }
+  [K in ImageFormats]: DataBaseImageSizes
 };
 
 export type DataBaseEntry = {
