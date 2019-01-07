@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { Observable } from 'rxjs'
-import { DataBaseEntry } from '_types_'
+import type from '_types_'
 import { Store } from '@ngrx/store'
-// @ts-ignore
 import * as fromCms from '../../../state/cms.reducer'
 import { map } from 'rxjs/operators'
 import { AngularFireStorage } from '@angular/fire/storage'
@@ -13,7 +12,7 @@ import { AngularFireStorage } from '@angular/fire/storage'
   styleUrls: ['./publish.component.scss'],
 })
 export class PublishComponent implements OnInit {
-  unpublished$: Observable<DataBaseEntry[]>
+  unpublished$: Observable<type.DataBaseEntry[]>
 
   constructor(
     private storage: AngularFireStorage,
