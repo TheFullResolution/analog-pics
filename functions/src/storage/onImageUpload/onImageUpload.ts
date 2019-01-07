@@ -7,10 +7,9 @@ import { checkIfValid } from '../checks/checkIfValid'
 import { checkIfProcessed } from '../checks/checkIfProcessed'
 import { createImageResize } from './methods/createImageResize'
 import { getFileName } from './methods/getFileName'
-import { CONSTS, ImageFormats, imagesSizes } from '../../../../_types_'
 import { generateFileNames } from './methods/generateFileNames'
 import { updateDatabase } from './methods/updateDatabase'
-import { Firestore, Storage, RuntimeOptions } from '../..'
+import { Firestore, Storage, RuntimeOptions, CONSTS, SharedTypes } from '../..'
 import { updatePhotosDataBase, UpdateType } from '../../database'
 
 interface OnImageUpload {
@@ -61,28 +60,27 @@ export const onImageUpload = ({
         tempLocalDir,
         tempLocalFile,
         bucket,
-        config: { PATH: CONSTS.PATH, IS_PROCESSED: CONSTS.IS_PROCESSED },
+        config: { PATH: CONSTS.COLLECTION, IS_PROCESSED: CONSTS.IS_PROCESSED },
       })
 
       //4. Generate File list for upload
       const filesToGenerate = generateFileNames({
-        imagesSizes,
+        sizes: CONSTS.IMAGE_SIZES,
         newFileName,
-        formats: [ImageFormats.jpeg, ImageFormats.webp],
+        formats: [SharedTypes.ImageFormat.jpeg, SharedTypes.ImageFormat.webp],
       })
       console.log('Generate File list for upload')
 
       //5. Format and Upload all the files
       const generateAndUpload = imageResize(filesToGenerate)
 
-      const uploads = await Promise.all(generateAndUpload)
+      await Promise.all(generateAndUpload)
 
       await updateDatabase({
         filesArray: filesToGenerate,
         fileName: newFileName,
         fireStore,
-        uploads,
-        PATH: CONSTS.PATH,
+        PATH: CONSTS.COLLECTION,
       })
 
       await bucket.file(filePath).delete()

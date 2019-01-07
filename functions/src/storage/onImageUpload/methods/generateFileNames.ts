@@ -1,34 +1,34 @@
-import { ImageFormatsTypes, ImagesSizesInterface } from '../../../../../_types_'
+import { SharedTypes } from "../../../index";
 
 interface FilesInterface {
   thumbName: string
   size: number
-  type: string
-  format: ImageFormatsTypes
+  type: SharedTypes.ImageSizeTypes
+  format: SharedTypes.ImageFormatsTypes
 }
 
 export type FilesArray = FilesInterface[]
 
 interface GenerateFileNames {
-  imagesSizes: ImagesSizesInterface
+  sizes: SharedTypes.ImageSizesType
   newFileName: string
-  formats: ImageFormatsTypes[]
+  formats: SharedTypes.ImageFormatsTypes[]
 }
 
 export const generateFileNames = ({
-  imagesSizes,
+  sizes,
   newFileName,
   formats,
 }: GenerateFileNames): FilesArray => {
-  return formats.reduce<FilesArray>((previousArray, format) => {
+  return formats.reduce((previousArray, format) => {
 
-    const files = Object.entries(imagesSizes).map(([key, value]) => ({
+    const files = Object.entries(sizes).map(([key, value]) => ({
       thumbName: `${key}-${newFileName}.${format}`,
       size: value,
-      type: key,
+      type: key as SharedTypes.ImageSizeTypes,
       format,
     }))
 
     return [...previousArray, ...files]
-  }, [])
+  }, [] as FilesArray)
 }

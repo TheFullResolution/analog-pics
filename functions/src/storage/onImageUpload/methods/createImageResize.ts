@@ -3,14 +3,17 @@ import * as sharp from 'sharp'
 import * as mime from 'mime-types'
 
 import { FilesArray } from './generateFileNames'
-import { CONSTS } from '../../../../../_types_'
+
 import { Bucket } from '../../../index'
 
 interface CreateImageResize {
   readonly tempLocalDir: string
   readonly tempLocalFile: string
   readonly bucket: Bucket
-  readonly config: typeof CONSTS
+  readonly config: {
+    PATH: string,
+    IS_PROCESSED: string
+  }
 }
 
 export const createImageResize = ({

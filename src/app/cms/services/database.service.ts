@@ -3,7 +3,7 @@ import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from '@angular/fire/firestore'
-import { DataBaseEntry } from '../../../../_types_'
+import { DataBaseEntry } from '_types_'
 import { COLLECTION } from '_consts_'
 import { Store } from '@ngrx/store'
 import * as fromCms from '../state/cms.reducer'

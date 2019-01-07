@@ -2,8 +2,8 @@ import * as fAdmin from 'firebase-admin'
 import { Bucket as BucketType, File as FileType } from '@google-cloud/storage'
 import { Response } from 'request'
 import { ObjectMetadata } from 'firebase-functions/lib/providers/storage'
-import * as SharedTypes from '../../_types_'
-import * as CONSTS from '../../_consts_'
+import * as SharedTypes from './_types_'
+import * as CONSTS from './_consts_'
 
 export { SharedTypes }
 export { CONSTS }
