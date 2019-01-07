@@ -3,10 +3,10 @@ import {
   DatabaseActions,
   RESET_DATABASE,
 } from './database.actions'
-import { DataBaseEntry } from '_types_'
+import types from '_types_'
 
 export interface State {
-  data: DataBaseEntry[]
+  data: types.DataBaseEntry[]
 }
 
 const initialState: State = {
