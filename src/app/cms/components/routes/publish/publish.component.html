@@ -1,6 +1,5 @@
 <ul>
   <li *ngFor="let pic of (unpublished$ | async)">
-    {{ pic | json }}
-
+    <app-image [image]="pic"></app-image>
   </li>
 </ul>
