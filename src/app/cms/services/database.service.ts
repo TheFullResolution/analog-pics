@@ -19,19 +19,22 @@ export class DatabaseService {
     private db: AngularFirestore,
     private store: Store<fromCms.State>,
   ) {
-    this.photosCollection = db.collection<types.DataBaseEntry>(consts.COLLECTION)
+    this.photosCollection = db.collection<types.DataBaseEntry>(
+      consts.COLLECTION,
+    )
   }
 
   fetchDatabase() {
+    this.store.dispatch(new DatabaseActions.SetDatabaseActive())
     this.photosListener = this.photosCollection
       .valueChanges()
       .subscribe((data: types.DataBaseEntry[]) => {
-        this.store.dispatch(new DatabaseActions.SetDatabase(data))
+        this.store.dispatch(new DatabaseActions.SetDatabaseData(data))
       })
   }
 
   stopFetchingDatabase() {
     this.photosListener.unsubscribe()
-    this.store.dispatch(new DatabaseActions.ResetDatabase())
+    this.store.dispatch(new DatabaseActions.ResetDatabaseData())
   }
 }

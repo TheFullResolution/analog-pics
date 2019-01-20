@@ -1,13 +1,13 @@
-import { CmsModule } from './cms.module';
+import { CmsModule } from './cms.module'
 
 describe('CmsModule', () => {
-  let cmsModule: CmsModule;
+  let cmsModule: CmsModule
 
   beforeEach(() => {
-    cmsModule = new CmsModule();
-  });
+    cmsModule = new CmsModule()
+  })
 
   it('should create an instance', () => {
-    expect(cmsModule).toBeTruthy();
-  });
-});
+    expect(cmsModule).toBeTruthy()
+  })
+})

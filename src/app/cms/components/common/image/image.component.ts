@@ -3,11 +3,19 @@ import type from '_types_'
 
 @Component({
   selector: 'app-image',
-  templateUrl: './image.component.html',
+  template: `
+    <picture>
+      <source type="image/webp" [srcset]="webpSrcset" />
+      <source type="image/jpeg" [srcset]="jpegSrcset" />
+      <img [src]="defaultImg.downloadUrl" [alt]="defaultImg.name" />
+    </picture>
+  `,
   styleUrls: ['./image.component.scss'],
 })
 export class ImageComponent implements OnInit {
   @Input() image: type.DataBaseEntry
+  @Input() defaultSize: type.ImageSizeTypes = 'xs'
+
   defaultImg: type.DataBaseImageObject
   webpSrcset: string
   jpegSrcset: string
@@ -29,5 +37,5 @@ export class ImageComponent implements OnInit {
       .reduce((acc, el) => acc + `${el.downloadUrl} ${el.size}w,`, '')
 
   getDefault = (list: type.DataBaseImageObject[]) =>
-    list.find(img => img.type === 'xs')
+    list.find(img => img.type === this.defaultSize)
 }

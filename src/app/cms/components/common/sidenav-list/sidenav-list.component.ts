@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core'
-import { RouteName, routeNames } from '../../../cms-routing.module'
+import { routeNames } from '../../../cms-routing.module'
+import { RouteName } from 'src/app/cms/cms.paths'
 
 @Component({
   selector: 'app-sidenav-list',

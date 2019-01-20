@@ -1,5 +1,3 @@
 <ul>
-  <li *ngFor="let pic of (unpublished$ | async)">
-    <app-image [image]="pic"></app-image>
-  </li>
+  <app-picture-grid [images]="unpublished$ | async"></app-picture-grid>
 </ul>

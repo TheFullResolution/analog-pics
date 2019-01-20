@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { InputFileComponent } from './input-file.component'
+import { ImageComponent } from './image.component'
 
-describe('InputFileComponent', () => {
-  let component: InputFileComponent
-  let fixture: ComponentFixture<InputFileComponent>
+describe('ImageComponent', () => {
+  let component: ImageComponent
+  let fixture: ComponentFixture<ImageComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InputFileComponent ]
+      declarations: [ ImageComponent ]
     })
     .compileComponents()
   }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InputFileComponent)
+    fixture = TestBed.createComponent(ImageComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

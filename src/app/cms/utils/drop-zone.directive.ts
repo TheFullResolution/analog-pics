@@ -1,14 +1,8 @@
-import {
-  Directive,
-  HostListener,
-  Output,
-  EventEmitter,
-} from '@angular/core'
+import { Directive, HostListener, Output, EventEmitter } from '@angular/core'
 
 export interface HTMLFileInputEvent extends Event {
   target: HTMLInputElement & EventTarget
 }
-
 
 @Directive({
   selector: '[appDropZone]',

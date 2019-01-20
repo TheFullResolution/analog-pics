@@ -6,39 +6,32 @@ import { AuthGuard } from './state/auth/auth.guard'
 import { CmsComponent } from './components/cms-root/cms.component'
 import { FileUploadComponent } from './components/routes/file-upload/file-upload.component'
 import { PublishComponent } from './components/routes/publish/publish.component'
-
-export interface RouteName {
-  path: string
-  label: string
-  icon: string
-  component: any
-  auth: boolean
-}
+import { RouteName, RoutPath } from './cms.paths'
 
 export const routeNames: RouteName[] = [
   {
-    path: 'login',
+    path: RoutPath.login,
     label: 'Login',
     icon: '',
     component: LoginComponent,
     auth: false,
   },
   {
-    path: 'dashboard',
+    path: RoutPath.dashboard,
     label: 'Dashboard',
     icon: 'data_usage',
     component: DashboardComponent,
     auth: true,
   },
   {
-    path: 'file-upload',
+    path: RoutPath.upload,
     label: 'Picture Upload',
     icon: 'cloud_upload',
     component: FileUploadComponent,
     auth: true,
   },
   {
-    path: 'publish',
+    path: RoutPath.publish,
     label: 'Publish Pictures',
     icon: 'publish',
     component: PublishComponent,

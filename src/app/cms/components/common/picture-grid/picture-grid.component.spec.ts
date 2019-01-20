@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { InputFileComponent } from './input-file.component'
+import { PictureGridComponent } from './picture-grid.component'
 
-describe('InputFileComponent', () => {
-  let component: InputFileComponent
-  let fixture: ComponentFixture<InputFileComponent>
+describe('PictureGridComponent', () => {
+  let component: PictureGridComponent
+  let fixture: ComponentFixture<PictureGridComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InputFileComponent ]
+      declarations: [ PictureGridComponent ]
     })
     .compileComponents()
   }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InputFileComponent)
+    fixture = TestBed.createComponent(PictureGridComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })
