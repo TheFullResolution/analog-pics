@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core'
 import { Observable, from, combineLatest } from 'rxjs'
 import type from '_types_'
 import { Store } from '@ngrx/store'
-import * as fromCms from '../../../state/cms.reducer'
-import { map, flatMap, reduce, scan } from 'rxjs/operators'
+import * as fromState from '../../../state/cms.reducer'
+import { map, flatMap, reduce, tap, concatMap } from 'rxjs/operators'
 import { AngularFireStorage } from '@angular/fire/storage'
 
 @Component({
@@ -12,17 +12,42 @@ import { AngularFireStorage } from '@angular/fire/storage'
   styleUrls: ['./publish.component.scss'],
 })
 export class PublishComponent implements OnInit {
+  loading = false
   unpublished$: Observable<type.DataBaseEntry[]>
 
   constructor(
     private storage: AngularFireStorage,
-    private store: Store<fromCms.State>,
+    private store: Store<fromState.State>,
   ) {}
 
   ngOnInit() {
-    this.unpublished$ = this.store.select(fromCms.getUnpublished).pipe(
-      flatMap(list => from(list)),
-      flatMap(entry => {
+    this.unpublished$ = this.assignUnpublished()
+  }
+
+  setLoading = (loading: boolean) => {
+    this.loading = loading
+  }
+
+  assignUnpublished = () => {
+    this.setLoading(true)
+    return this.store.select(fromState.getUnpublished).pipe(
+      flatMap(list => {
+        const newList = this.processNewList(list)
+
+        return combineLatest(newList)
+      }),
+      map(([el]) => el),
+      tap(el => {
+        if (el.length > 0) {
+          this.setLoading(false)
+        }
+      }),
+    )
+  }
+
+  processNewList = (list: type.DataBaseEntry[]) =>
+    from(list).pipe(
+      concatMap(entry => {
         const { thumbs, ...rest } = entry
 
         const newThumbs = this.updateThumbsWithUrl(thumbs)
@@ -33,9 +58,8 @@ export class PublishComponent implements OnInit {
         ...obj,
         thumbs,
       })),
-      scan<type.DataBaseEntry>((acc, val) => [...acc, val], []),
+      reduce<type.DataBaseEntry>((acc, val) => [...acc, val], []),
     )
-  }
 
   updateThumbsWithUrl = (thumbs: type.DataBaseImageObject[]) =>
     from(thumbs).pipe(

@@ -11,13 +11,12 @@ export class HoverDirective {
   @HostListener('mouseleave', ['$event'])
   onMouseLeave($event) {
     $event.preventDefault()
-    this.hovered.emit(true)
-  }
-
-  @HostListener('mouseenter', ['$event'])
-  onMouseEnter($event) {
-    $event.preventDefault()
     this.hovered.emit(false)
   }
 
+  @HostListener('mouseover', ['$event'])
+  onMouseEnter($event) {
+    $event.preventDefault()
+    this.hovered.emit(true)
+  }
 }

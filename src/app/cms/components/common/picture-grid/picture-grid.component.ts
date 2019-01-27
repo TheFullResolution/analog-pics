@@ -1,14 +1,24 @@
 import { Subscription } from 'rxjs'
-import { Component, OnInit, Input } from '@angular/core'
+import {
+  Component,
+  OnInit,
+  Input,
+  ContentChild,
+  TemplateRef,
+} from '@angular/core'
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout'
 import type from '_types_'
 
 @Component({
   selector: 'app-picture-grid',
   template: `
-    <mat-grid-list [cols]="gridCols" rowHeight="2:1" gutterSize="5px">
+    <mat-grid-list [cols]="gridCols" rowHeight="3:2" gutterSize="16px">
       <mat-grid-tile *ngFor="let image of images">
-        <app-image [image]="image"></app-image>
+        <ng-template
+          [ngTemplateOutlet]="itemTemplate"
+          [ngTemplateOutletContext]="{ $implicit: image }"
+        >
+        </ng-template>
       </mat-grid-tile>
     </mat-grid-list>
   `,
@@ -17,7 +27,10 @@ import type from '_types_'
 export class PictureGridComponent implements OnInit {
   breakpoints: Subscription
   gridCols = 1
+
+  @ContentChild(TemplateRef) itemTemplate: TemplateRef<any>
   @Input() images: type.DataBaseEntry[]
+
   constructor(private breakpointObserver: BreakpointObserver) {}
 
   ngOnInit() {

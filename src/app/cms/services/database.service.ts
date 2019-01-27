@@ -21,6 +21,7 @@ export class DatabaseService {
   ) {
     this.photosCollection = db.collection<types.DataBaseEntry>(
       consts.COLLECTION,
+      ref => ref.orderBy('uploaded')
     )
   }
 
