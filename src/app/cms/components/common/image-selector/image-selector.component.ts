@@ -8,11 +8,23 @@ import {
   SimpleChange,
   ContentChildren,
 } from '@angular/core'
-import { ImageComponent } from '../image/image.component'
+import {style, state, animate, transition, trigger} from '@angular/animations'
+
 
 @Component({
   // tslint:disable-next-line:use-host-property-decorator
   selector: 'app-image-selector',
+  animations: [
+    trigger('fadeInOut', [
+      transition(':enter', [   // :enter is alias to 'void => *'
+        style({opacity: 0}),
+        animate(200, style({opacity: 1}))
+      ]),
+      transition(':leave', [   // :leave is alias to '* => void'
+        animate(200, style({opacity: 0}))
+      ])
+    ])
+  ],
   template: `
     <div
       class="wrapper"
@@ -25,6 +37,7 @@ import { ImageComponent } from '../image/image.component'
         ariaLabel="Select this Image"
         *ngIf="selected || isHovering"
         [(ngModel)]="selected"
+        [@fadeInOut]
       >
       </mat-checkbox>
       <ng-content [class.hovering]="isHovering"></ng-content>

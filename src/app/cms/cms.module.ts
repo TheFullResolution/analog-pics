@@ -2,7 +2,10 @@ import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { AngularFireModule } from '@angular/fire'
 import { AngularFireAuthModule } from '@angular/fire/auth'
-import { AngularFirestoreModule } from '@angular/fire/firestore'
+import {
+  AngularFirestoreModule,
+  FirestoreSettingsToken,
+} from '@angular/fire/firestore'
 import { AngularFireStorageModule } from '@angular/fire/storage'
 import { FormsModule } from '@angular/forms'
 import { StoreModule } from '@ngrx/store'
@@ -62,6 +65,12 @@ import { HoverDirective } from './utils/hover.directive'
     CommonModule,
     CmsRoutingModule,
   ],
-  providers: [AuthService, StorageService, UploadStateService, DatabaseService],
+  providers: [
+    AuthService,
+    StorageService,
+    UploadStateService,
+    DatabaseService,
+    { provide: FirestoreSettingsToken, useValue: {} },
+  ],
 })
 export class CmsModule {}
