@@ -8,23 +8,11 @@ import {
   SimpleChange,
   ContentChildren,
 } from '@angular/core'
-import {style, state, animate, transition, trigger} from '@angular/animations'
-
+import { fadeInOut } from '../../animations/fadeInOut'
 
 @Component({
-  // tslint:disable-next-line:use-host-property-decorator
   selector: 'app-image-selector',
-  animations: [
-    trigger('fadeInOut', [
-      transition(':enter', [   // :enter is alias to 'void => *'
-        style({opacity: 0}),
-        animate(200, style({opacity: 1}))
-      ]),
-      transition(':leave', [   // :leave is alias to '* => void'
-        animate(200, style({opacity: 0}))
-      ])
-    ])
-  ],
+  animations: [fadeInOut()],
   template: `
     <div
       class="wrapper"
