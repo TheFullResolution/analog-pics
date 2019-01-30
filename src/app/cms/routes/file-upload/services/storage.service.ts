@@ -1,7 +1,18 @@
 import { Injectable } from '@angular/core'
-import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage'
-import { from, Observable, of, Subject, Subscription } from 'rxjs'
-import { concatMap, catchError } from 'rxjs/operators'
+import {
+  AngularFireStorage,
+  AngularFireUploadTask,
+} from '@angular/fire/storage'
+import {
+  from,
+  Observable,
+  of,
+  Subject,
+  Subscription,
+  Observer,
+  TeardownLogic,
+} from 'rxjs'
+import { concatMap, catchError, takeUntil } from 'rxjs/operators'
 import { UploadTaskSnapshot } from '@angular/fire/storage/interfaces'
 import { Controls } from './file-upload.types'
 import { HTMLFileInputEvent } from '../../../utils/drop-zone.directive'
@@ -13,6 +24,7 @@ export class StorageService {
   private _task$: AngularFireUploadTask
   private _tasks$: Subscription
   private _snapshot$: Subject<UploadTaskSnapshot> = new Subject()
+  private _terminateUpload: Subject<boolean> = new Subject()
   private _fileProgress$: Subject<number> = new Subject()
 
   public snapshot$ = this._snapshot$.asObservable()
@@ -35,42 +47,43 @@ export class StorageService {
     this._tasks$ = from(files)
       .pipe(
         concatMap(file => checkFileType(file)),
+        takeUntil(this._terminateUpload),
         concatMap(file => this.pushUpload(file)),
-        catchError(err => of(err)),
       )
       .subscribe(
         el => {
           this.state.updateAfterFileUpload(el.bytesTransferred)
         },
         error => {
+          console.log(error)
+
           this.error = error
         },
-        // () => {
-        //   this.state.updateState({ active: false })
-        // },
       )
   }
 
   pushUpload(file: File): Observable<UploadTaskSnapshot> {
-    return Observable.create(observer => {
-      this.state.updateState({
-        currentFileName: file.name,
-      })
-
-      this._task$ = this.storage.upload(file.name, file)
-
-      this.subscribeToTaskChanges()
-
-      this._task$
-        .then(snap => {
-          observer.next(snap)
-
-          observer.complete()
+    return Observable.create(
+      (observer: Observer<UploadTaskSnapshot>): TeardownLogic => {
+        this.state.updateState({
+          currentFileName: file.name,
         })
-        .catch(err => {
-          observer.error(err.message)
-        })
-    })
+
+        this._task$ = this.storage.upload(file.name, file)
+
+        this.subscribeToTaskChanges()
+
+        this._task$
+          .then(snap => {
+            observer.next(snap)
+
+            observer.complete()
+          })
+          .catch(err => {
+            observer.error(err.message)
+          })
+      },
+    )
   }
 
   subscribeToTaskChanges = () => {
@@ -92,6 +105,7 @@ export class StorageService {
         break
       case Controls.cancel:
         this._task$.cancel()
+        this._terminateUpload.next(true)
         this.state.resetState()
         break
       case Controls.resume:

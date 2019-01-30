@@ -9,4 +9,4 @@
   </app-picture-grid>
 </ng-container>
 
-<div class="spinner"><mat-spinner *ngIf="loading"></mat-spinner></div>
+<div class="spinner"><mat-spinner *ngIf="loading | async"></mat-spinner></div>

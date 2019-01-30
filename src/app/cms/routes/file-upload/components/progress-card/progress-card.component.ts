@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core'
 import { Observable } from 'rxjs'
 import { UploadTaskSnapshot } from '@angular/fire/storage/interfaces'
-import { Controls, UploadState } from '../../service/file-upload.types'
-import { StorageService } from '../../service/storage.service'
-import { UploadStateService } from '../../service/upload-state.service'
+import { Controls, UploadState } from '../../services/file-upload.types'
+import { StorageService } from '../../services/storage.service'
+import { UploadStateService } from '../../services/upload-state.service'
 
 @Component({
   selector: 'app-progress-card',

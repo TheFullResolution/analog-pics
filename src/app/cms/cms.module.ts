@@ -1,3 +1,4 @@
+import { UnpublishedService } from './routes/publish/service/unpublished.service'
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { AngularFireModule } from '@angular/fire'
@@ -23,8 +24,8 @@ import { DashboardComponent } from './routes/dashboard/dashboard.component'
 import { ProgressCardComponent } from './routes/file-upload/components/progress-card/progress-card.component'
 import { UploadCardComponent } from './routes/file-upload/components/upload-card/upload-card.component'
 import { FileUploadComponent } from './routes/file-upload/file-upload.component'
-import { StorageService } from './routes/file-upload/service/storage.service'
-import { UploadStateService } from './routes/file-upload/service/upload-state.service'
+import { StorageService } from './routes/file-upload/services/storage.service'
+import { UploadStateService } from './routes/file-upload/services/upload-state.service'
 import { LoginComponent } from './routes/login/login.component'
 import { PublishComponent } from './routes/publish/publish.component'
 import { MaterialModule } from './material/material.module'
@@ -70,6 +71,7 @@ import { HoverDirective } from './utils/hover.directive'
     StorageService,
     UploadStateService,
     DatabaseService,
+    UnpublishedService,
     { provide: FirestoreSettingsToken, useValue: {} },
   ],
 })

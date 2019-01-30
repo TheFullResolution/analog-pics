@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
-import { UploadStateService } from './service/upload-state.service'
+import { UploadStateService } from './services/upload-state.service'
 import { Observable } from 'rxjs'
-import { UploadState } from './service/file-upload.types'
+import { UploadState } from './services/file-upload.types'
 
 @Component({
   selector: 'app-file-upload',

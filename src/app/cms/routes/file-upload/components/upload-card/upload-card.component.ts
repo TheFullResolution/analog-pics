@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { StorageService } from '../../service/storage.service'
+import { StorageService } from '../../services/storage.service'
 import { HTMLFileInputEvent } from '../../../../utils/drop-zone.directive'
 
 @Component({
