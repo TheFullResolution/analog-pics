@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { Observable, from, combineLatest } from 'rxjs'
 import type from '_types_'
 import { Store } from '@ngrx/store'
-import * as fromState from '../../../state/cms.reducer'
+import * as fromState from '../../state/cms.reducer'
 import { map, flatMap, reduce, tap, concatMap } from 'rxjs/operators'
 import { AngularFireStorage } from '@angular/fire/storage'
 

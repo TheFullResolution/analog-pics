@@ -4,7 +4,7 @@ import { from, Observable, of, Subject, Subscription } from 'rxjs'
 import { concatMap, catchError } from 'rxjs/operators'
 import { UploadTaskSnapshot } from '@angular/fire/storage/interfaces'
 import { Controls } from './file-upload.types'
-import { HTMLFileInputEvent } from '../../../../utils/drop-zone.directive'
+import { HTMLFileInputEvent } from '../../../utils/drop-zone.directive'
 import { checkFileType } from '../utils/checkFileType'
 import { UploadStateService } from './upload-state.service'
 

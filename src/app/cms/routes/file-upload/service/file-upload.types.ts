@@ -1,4 +1,4 @@
-import { strEnumHelper } from '../../../../utils/strEnumHelper'
+import { strEnumHelper } from '../../../utils/strEnumHelper'
 
 export interface UploadState {
   active: boolean

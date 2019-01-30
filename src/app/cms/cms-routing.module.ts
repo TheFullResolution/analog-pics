@@ -1,11 +1,11 @@
 import { NgModule, ComponentRef } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import { LoginComponent } from './components/routes/login/login.component'
-import { DashboardComponent } from './components/routes/dashboard/dashboard.component'
+import { LoginComponent } from './routes/login/login.component'
+import { DashboardComponent } from './routes/dashboard/dashboard.component'
 import { AuthGuard } from './state/auth/auth.guard'
-import { CmsComponent } from './components/cms-root/cms.component'
-import { FileUploadComponent } from './components/routes/file-upload/file-upload.component'
-import { PublishComponent } from './components/routes/publish/publish.component'
+import { CmsComponent } from './root/cms.component'
+import { FileUploadComponent } from './routes/file-upload/file-upload.component'
+import { PublishComponent } from './routes/publish/publish.component'
 import { RouteName, RoutPath } from './cms.paths'
 
 export const routeNames: RouteName[] = [

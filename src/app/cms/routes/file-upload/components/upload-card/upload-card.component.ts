@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 import { StorageService } from '../../service/storage.service'
-import { HTMLFileInputEvent } from '../../../../../utils/drop-zone.directive'
+import { HTMLFileInputEvent } from '../../../../utils/drop-zone.directive'
 
 @Component({
   selector: 'app-upload-card',
