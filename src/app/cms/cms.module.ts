@@ -1,3 +1,4 @@
+import { SelectService } from './services/Select.service'
 import { UnpublishedService } from './routes/publish/service/unpublished.service'
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
@@ -72,6 +73,7 @@ import { HoverDirective } from './utils/hover.directive'
     UploadStateService,
     DatabaseService,
     UnpublishedService,
+    SelectService,
     { provide: FirestoreSettingsToken, useValue: {} },
   ],
 })
