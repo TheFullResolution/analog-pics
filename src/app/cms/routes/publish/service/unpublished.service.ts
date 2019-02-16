@@ -1,8 +1,7 @@
-import { getUnpublished } from './../../../state/cms.reducer'
+import { CmsState } from './../../../state/state.reducer'
 import { Injectable } from '@angular/core'
 import type from '_types_'
 import {
-  Observable,
   from,
   combineLatest,
   Subject,
@@ -12,7 +11,7 @@ import {
 import { concatMap, map, reduce, flatMap, tap } from 'rxjs/operators'
 import { AngularFireStorage } from '@angular/fire/storage'
 import { Store } from '@ngrx/store'
-import * as fromState from '../../../state/cms.reducer'
+import { getUnpublished } from 'src/app/cms/state/state.selectors'
 
 @Injectable()
 export class UnpublishedService {
@@ -25,13 +24,13 @@ export class UnpublishedService {
 
   constructor(
     private storage: AngularFireStorage,
-    private store: Store<fromState.State>,
+    private store: Store<CmsState>,
   ) {}
 
   getUnpublished = () => {
     this.setLoading(true)
     this._storeSubscription$ = this.store
-      .select(fromState.getUnpublished)
+      .select(getUnpublished)
       .pipe(
         flatMap(list => {
           const newList = this.processNewList(list)

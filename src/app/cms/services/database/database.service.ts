@@ -1,3 +1,4 @@
+import { CmsState } from './../../state/state.reducer'
 import { Injectable } from '@angular/core'
 import {
   AngularFirestore,
@@ -6,9 +7,8 @@ import {
 import types from '_types_'
 import consts from '_consts_'
 import { Store } from '@ngrx/store'
-import * as fromCms from '../../state/cms.reducer'
 import * as DatabaseActions from '../../state/database/database.actions'
-import { Observable, Subscription } from 'rxjs'
+import {  Subscription } from 'rxjs'
 import { map } from 'rxjs/operators'
 
 @Injectable()
@@ -18,7 +18,7 @@ export class DatabaseService {
 
   constructor(
     private db: AngularFirestore,
-    private store: Store<fromCms.State>,
+    private store: Store<CmsState>,
   ) {
     this.photosCollection = db.collection<types.DataBaseEntry>(
       consts.COLLECTION,

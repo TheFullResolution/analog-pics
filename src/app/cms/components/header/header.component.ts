@@ -1,8 +1,9 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core'
 import { AuthService } from '../../services/auth/auth.service'
 import { Store } from '@ngrx/store'
-import * as fromCms from '../../state/cms.reducer'
 import { Observable } from 'rxjs'
+import { CmsState } from '../../state/state.reducer'
+import { getIsAuth } from '../../state/state.selectors'
 
 @Component({
   selector: 'app-header-cms',
@@ -15,11 +16,11 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private store: Store<fromCms.State>,
+    private store: Store<CmsState>,
   ) {}
 
   ngOnInit() {
-    this.isAuth$ = this.store.select(fromCms.getIsAuth)
+    this.isAuth$ = this.store.select(getIsAuth)
   }
 
   onToggleSideNav = () => {

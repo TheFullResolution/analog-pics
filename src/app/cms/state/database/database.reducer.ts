@@ -35,5 +35,3 @@ export function databaseReducer(state = initialState, action: DatabaseActions) {
   }
 }
 
-export const getDatabaseState = (state: State) => state.data
-

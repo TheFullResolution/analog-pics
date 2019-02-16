@@ -4,16 +4,15 @@ import * as fromSelect from './select/select.reducer'
 import {
   ActionReducerMap,
   createFeatureSelector,
-  createSelector,
 } from '@ngrx/store'
 
-export interface State {
+export interface CmsState {
   auth: fromAuth.State
   database: fromDatabase.State
   select: fromSelect.State
 }
 
-export const reducers: ActionReducerMap<State> = {
+export const reducers: ActionReducerMap<CmsState> = {
   auth: fromAuth.authReducer,
   database: fromDatabase.databaseReducer,
   select: fromSelect.selectReducer,
@@ -25,17 +24,4 @@ export const getDataBaseState = createFeatureSelector<fromDatabase.State>(
 )
 export const getSelectState = createFeatureSelector<fromSelect.State>('select')
 
-export const getIsAuth = createSelector(
-  getAuthState,
-  fromAuth.getIsAuthenticated,
-)
 
-export const getData = createSelector(
-  getDataBaseState,
-  fromDatabase.getDatabaseState,
-)
-
-export const getUnpublished = createSelector(
-  getData,
-  data => data.filter(el => !el.published),
-)

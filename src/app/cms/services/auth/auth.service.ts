@@ -1,9 +1,9 @@
+import { CmsState, getDataBaseState } from './../../state/state.reducer'
 import { Injectable } from '@angular/core'
 import { Router } from '@angular/router'
 import { AuthData } from '../../state/auth/auth-data.types'
 import { AngularFireAuth } from '@angular/fire/auth'
 import { Store } from '@ngrx/store'
-import * as fromState from '../../state/cms.reducer'
 import * as Auth from '../../state/auth/auth.actions'
 import { DatabaseService } from '../database/database.service'
 import { take } from 'rxjs/operators'
@@ -16,7 +16,7 @@ export class AuthService {
     private router: Router,
     private afAuth: AngularFireAuth,
     private database: DatabaseService,
-    private store: Store<fromState.State>,
+    private store: Store<CmsState>,
   ) {}
 
   iniAuthListener() {
@@ -30,7 +30,7 @@ export class AuthService {
 
         this.store.dispatch(new Auth.SetUnauthenticated())
         this.store
-          .select(fromState.getDataBaseState)
+          .select(getDataBaseState)
           .pipe(take(1))
           .subscribe(({ active }) => {
             if (active) {
