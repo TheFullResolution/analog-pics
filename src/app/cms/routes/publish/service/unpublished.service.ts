@@ -17,7 +17,7 @@ import * as fromState from '../../../state/cms.reducer'
 @Injectable()
 export class UnpublishedService {
   private _storeSubscription$: Subscription
-  private _unpublished$: Subject<type.DataBaseEntry[]> = new Subject()
+  private _unpublished$: Subject<type.DataBaseEntryWithId[]> = new Subject()
   private _loading$: BehaviorSubject<boolean> = new BehaviorSubject(false)
 
   public unpublished$ = this._unpublished$.asObservable()
@@ -54,7 +54,7 @@ export class UnpublishedService {
     this._loading$.next(loading)
   }
 
-  private processNewList = (list: type.DataBaseEntry[]) =>
+  private processNewList = (list: type.DataBaseEntryWithId[]) =>
     from(list).pipe(
       concatMap(entry => {
         const { thumbs, ...rest } = entry
@@ -67,7 +67,7 @@ export class UnpublishedService {
         ...obj,
         thumbs,
       })),
-      reduce<type.DataBaseEntry>((acc, val) => [...acc, val], []),
+      reduce<type.DataBaseEntryWithId>((acc, val) => [...acc, val], []),
     )
 
   private updateThumbsWithUrl = (thumbs: type.DataBaseImageObject[]) =>

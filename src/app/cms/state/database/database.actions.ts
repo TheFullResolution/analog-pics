@@ -12,7 +12,7 @@ export class SetDatabaseActive implements Action {
 export class SetDatabaseData implements Action {
   readonly type = SET_DATABASE_DATA
 
-  constructor(public payload: types.DataBaseEntry[]) {}
+  constructor(public payload: types.DataBaseEntryWithId[]) {}
 }
 
 export class ResetDatabaseData implements Action {

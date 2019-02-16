@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core'
 import { Router } from '@angular/router'
-import { AuthData } from '../state/auth/auth-data.types'
+import { AuthData } from '../../state/auth/auth-data.types'
 import { AngularFireAuth } from '@angular/fire/auth'
 import { Store } from '@ngrx/store'
-import * as fromState from '../state/cms.reducer'
-import * as Auth from '../state/auth/auth.actions'
-import { DatabaseService } from './database.service'
+import * as fromState from '../../state/cms.reducer'
+import * as Auth from '../../state/auth/auth.actions'
+import { DatabaseService } from '../database/database.service'
 import { take } from 'rxjs/operators'
-import { getFullPath, RoutPath } from '../cms.paths'
+import { getFullPath, RoutPath } from '../../cms.paths'
 
 
 @Injectable()

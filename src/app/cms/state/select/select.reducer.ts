@@ -8,7 +8,7 @@ import types from '_types_'
 
 export interface State {
   active: boolean
-  data: types.DataBaseEntry[]
+  data: types.DataBaseEntryWithId[]
 }
 
 const initialState: State = {
@@ -25,7 +25,7 @@ export function selectReducer(state = initialState, action: SelectActions) {
         active: true,
       }
     case REMOVE_SELECTION:
-      const newData = state.data.filter(el => el.name !== action.payload.name)
+      const newData = state.data.filter(el => el.id !== action.payload.id)
       const newActive = newData.length !== 0
       return {
         ...state,

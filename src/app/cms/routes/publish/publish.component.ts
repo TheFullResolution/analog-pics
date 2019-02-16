@@ -10,7 +10,7 @@ import { UnpublishedService } from './service/unpublished.service'
 })
 export class PublishComponent implements OnInit {
   loading: Observable<boolean>
-  unpublished$: Observable<type.DataBaseEntry[]>
+  unpublished$: Observable<type.DataBaseEntryWithId[]>
 
   constructor(private unpublishedService: UnpublishedService) {}
 

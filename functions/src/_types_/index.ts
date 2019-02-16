@@ -32,3 +32,8 @@ export interface DataBaseEntry {
   uploaded: any;
   thumbs: DataBaseImageObject[];
 }
+
+export type DataBaseEntryWithId = {
+  id: string
+} & DataBaseEntry;
+

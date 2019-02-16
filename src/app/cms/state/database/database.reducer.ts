@@ -8,7 +8,7 @@ import types from '_types_'
 
 export interface State {
   active: boolean
-  data: types.DataBaseEntry[]
+  data: types.DataBaseEntryWithId[]
 }
 
 const initialState: State = {

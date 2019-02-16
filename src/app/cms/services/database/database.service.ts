@@ -6,9 +6,10 @@ import {
 import types from '_types_'
 import consts from '_consts_'
 import { Store } from '@ngrx/store'
-import * as fromCms from '../state/cms.reducer'
-import * as DatabaseActions from '../state/database/database.actions'
+import * as fromCms from '../../state/cms.reducer'
+import * as DatabaseActions from '../../state/database/database.actions'
 import { Observable, Subscription } from 'rxjs'
+import { map } from 'rxjs/operators'
 
 @Injectable()
 export class DatabaseService {
@@ -28,8 +29,14 @@ export class DatabaseService {
   fetchDatabase() {
     this.store.dispatch(new DatabaseActions.SetDatabaseActive())
     this.photosListener = this.photosCollection
-      .valueChanges()
-      .subscribe((data: types.DataBaseEntry[]) => {
+      .stateChanges(['added']).pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as types.DataBaseEntry
+          const id = a.payload.doc.id
+          return { id, ...data }
+        }))
+      )
+      .subscribe((data: types.DataBaseEntryWithId[]) => {
         this.store.dispatch(new DatabaseActions.SetDatabaseData(data))
       })
   }

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core'
-import { AuthService } from '../../services/auth.service'
+import { AuthService } from '../../services/auth/auth.service'
 import { Store } from '@ngrx/store'
 import * as fromCms from '../../state/cms.reducer'
 import { Observable } from 'rxjs'
