@@ -1,9 +1,29 @@
 <ng-container *ngIf="(unpublished$ | async) as images">
+  <div class="control">
+    <button mat-raised-button color="accent" (click)="selectAll(images)">
+      Select All
+    </button>
+    <ng-container *ngIf="(anySelected | async)">
+      <button
+        mat-raised-button
+        color="accent"
+        [@fadeInOut]
+        (click)="deselectAll()"
+      >
+        Deselect All
+      </button>
+      <button mat-raised-button color="warn" [@fadeInOut]>
+        Publish
+      </button>
+    </ng-container>
+  </div>
+
   <app-picture-grid [images]="images">
     <ng-template let-image>
       <app-image-selector
         [image]="image"
         [anySelected]="anySelected"
+        [selected]="checkSelectionState(image) | async"
         (addSelected)="addSelected($event)"
         (removeSelected)="removeSelected($event)"
       >

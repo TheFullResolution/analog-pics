@@ -1,12 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Output,
-  EventEmitter,
-  Input,
-  OnChanges,
-  SimpleChange,
-} from '@angular/core'
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core'
 import type from '_types_'
 import { fadeInOut } from '../../animations/fadeInOut'
 import { MatCheckboxChange } from '@angular/material'
@@ -26,8 +18,8 @@ import { Observable } from 'rxjs'
         class="check"
         ariaLabel="Select this Image"
         *ngIf="selected || isHovering || (anySelected | async)"
-        [(ngModel)]="selected"
-        (change)="onChangeCheckbox($event)"
+        [checked]="selected"
+        (change)="onChangeCheckbox(!selected)"
         [@fadeInOut]
       >
       </mat-checkbox>
@@ -38,7 +30,7 @@ import { Observable } from 'rxjs'
   `,
   styleUrls: ['./image-selector.component.scss'],
 })
-export class ImageSelectorComponent implements OnInit, OnChanges {
+export class ImageSelectorComponent implements OnInit {
   showControls: boolean
   isHovering: boolean
   anySelectedValue: boolean
@@ -57,25 +49,18 @@ export class ImageSelectorComponent implements OnInit, OnChanges {
     })
   }
 
-  ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-    console.log(changes)
-  }
-
   toggleHover = (event: boolean) => {
     this.isHovering = event
   }
 
   toggleSelected = (value: boolean) => {
     if (this.anySelectedValue) {
-      this.selected = value
       this.emitChange(value)
     }
   }
 
-  onChangeCheckbox = ($event: MatCheckboxChange) => {
-    console.log(this.selected)
-
-    this.emitChange($event.checked)
+  onChangeCheckbox = (value: boolean) => {
+    this.emitChange(value)
   }
 
   emitChange = (value: boolean) => {

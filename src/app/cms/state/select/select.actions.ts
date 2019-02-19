@@ -7,7 +7,7 @@ export const CLEAR_SELECTION = '[Select] Clear Selection'
 
 export class AddSelection implements Action {
   readonly type = ADD_SELECTION
-  constructor(public payload: types.DataBaseEntryWithId) {}
+  constructor(public payload: types.DataBaseEntryWithId[]) {}
 }
 
 export class RemoveSelection implements Action {

@@ -21,7 +21,7 @@ export function selectReducer(state = initialState, action: SelectActions) {
     case ADD_SELECTION:
       return {
         ...state,
-        data: [...state.data, action.payload],
+        data: [...state.data, ...action.payload],
         active: true,
       }
     case REMOVE_SELECTION:

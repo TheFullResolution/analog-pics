@@ -8,3 +8,4 @@ export const getDataBaseData = createSelector(getDataBaseState, (state) => state
 export const getUnpublished = createSelector(getDataBaseData, data => data.filter(el => !el.published))
 
 export const getSelectedActive = createSelector(getSelectState, (state) => state.active)
+export const getSelectedData = createSelector(getSelectState, (state) => state.data)

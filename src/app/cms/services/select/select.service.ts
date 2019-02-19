@@ -1,4 +1,4 @@
-import { getSelectedActive } from './../../state/state.selectors'
+import { getSelectedActive, getSelectedData } from './../../state/state.selectors'
 import { CmsState, getSelectState } from './../../state/state.reducer'
 import * as SelectActions from './../../state/select/select.actions'
 import { Injectable } from '@angular/core'
@@ -10,8 +10,8 @@ import { take } from 'rxjs/operators'
 export class SelectService {
   constructor(private store: Store<CmsState>) {}
 
-  addSelection(pic: types.DataBaseEntryWithId) {
-    this.store.dispatch(new SelectActions.AddSelection(pic))
+  addSelection(pics: types.DataBaseEntryWithId[]) {
+    this.store.dispatch(new SelectActions.AddSelection(pics))
   }
 
   removeSelection(pic: types.DataBaseEntryWithId) {
@@ -34,6 +34,8 @@ export class SelectService {
 
     return currentState
   }
+
+  getSelectionData = () => this.store.select(getSelectedData)
 
   getSelectionActive = () => this.store.select(getSelectedActive)
 }

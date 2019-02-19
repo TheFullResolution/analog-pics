@@ -1,5 +1,25 @@
+@import '~src/_variables.scss';
+
 .spinner {
   display: flex;
   padding-top: 10vh;
   justify-content: center;
+}
+
+.control {
+  position: sticky;
+  padding: {
+    bottom: $marginL;
+    top: $marginL;
+  }
+  z-index: 1;
+  display: flex;
+  top: 0;
+  background-color: $white;
+
+  button {
+    + button {
+      margin-left: $marginM;
+    }
+  }
 }
