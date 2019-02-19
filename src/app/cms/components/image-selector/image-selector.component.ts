@@ -6,9 +6,11 @@ import {
   Input,
   OnChanges,
   SimpleChange,
-  ContentChildren,
 } from '@angular/core'
+import type from '_types_'
 import { fadeInOut } from '../../animations/fadeInOut'
+import { MatCheckboxChange } from '@angular/material'
+import { Observable } from 'rxjs'
 
 @Component({
   selector: 'app-image-selector',
@@ -23,34 +25,64 @@ import { fadeInOut } from '../../animations/fadeInOut'
       <mat-checkbox
         class="check"
         ariaLabel="Select this Image"
-        *ngIf="selected || isHovering"
+        *ngIf="selected || isHovering || (anySelected | async)"
         [(ngModel)]="selected"
+        (change)="onChangeCheckbox($event)"
         [@fadeInOut]
       >
       </mat-checkbox>
-      <ng-content [class.hovering]="isHovering"></ng-content>
+      <a (click)="toggleSelected(!selected)">
+        <ng-content [class.hovering]="isHovering"></ng-content>
+      </a>
     </div>
   `,
   styleUrls: ['./image-selector.component.scss'],
 })
 export class ImageSelectorComponent implements OnInit, OnChanges {
-  selected: boolean
   showControls: boolean
   isHovering: boolean
+  anySelectedValue: boolean
 
-  @Output() addSelected = new EventEmitter<string>()
-  @Output() removeSelected = new EventEmitter<string>()
+  @Output() addSelected = new EventEmitter<type.DataBaseEntryWithId>()
+  @Output() removeSelected = new EventEmitter<type.DataBaseEntryWithId>()
 
-  @Input() selectedParent: boolean
+  @Input() selected: boolean
+  @Input() anySelected: Observable<boolean>
+  @Input() image: type.DataBaseEntryWithId
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.anySelected.subscribe(val => {
+      this.anySelectedValue = val
+    })
+  }
 
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
     console.log(changes)
   }
 
-  toggleHover(event: boolean) {
+  toggleHover = (event: boolean) => {
     this.isHovering = event
+  }
+
+  toggleSelected = (value: boolean) => {
+    if (this.anySelectedValue) {
+      this.selected = value
+      this.emitChange(value)
+    }
+  }
+
+  onChangeCheckbox = ($event: MatCheckboxChange) => {
+    console.log(this.selected)
+
+    this.emitChange($event.checked)
+  }
+
+  emitChange = (value: boolean) => {
+    if (value) {
+      this.addSelected.emit(this.image)
+    } else {
+      this.removeSelected.emit(this.image)
+    }
   }
 }

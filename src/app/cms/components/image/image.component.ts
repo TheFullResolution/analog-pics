@@ -13,7 +13,7 @@ import type from '_types_'
   styleUrls: ['./image.component.scss'],
 })
 export class ImageComponent implements OnInit {
-  @Input() image: type.DataBaseEntry
+  @Input() image: type.DataBaseEntryWithId
   @Input() defaultSize: type.ImageSizeTypes = 'xs'
 
   defaultImg: type.DataBaseImageObject

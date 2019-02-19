@@ -1,12 +1,16 @@
-
 <ng-container *ngIf="(unpublished$ | async) as images">
   <app-picture-grid [images]="images">
     <ng-template let-image>
-      <app-image-selector>
+      <app-image-selector
+        [image]="image"
+        [anySelected]="anySelected"
+        (addSelected)="addSelected($event)"
+        (removeSelected)="removeSelected($event)"
+      >
         <app-image [image]="image"></app-image>
       </app-image-selector>
     </ng-template>
   </app-picture-grid>
 </ng-container>
 
-<div class="spinner"><mat-spinner *ngIf="loading | async"></mat-spinner></div>
+<div class="spinner"><mat-spinner *ngIf="(loading | async)"></mat-spinner></div>

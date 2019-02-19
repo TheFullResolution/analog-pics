@@ -35,7 +35,5 @@ export class SelectService {
     return currentState
   }
 
-  getSelectionActive() {
-    this.store.select(getSelectedActive)
-  }
+  getSelectionActive = () => this.store.select(getSelectedActive)
 }
