@@ -1,13 +1,15 @@
-import { Subscription } from 'rxjs'
+import { Subscription, Subject } from 'rxjs'
 import {
   Component,
   OnInit,
   Input,
   ContentChild,
   TemplateRef,
+  OnDestroy,
 } from '@angular/core'
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout'
 import type from '_types_'
+import { takeUntil } from 'rxjs/operators'
 
 @Component({
   selector: 'app-picture-grid',
@@ -24,7 +26,8 @@ import type from '_types_'
   `,
   styleUrls: ['./picture-grid.component.scss'],
 })
-export class PictureGridComponent implements OnInit {
+export class PictureGridComponent implements OnInit, OnDestroy {
+  private _ngUnsubscribe = new Subject()
   breakpoints: Subscription
   gridCols = 1
 
@@ -36,6 +39,10 @@ export class PictureGridComponent implements OnInit {
   ngOnInit() {
     this.listenToBreakPoints()
   }
+  ngOnDestroy() {
+    this._ngUnsubscribe.next()
+    this._ngUnsubscribe.complete()
+  }
 
   listenToBreakPoints() {
     this.breakpoints = this.breakpointObserver
@@ -45,6 +52,7 @@ export class PictureGridComponent implements OnInit {
         Breakpoints.Large,
         Breakpoints.XLarge,
       ])
+      .pipe(takeUntil(this._ngUnsubscribe))
       .subscribe(result => {
         if (
           result.breakpoints[Breakpoints.Small] ||

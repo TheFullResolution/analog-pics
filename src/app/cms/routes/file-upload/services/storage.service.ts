@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, OnDestroy } from '@angular/core'
 import {
   AngularFireStorage,
   AngularFireUploadTask,
@@ -6,9 +6,7 @@ import {
 import {
   from,
   Observable,
-  of,
   Subject,
-  Subscription,
   Observer,
   TeardownLogic,
 } from 'rxjs'
@@ -20,15 +18,15 @@ import { checkFileType } from '../utils/checkFileType'
 import { UploadStateService } from './upload-state.service'
 
 @Injectable()
-export class StorageService {
-  private _task$: AngularFireUploadTask
-  private _tasks$: Subscription
-  private _snapshot$: Subject<UploadTaskSnapshot> = new Subject()
+export class StorageService implements OnDestroy {
+  private _ngUnsubscribe = new Subject()
+  private _task: AngularFireUploadTask
+  private _snapshot: Subject<UploadTaskSnapshot> = new Subject()
   private _terminateUpload: Subject<boolean> = new Subject()
-  private _fileProgress$: Subject<number> = new Subject()
+  private _fileProgress: Subject<number> = new Subject()
 
-  public snapshot$ = this._snapshot$.asObservable()
-  public fileProgress$ = this._fileProgress$.asObservable()
+  public snapshot$ = this._snapshot.asObservable()
+  public fileProgress$ = this._fileProgress.asObservable()
 
   error: string
 
@@ -37,18 +35,24 @@ export class StorageService {
     private state: UploadStateService,
   ) {}
 
+  ngOnDestroy() {
+    this._ngUnsubscribe.next()
+    this._ngUnsubscribe.complete()
+  }
+
   startUpload(event: HTMLFileInputEvent) {
-    this._task$ = null
+    this._task = null
 
     const files = Array.from(event.target.files)
 
     this.state.initializeUpload(files)
 
-    this._tasks$ = from(files)
+    from(files)
       .pipe(
         concatMap(file => checkFileType(file)),
         takeUntil(this._terminateUpload),
         concatMap(file => this.pushUpload(file)),
+        takeUntil(this._ngUnsubscribe),
       )
       .subscribe(
         el => {
@@ -63,17 +67,17 @@ export class StorageService {
   }
 
   pushUpload(file: File): Observable<UploadTaskSnapshot> {
-    return Observable.create(
+    return new Observable (
       (observer: Observer<UploadTaskSnapshot>): TeardownLogic => {
         this.state.updateState({
           currentFileName: file.name,
         })
 
-        this._task$ = this.storage.upload(file.name, file)
+        this._task = this.storage.upload(file.name, file)
 
         this.subscribeToTaskChanges()
 
-        this._task$
+        this._task
           .then(snap => {
             observer.next(snap)
 
@@ -87,29 +91,29 @@ export class StorageService {
   }
 
   subscribeToTaskChanges = () => {
-    this._task$.snapshotChanges().subscribe(el => {
-      this._snapshot$.next(el)
+    this._task.snapshotChanges().subscribe(el => {
+      this._snapshot.next(el)
 
       this.state.updateSize(el.bytesTransferred)
     })
 
-    this._task$.percentageChanges().subscribe(el => {
-      this._fileProgress$.next(el)
+    this._task.percentageChanges().subscribe(el => {
+      this._fileProgress.next(el)
     })
   }
 
   controlTask(command: Controls) {
     switch (command) {
       case Controls.pause:
-        this._task$.pause()
+        this._task.pause()
         break
       case Controls.cancel:
-        this._task$.cancel()
+        this._task.cancel()
         this._terminateUpload.next(true)
         this.state.resetState()
         break
       case Controls.resume:
-        this._task$.resume()
+        this._task.resume()
         break
     }
   }
