@@ -1,10 +1,11 @@
 import { SelectService } from './../../services/select/select.service'
-import { Component, OnInit } from '@angular/core'
-import { Observable, combineLatest } from 'rxjs'
+import { Component, OnInit, OnDestroy } from '@angular/core'
+import { Observable, combineLatest, Subject, Subscription } from 'rxjs'
 import type from '_types_'
 import { UnpublishedService } from './service/unpublished.service'
 import { fadeInOut } from '../../animations/fadeInOut'
-import { take, map } from 'rxjs/operators'
+import { take, map, takeUntil } from 'rxjs/operators'
+import { PublishService } from './service/publish.service'
 
 @Component({
   animations: [fadeInOut()],
@@ -12,23 +13,38 @@ import { take, map } from 'rxjs/operators'
   templateUrl: './publish.component.html',
   styleUrls: ['./publish.component.scss'],
 })
-export class PublishComponent implements OnInit {
-  loading: Observable<boolean>
-  anySelected: Observable<boolean>
+export class PublishComponent implements OnInit, OnDestroy {
+  private _ngUnsubscribe = new Subject()
+
+  loadingUnpublished$: Observable<boolean>
+  anySelected$: Observable<boolean>
+  processingPublishing: boolean
   selection$: Observable<type.DataBaseEntryWithId[]>
   unpublished$: Observable<type.DataBaseEntryWithId[]>
 
   constructor(
     private unpublishedService: UnpublishedService,
+    private publishService: PublishService,
     private selectService: SelectService,
   ) {}
 
   ngOnInit() {
     this.unpublishedService.getUnpublished()
-    this.anySelected = this.selectService.getSelectionActive()
+    this.anySelected$ = this.selectService.getSelectionActive()
     this.selection$ = this.selectService.getSelectionData()
     this.unpublished$ = this.unpublishedService.unpublished$
-    this.loading = this.unpublishedService.loading$
+    this.loadingUnpublished$ = this.unpublishedService.loading$
+    this.publishService.processing$
+      .pipe(takeUntil(this._ngUnsubscribe))
+      .subscribe(status => {
+        this.processingPublishing = status
+      })
+  }
+
+  ngOnDestroy() {
+    this._ngUnsubscribe.next()
+    this._ngUnsubscribe.complete()
+    this.selectService.clearSelection()
   }
 
   checkSelectionState = (img: type.DataBaseEntryWithId) =>
@@ -47,6 +63,13 @@ export class PublishComponent implements OnInit {
   }
 
   deselectAll = () => {
+    this.selectService.clearSelection()
+  }
+
+  publishSelection = () => {
+    this.publishService.publishPictures(
+      this.selectService.getCurrentSelection(),
+    )
     this.selectService.clearSelection()
   }
 }

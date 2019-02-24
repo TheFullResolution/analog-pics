@@ -37,6 +37,7 @@ import { reducers } from './state/state.reducer'
 import { DropZoneDirective } from './utils/drop-zone.directive'
 import { FileSizePipe } from './utils/file-size.pipe'
 import { HoverDirective } from './utils/hover.directive'
+import { PublishService } from './routes/publish/service/publish.service';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { HoverDirective } from './utils/hover.directive'
     UploadStateService,
     DatabaseService,
     UnpublishedService,
+    PublishService,
     SelectService,
     { provide: FirestoreSettingsToken, useValue: {} },
   ],

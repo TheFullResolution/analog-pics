@@ -26,25 +26,26 @@ export class UnpublishedService implements OnDestroy {
   }
 
   getUnpublished = () => {
-    this.setLoading(true)
     this.store
       .select(getUnpublished)
       .pipe(
         flatMap(list => {
+          this.setLoading(true)
           const newList = this.processNewList(list)
-
-          return combineLatest(newList)
+          newList.subscribe({
+            complete: () => {
+              this.setLoading(false)
+            },
+          })
+          return newList
         }),
-        map(([el]) => el),
-        tap(el => {
-          if (el.length > 0) {
-            this.setLoading(false)
-          }
-        }),
+        map(el => el),
         takeUntil(this._ngUnsubscribe),
       )
-      .subscribe(el => {
-        this._unpublished.next(el)
+      .subscribe({
+        next: el => {
+          this._unpublished.next(el)
+        },
       })
   }
 
@@ -52,8 +53,8 @@ export class UnpublishedService implements OnDestroy {
     this._loading.next(loading)
   }
 
-  private processNewList = (list: type.DataBaseEntryWithId[]) =>
-    from(list).pipe(
+  private processNewList = (list: type.DataBaseEntryWithId[]) => {
+    return from(list).pipe(
       concatMap(entry => {
         const { thumbs, ...rest } = entry
 
@@ -67,12 +68,16 @@ export class UnpublishedService implements OnDestroy {
       })),
       reduce<type.DataBaseEntryWithId>((acc, val) => [...acc, val], []),
     )
-
+  }
   private updateThumbsWithUrl = (thumbs: type.DataBaseImageObject[]) =>
     from(thumbs).pipe(
-      flatMap(thumb =>
-        combineLatest(this.getDownloadUrl(thumb.name), from([thumb])),
-      ),
+      flatMap(thumb => {
+        const downloadUrl$ = thumb.downloadUrl
+          ? from([thumb.downloadUrl])
+          : this.getDownloadUrl(thumb.name)
+
+        return combineLatest(downloadUrl$, from([thumb]))
+      }),
       map(([downloadUrl, thumb]) => ({ ...thumb, downloadUrl })),
       reduce<type.DataBaseImageObject>((acc, thumb) => [...acc, thumb], []),
     )

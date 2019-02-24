@@ -3,7 +3,7 @@
     <button mat-raised-button color="accent" (click)="selectAll(images)">
       Select All
     </button>
-    <ng-container *ngIf="(anySelected | async)">
+    <ng-container *ngIf="(anySelected$ | async)">
       <button
         mat-raised-button
         color="accent"
@@ -12,8 +12,15 @@
       >
         Deselect All
       </button>
-      <button mat-raised-button color="warn" [@fadeInOut]>
-        Publish
+      <button
+        mat-raised-button
+        color="warn"
+        [@fadeInOut]
+        [disabled]="processingPublishing"
+        (click)="publishSelection()"
+      >
+        <span *ngIf="!processingPublishing">Publish</span>
+        <mat-icon *ngIf="processingPublishing" class="rotate">cached</mat-icon>
       </button>
     </ng-container>
   </div>
@@ -22,7 +29,7 @@
     <ng-template let-image>
       <app-image-selector
         [image]="image"
-        [anySelected]="anySelected"
+        [anySelected]="anySelected$"
         [selected]="checkSelectionState(image) | async"
         (addSelected)="addSelected($event)"
         (removeSelected)="removeSelected($event)"
@@ -33,4 +40,6 @@
   </app-picture-grid>
 </ng-container>
 
-<div class="spinner"><mat-spinner *ngIf="(loading | async)"></mat-spinner></div>
+<div class="spinner">
+  <mat-spinner *ngIf="(loadingUnpublished$ | async)"></mat-spinner>
+</div>

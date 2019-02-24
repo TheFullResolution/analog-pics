@@ -29,7 +29,7 @@ export class DatabaseService {
   fetchDatabase() {
     this.store.dispatch(new DatabaseActions.SetDatabaseActive())
     this.photosListener = this.photosCollection
-      .stateChanges(['added']).pipe(
+      .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as types.DataBaseEntry
           const id = a.payload.doc.id

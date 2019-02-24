@@ -1,10 +1,12 @@
-import { getSelectedActive, getSelectedData } from './../../state/state.selectors'
-import { CmsState, getSelectState } from './../../state/state.reducer'
-import * as SelectActions from './../../state/select/select.actions'
-import { Injectable } from '@angular/core'
-import { Store } from '@ngrx/store'
 import types from '_types_'
 import { take } from 'rxjs/operators'
+
+import { Injectable } from '@angular/core'
+import { Store } from '@ngrx/store'
+
+import * as SelectActions from '../../state/select/select.actions'
+import { CmsState, getSelectState } from '../../state/state.reducer'
+import { getSelectedActive, getSelectedData } from '../../state/state.selectors'
 
 @Injectable()
 export class SelectService {
