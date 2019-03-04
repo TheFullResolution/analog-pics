@@ -1,0 +1,31 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body .mat-checkbox-inner-container,
+body .mat-radio-container,
+body .mat-radio-outer-circle,
+body .mat-radio-inner-circle {
+  height: 18px;
+  width: 18px;
+}
+
+body .mat-checkbox-ripple,
+body .mat-radio-ripple {
+  left: calc(50% - 22px);
+  top: calc(50% - 22px);
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}

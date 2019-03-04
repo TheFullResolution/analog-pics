@@ -1,3 +1,8 @@
+export type PhotosDataBase = {
+  date: string,
+  items: null | Array<Object>,
+}
+
 export const photosDataBaseDefault = {
   date: '',
   items: null,
@@ -12,7 +17,7 @@ export type UpdateTypes = UpdateType.reset | UpdateType.update
 
 interface UpdatePhotosDataBase {
   type: UpdateTypes
-  payload?: typeof photosDataBaseDefault
+  payload?: any
 }
 
 const photosDataBaseReducer = ({ type, payload }: UpdatePhotosDataBase) => {
@@ -22,15 +27,22 @@ const photosDataBaseReducer = ({ type, payload }: UpdatePhotosDataBase) => {
 
     case UpdateType.update:
       return payload
+
+    default:
+      return photosDataBaseDefault
   }
 }
 
-export let photosDataBase
+export let photosDataBase: PhotosDataBase
 
 export const initPhotosDataBase = () => {
   photosDataBase = { ...photosDataBaseDefault }
 }
 
-export const updatePhotosDataBase = (update: UpdatePhotosDataBase) => {
+export function updatePhotosDataBase(
+  update:
+    | { type: UpdateType.reset }
+    | { type: UpdateType.update; payload: any },
+) {
   photosDataBase = { ...photosDataBaseReducer(update) }
 }

@@ -1,9 +1,10 @@
 import { ObjectMetadata } from 'firebase-functions/lib/providers/storage'
-import { CONSTS } from '../../types'
+import { CONSTS } from '../..';
+
 
 interface CheckIfProcessed {
   readonly object: ObjectMetadata
-  readonly IS_PROCESSED: CONSTS.IS_PROCESSED
+  readonly IS_PROCESSED: typeof CONSTS.IS_PROCESSED
 }
 
 export const checkIfProcessed = function checkIfProcessedFunc({

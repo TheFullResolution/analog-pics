@@ -9,6 +9,7 @@ $marginXS: 4px;
 $marginS: 8px;
 $marginM: 16px;
 $marginL: 24px;
+$marginXL: 48px;
 $pageWidth: 850px;
 $paddingPageSide: 3%;
 
@@ -16,7 +17,11 @@ $primary: mat-color($app-primary);
 $accent: mat-color($app-accent);
 $warn: mat-color($app-warn);
 $background: #adcad6;
-$white: #ffffff;
+$white: #fafafa;
+$transparent-white: rgba(100%, 100%, 100%, 0.9);
+$light-grey: rgb(95.7%, 96.1%, 95.7%);
+$transparent-grey: rgba(95.7%, 96.1%, 95.7%, 0.9);
+$dark-grey: #b3b3b3;
 $black: #000000;
 
 $transition: cubic-bezier(0.23, 1, 0.32, 1);

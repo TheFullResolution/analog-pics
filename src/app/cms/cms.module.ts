@@ -1,43 +1,62 @@
-import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { MaterialModule } from './material/material.module'
-import { CmsRoutingModule } from './cms-routing.module'
+import { NgModule } from '@angular/core'
 import { AngularFireModule } from '@angular/fire'
-import { FormsModule } from '@angular/forms'
-import { AngularFirestoreModule } from '@angular/fire/firestore'
-import { AngularFireStorageModule } from '@angular/fire/storage'
 import { AngularFireAuthModule } from '@angular/fire/auth'
+import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore'
+import { AngularFireStorageModule } from '@angular/fire/storage'
+import { FormsModule } from '@angular/forms'
 import { StoreModule } from '@ngrx/store'
-import { reducers } from './state/cms.reducer'
-import { AuthService } from './services/auth.service'
+
 import { environment } from '../../environments/environment'
-import { FileUploadComponent } from './components/routes/file-upload/file-upload.component'
-import { FileSizePipe } from './utils/file-size.pipe'
-import { LoginComponent } from './components/routes/login/login.component'
-import { DashboardComponent } from './components/routes/dashboard/dashboard.component'
-import { HeaderComponent } from './components/common/header/header.component'
+import { CmsRoutingModule } from './cms-routing.module'
+import { HeaderComponent } from './components/header/header.component'
+import { ImageSelectorComponent } from './components/image-selector/image-selector.component'
+import { ImageComponent } from './components/image/image.component'
+import { InputFileComponent } from './components/input-file/input-file.component'
+import { PictureGridComponent } from './components/picture-grid/picture-grid.component'
+import { SidenavListComponent } from './components/sidenav-list/sidenav-list.component'
+import { MaterialModule } from './material.module'
+import { CmsComponent } from './root/cms.component'
+import { DashboardComponent } from './routes/dashboard/dashboard.component'
+import {
+    ProgressCardComponent
+} from './routes/file-upload/components/progress-card/progress-card.component'
+import {
+    UploadCardComponent
+} from './routes/file-upload/components/upload-card/upload-card.component'
+import { FileUploadComponent } from './routes/file-upload/file-upload.component'
+import { StorageService } from './routes/file-upload/services/storage.service'
+import { UploadStateService } from './routes/file-upload/services/upload-state.service'
+import { LoginComponent } from './routes/login/login.component'
+import { PublishComponent } from './routes/publish/publish.component'
+import { UnpublishedService } from './routes/publish/service/unpublished.service'
+import { AuthService } from './services/auth/auth.service'
+import { DatabaseService } from './services/database/database.service'
+import { SelectService } from './services/select/select.service'
+import { reducers } from './state/state.reducer'
 import { DropZoneDirective } from './utils/drop-zone.directive'
-import { CmsComponent } from './components/cms-root/cms.component'
-import { InputFileComponent } from './components/common/input-file/input-file.component'
-import { SidenavListComponent } from './components/common/sidenav-list/sidenav-list.component'
-import { StorageService } from './components/routes/file-upload/service/storage.service'
-import { UploadCardComponent } from './components/routes/file-upload/components/upload-card/upload-card.component'
-import { ProgressCardComponent } from './components/routes/file-upload/components/progress-card/progress-card.component'
-import { UploadStateService } from './components/routes/file-upload/service/upload-state.service'
+import { FileSizePipe } from './utils/file-size.pipe'
+import { HoverDirective } from './utils/hover.directive'
+import { PublishService } from './routes/publish/service/publish.service';
 
 @NgModule({
   declarations: [
-    LoginComponent,
     CmsComponent,
     DashboardComponent,
-    HeaderComponent,
     DropZoneDirective,
-    FileUploadComponent,
+    HoverDirective,
     FileSizePipe,
+    FileUploadComponent,
+    HeaderComponent,
+    ImageComponent,
+    ImageSelectorComponent,
     InputFileComponent,
+    LoginComponent,
+    PictureGridComponent,
+    ProgressCardComponent,
+    PublishComponent,
     SidenavListComponent,
     UploadCardComponent,
-    ProgressCardComponent,
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
@@ -50,6 +69,15 @@ import { UploadStateService } from './components/routes/file-upload/service/uplo
     CommonModule,
     CmsRoutingModule,
   ],
-  providers: [AuthService, StorageService, UploadStateService],
+  providers: [
+    AuthService,
+    StorageService,
+    UploadStateService,
+    DatabaseService,
+    UnpublishedService,
+    PublishService,
+    SelectService,
+    { provide: FirestoreSettingsToken, useValue: {} },
+  ],
 })
 export class CmsModule {}

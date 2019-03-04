@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core'
-import { HomeComponent } from './home/home.component'
-import { GridComponent } from './grid/grid.component'
-import { HeaderComponent } from './common/header/header.component'
-import { GalleryComponent } from './gallery.component'
+import { HomeComponent } from './components/routes/home/home.component'
+import { GridComponent } from './components/routes/home/grid/grid.component'
+import { HeaderComponent } from './components/common/header/header.component'
+import { GalleryComponent } from './components/gallery-root/gallery.component'
 import { GalleryRoutingModule } from './gallery-routing.module'
+import { HttpClientModule } from '@angular/common/http'
 
 @NgModule({
   declarations: [
@@ -12,6 +13,6 @@ import { GalleryRoutingModule } from './gallery-routing.module'
     GridComponent,
     GalleryComponent,
   ],
-  imports: [GalleryRoutingModule],
+  imports: [GalleryRoutingModule, HttpClientModule],
 })
 export class GalleryModule {}

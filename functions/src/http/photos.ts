@@ -1,6 +1,6 @@
 import * as functions from 'firebase-functions'
 import * as corsCreator from 'cors'
-import { Admin } from '../index'
+import { Admin, CONSTS } from '../index'
 import {
   initPhotosDataBase,
   photosDataBase,
@@ -11,7 +11,9 @@ import {
 const cors = corsCreator({ origin: true })
 
 const ONE_HOUR_MS = 3600000
-const ONE_HOUR_S = 3600
+const ONE_MINUTE_S = 60
+const TEN_MINUTE_S = 10 * ONE_MINUTE_S
+const ONE_HOUR_S = 60 * ONE_MINUTE_S
 const ONE_DAY_S = 24 * ONE_HOUR_S
 
 interface Photos {
@@ -37,7 +39,7 @@ export const photos = ({ admin }: Photos) =>
 
       res.set(
         'Cache-Control',
-        `public, max-age=${ONE_DAY_S}, s-maxage=${ONE_HOUR_S}`,
+        `public, max-age=${ONE_MINUTE_S}, s-maxage=${ONE_MINUTE_S}`,
       )
 
       if (
@@ -51,10 +53,11 @@ export const photos = ({ admin }: Photos) =>
 
       const collection = await admin
         .firestore()
-        .collection('photos')
+        .collection(CONSTS.COLLECTION)
+        .where('published', '==', true)
         .get()
 
-      const newData = []
+      const newData: any = []
 
       collection.forEach(doc => {
         newData.push({ ...doc.data(), id: doc.id })

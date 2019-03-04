@@ -1,0 +1,82 @@
+<ng-container *ngIf="(snapshot$ | async) as snap; else notReady">
+  <ng-container *ngIf="(uploadState$ | async) as state; else notReady">
+    <mat-card>
+      <mat-card-content class="mat-typography">
+        <div class="progress">
+          <h2>Current File</h2>
+          <p>Name: {{ state.currentFileName }}</p>
+          <div class="details">
+            <span
+              >Processed: {{ fileProgress$ | async | number: '1.2-2' }}%
+            </span>
+            <span
+              >Transferred: {{ snap.bytesTransferred | fileSize }} of
+              {{ snap.totalBytes | fileSize }}
+            </span>
+          </div>
+          <mat-progress-bar mode="determinate" [value]="fileProgress$ | async">
+          </mat-progress-bar>
+        </div>
+
+        <div class="progress">
+          <h2>Total Progress</h2>
+          <p>File Count: {{ state.filesUploaded }} / {{ state.filesCount }}</p>
+          <div class="details">
+            <span>Processed:{{ state.progress | number: '1.2-2' }}%</span>
+            <span
+              >Transferred: {{ state.transferred | fileSize }} of
+              {{ state.size | fileSize }}
+            </span>
+          </div>
+          <mat-progress-bar mode="determinate" [value]="state.progress">
+          </mat-progress-bar>
+        </div>
+      </mat-card-content>
+      <div class="buttons">
+        <ng-container *ngIf="(uploadState$ | async).progress !== 100">
+          <button
+            (click)="control(controls.pause)"
+            mat-raised-button
+            color="accent"
+            [disabled]="!isActive(snap)"
+          >
+            Pause
+          </button>
+          <button
+            (click)="control(controls.cancel)"
+            mat-raised-button
+            color="warn"
+            [disabled]="!isActive(snap)"
+          >
+            Cancel
+          </button>
+          <button
+            (click)="control(controls.resume)"
+            mat-raised-button
+            color="primary"
+            [disabled]="!isPaused(snap)"
+          >
+            Resume
+          </button>
+        </ng-container>
+        <ng-container *ngIf="(uploadState$ | async).progress === 100">
+          <button (click)="closePanel()" mat-raised-button color="primary">
+            Upload More
+          </button>
+          <a
+            mat-raised-button
+            color="primary"
+            [routerLink]="getFullPath(pathToPublish.path)"
+            >{{ pathToPublish.label }}
+          </a>
+        </ng-container>
+      </div>
+    </mat-card>
+  </ng-container>
+</ng-container>
+
+<ng-template #notReady>
+  <div class="spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

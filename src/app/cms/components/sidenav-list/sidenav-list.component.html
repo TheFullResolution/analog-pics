@@ -1,0 +1,14 @@
+<mat-nav-list>
+  <h2 matSubheader>Navigation</h2>
+  <nav>
+    <a
+      mat-list-item
+      *ngFor="let route of routes"
+      [routerLink]="route.path"
+      (click)="onClose()"
+    >
+      <mat-icon>{{ route.icon }}</mat-icon>
+      {{ route.label }}
+    </a>
+  </nav>
+</mat-nav-list>

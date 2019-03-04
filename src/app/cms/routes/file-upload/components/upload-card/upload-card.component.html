@@ -1,0 +1,15 @@
+<mat-card>
+  <mat-card-content>
+    <div
+      class="dropzone mat-typography"
+      appDropZone
+      (hovered)="toggleHover($event)"
+      (dropped)="startUpload($event)"
+      [class.hovering]="isHovering"
+    >
+      <h2>AnalogPics Drop Zone</h2>
+
+      <app-input-file (changed)="startUpload($event)"></app-input-file>
+    </div>
+  </mat-card-content>
+</mat-card>

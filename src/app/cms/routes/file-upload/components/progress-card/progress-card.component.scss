@@ -1,0 +1,48 @@
+@import '~src/_variables.scss';
+
+mat-card {
+  max-width: $pageWidth;
+  margin: {
+    bottom: $marginL;
+    left: auto;
+    right: auto;
+  }
+}
+
+.progress {
+  margin-bottom: $marginM;
+  text-align: center;
+
+  &:nth-of-type(2) {
+    border-top: 1px solid $background;
+    padding-top: $marginL;
+  }
+}
+
+.details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: $marginS;
+
+  span + span {
+    margin-left: $marginXS;
+  }
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  a,
+  button {
+    margin: $marginXS;
+  }
+}
+
+.spinner {
+  display: flex;
+  padding-top: 10vh;
+  justify-content: center;
+}
