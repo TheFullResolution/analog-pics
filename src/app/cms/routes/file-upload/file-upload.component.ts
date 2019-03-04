@@ -5,8 +5,13 @@ import { UploadState } from './services/file-upload.types'
 
 @Component({
   selector: 'app-file-upload',
-  template: `<app-upload-card *ngIf="!(uploadState$ | async).active"></app-upload-card>
-             <app-progress-card *ngIf="(uploadState$ | async).active"></app-progress-card>`,
+  template: `
+    <div class="container">
+      <app-upload-card *ngIf="!(uploadState$ | async).active"></app-upload-card>
+      <app-progress-card *ngIf="(uploadState$ | async).active">
+      </app-progress-card>
+    </div>
+  `,
   styleUrls: ['./file-upload.component.scss'],
 })
 export class FileUploadComponent implements OnInit {

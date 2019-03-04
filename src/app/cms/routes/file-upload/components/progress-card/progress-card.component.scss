@@ -35,7 +35,14 @@ mat-card {
   flex-wrap: wrap;
   justify-content: center;
 
+  a,
   button {
     margin: $marginXS;
   }
+}
+
+.spinner {
+  display: flex;
+  padding-top: 10vh;
+  justify-content: center;
 }

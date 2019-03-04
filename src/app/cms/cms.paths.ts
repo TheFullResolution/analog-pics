@@ -9,7 +9,7 @@ export const RoutPath = strEnumHelper([
 ])
 export type RoutPath = keyof typeof RoutPath
 
-export const getFullPath = (path_string: RoutPath) => `${BASE}/${path_string}`
+export const getFullPath = (path_string: RoutPath) => `/${BASE}/${path_string}`
 
 export interface RouteName {
   path: RoutPath
