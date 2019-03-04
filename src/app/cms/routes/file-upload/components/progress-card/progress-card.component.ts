@@ -4,8 +4,8 @@ import { UploadTaskSnapshot } from '@angular/fire/storage/interfaces'
 import { Controls, UploadState } from '../../services/file-upload.types'
 import { StorageService } from '../../services/storage.service'
 import { UploadStateService } from '../../services/upload-state.service'
-import { routeNames } from 'src/app/cms/cms-routing.module';
-import { RoutPath, getFullPath } from 'src/app/cms/cms.paths';
+import { routeNames } from 'src/app/cms/cms-routing.module'
+import { RoutPath, getFullPath } from 'src/app/cms/cms.paths'
 
 @Component({
   selector: 'app-progress-card',
@@ -17,7 +17,6 @@ export class ProgressCardComponent implements OnInit {
   fileProgress$: Observable<number>
   uploadState$: Observable<UploadState>
   controls: typeof Controls
-
 
   pathToPublish = routeNames.find(el => el.path === RoutPath.publish)
   getFullPath = getFullPath
