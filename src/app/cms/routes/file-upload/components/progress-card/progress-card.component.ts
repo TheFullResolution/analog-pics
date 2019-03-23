@@ -41,7 +41,7 @@ export class ProgressCardComponent implements OnInit {
   isPaused = (snapshot: UploadTaskSnapshot) => snapshot.state === 'paused'
 
   closePanel = () => {
-    this.state.resetState()
+    this.state.dispatch({type: 'reset'})
   }
 
   control = (command: Controls) => {

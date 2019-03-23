@@ -20,7 +20,7 @@
 
         <div class="progress">
           <h2>Total Progress</h2>
-          <p>File Count: {{ state.filesUploaded }} / {{ state.filesCount }}</p>
+          <p>File Count: {{ state.currentFileCount }} / {{ state.filesCount }}</p>
           <div class="details">
             <span>Processed:{{ state.progress | number: '1.2-2' }}%</span>
             <span
@@ -46,7 +46,7 @@
             (click)="control(controls.cancel)"
             mat-raised-button
             color="warn"
-            [disabled]="!isActive(snap)"
+            [disabled]="!isPaused(snap)"
           >
             Cancel
           </button>

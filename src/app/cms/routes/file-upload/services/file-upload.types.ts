@@ -3,9 +3,9 @@ import { strEnumHelper } from '../../../utils/strEnumHelper'
 export interface UploadState {
   active: boolean
   baseTransferred: number
+  currentFileCount: number
   currentFileName: string
   filesCount: number
-  filesUploaded: number
   progress: number
   size: number
   transferred: number

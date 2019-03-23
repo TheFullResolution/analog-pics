@@ -1,7 +1,7 @@
 import { Observable, Observer, TeardownLogic } from 'rxjs'
 
 export const checkFileType = (file: File): Observable<File> =>
-  Observable.create(
+  new Observable(
     (observer: Observer<File>): TeardownLogic => {
       if (file.type.split('/')[0] !== 'image') {
         observer.error('unsupported file type :( ')
