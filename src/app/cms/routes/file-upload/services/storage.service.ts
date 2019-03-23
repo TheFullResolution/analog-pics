@@ -3,14 +3,8 @@ import {
   AngularFireStorage,
   AngularFireUploadTask,
 } from '@angular/fire/storage'
-import {
-  from,
-  Observable,
-  Subject,
-  Observer,
-  TeardownLogic,
-} from 'rxjs'
-import { concatMap, catchError, takeUntil } from 'rxjs/operators'
+import { from, Observable, Subject, Observer, TeardownLogic } from 'rxjs'
+import { concatMap, takeUntil } from 'rxjs/operators'
 import { UploadTaskSnapshot } from '@angular/fire/storage/interfaces'
 import { Controls } from './file-upload.types'
 import { HTMLFileInputEvent } from '../../../utils/drop-zone.directive'
@@ -45,7 +39,7 @@ export class StorageService implements OnDestroy {
 
     const files = Array.from(event.target.files)
 
-    this.state.initializeUpload(files)
+    this.state.dispatch({ type: 'start-upload', payload: files })
 
     from(files)
       .pipe(
@@ -56,7 +50,10 @@ export class StorageService implements OnDestroy {
       )
       .subscribe(
         el => {
-          this.state.updateAfterFileUpload(el.bytesTransferred)
+          this.state.dispatch({
+            type: 'file-uploaded',
+            payload: el.bytesTransferred,
+          })
         },
         error => {
           console.log(error)
@@ -67,10 +64,11 @@ export class StorageService implements OnDestroy {
   }
 
   pushUpload(file: File): Observable<UploadTaskSnapshot> {
-    return new Observable (
+    return new Observable(
       (observer: Observer<UploadTaskSnapshot>): TeardownLogic => {
-        this.state.updateState({
-          currentFileName: file.name,
+        this.state.dispatch({
+          type: 'set-fileName',
+          payload: file.name,
         })
 
         this._task = this.storage.upload(file.name, file)
@@ -94,7 +92,10 @@ export class StorageService implements OnDestroy {
     this._task.snapshotChanges().subscribe(el => {
       this._snapshot.next(el)
 
-      this.state.updateSize(el.bytesTransferred)
+      this.state.dispatch({
+        type: 'snapshot',
+        payload: el.bytesTransferred,
+      })
     })
 
     this._task.percentageChanges().subscribe(el => {
@@ -110,7 +111,7 @@ export class StorageService implements OnDestroy {
       case Controls.cancel:
         this._task.cancel()
         this._terminateUpload.next(true)
-        this.state.resetState()
+        this.state.dispatch({type: 'reset'})
         break
       case Controls.resume:
         this._task.resume()
