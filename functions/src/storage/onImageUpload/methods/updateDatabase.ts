@@ -9,23 +9,26 @@ interface UpdateDatabase {
   filesArray: FilesArray
   fileName: string
   fireStore: Firestore
+  bucketName: string
   PATH: string
 }
 
 export const updateDatabase = async ({
+  bucketName,
   filesArray,
   fileName,
   fireStore,
   PATH,
 }: UpdateDatabase) => {
   const thumbsArray = filesArray.map(({ thumbName, ...rest }) => {
-    const bucketName = join(PATH, thumbName)
+    const pathAndName = join(PATH, thumbName)
 
-    return { ...rest, name: bucketName }
+    return { ...rest, name: pathAndName }
   })
 
   const upload: SharedTypes.DataBaseEntry = {
     name: fileName,
+    bucket: bucketName,
     published: false,
     uploaded: admin.firestore.FieldValue.serverTimestamp(),
     thumbs: thumbsArray,

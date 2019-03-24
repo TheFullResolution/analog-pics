@@ -1,6 +1,6 @@
 import * as functions from 'firebase-functions'
 import * as corsCreator from 'cors'
-import { Admin, CONSTS } from '../index'
+import { Admin, CONSTS, SharedTypes } from '../index'
 import {
   initPhotosDataBase,
   photosDataBase,
@@ -19,6 +19,8 @@ const ONE_DAY_S = 24 * ONE_HOUR_S
 interface Photos {
   admin: Admin
 }
+
+type DataBaseField = keyof SharedTypes.DataBaseEntry
 
 initPhotosDataBase()
 
@@ -51,16 +53,21 @@ export const photos = ({ admin }: Photos) =>
         return res.status(200).json({ database: photosDataBase })
       }
 
+      const where: DataBaseField = 'published'
+      const orderBy: DataBaseField = 'uploaded'
+
       const collection = await admin
         .firestore()
         .collection(CONSTS.COLLECTION)
-        .where('published', '==', true)
+        .where(where, '==', true)
+        .orderBy(orderBy)
         .get()
 
       const newData: any = []
 
       collection.forEach(doc => {
-        newData.push({ ...doc.data(), id: doc.id })
+        const { bucket, ...data } = doc.data()
+        newData.push({ ...data, id: doc.id })
       })
 
       updatePhotosDataBase({

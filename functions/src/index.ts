@@ -40,4 +40,10 @@ export const onImageUpload = storageFunctions.onImageUpload({
   fireStore,
   runtimeOpts,
 })
+
+export const OnDelete = storageFunctions.onDelete({
+  storage,
+  runtimeOpts,
+})
+
 export const photos = photosFunction({ admin })

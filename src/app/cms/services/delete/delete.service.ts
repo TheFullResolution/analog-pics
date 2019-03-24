@@ -3,16 +3,16 @@ import { AngularFirestore } from '@angular/fire/firestore'
 import types from '_types_'
 import consts from '_consts_'
 import { from, BehaviorSubject } from 'rxjs'
-import { concatMap, map } from 'rxjs/operators'
+import { concatMap } from 'rxjs/operators'
 
 @Injectable()
-export class PublishService {
+export class DeleteService {
   private _processing: BehaviorSubject<boolean> = new BehaviorSubject(false)
   public processing$ = this._processing.asObservable()
 
   constructor(private db: AngularFirestore) {}
 
-  publishPictures = ({
+  deletePictures = ({
     pics,
     callback,
   }: {
@@ -20,11 +20,10 @@ export class PublishService {
     callback: () => void
   }) => {
     this._processing.next(true)
+    console.log({ pics })
+
     from(pics)
-      .pipe(
-        map(pic => ({ ...pic, published: true })),
-        concatMap(pic => from(this.updateFirebase(pic))),
-      )
+      .pipe(concatMap(pic => from(this.deleteFromFirebase(pic))))
       .subscribe({
         complete: () => {
           this._processing.next(false)
@@ -33,11 +32,11 @@ export class PublishService {
       })
   }
 
-  updateFirebase = (pic: types.DataBaseEntryWithId) => {
+  deleteFromFirebase = (pic: types.DataBaseEntryWithId) => {
     const document = this.db.doc<types.DataBaseEntry>(
       `${consts.COLLECTION}/${pic.id}`,
     )
 
-    return document.update(pic)
+    return document.delete()
   }
 }

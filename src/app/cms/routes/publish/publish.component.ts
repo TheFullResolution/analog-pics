@@ -6,6 +6,7 @@ import { UnpublishedService } from './service/unpublished.service'
 import { fadeInOut } from '../../animations/fadeInOut'
 import { take, map, takeUntil } from 'rxjs/operators'
 import { PublishService } from './service/publish.service'
+import { DeleteService } from '../../services/delete/delete.service'
 
 @Component({
   animations: [fadeInOut()],
@@ -19,13 +20,15 @@ export class PublishComponent implements OnInit, OnDestroy {
   loadingUnpublished$: Observable<boolean>
   anySelected$: Observable<boolean>
   processingPublishing: boolean
+  processingDeleting: boolean
   selection$: Observable<type.DataBaseEntryWithId[]>
   unpublished$: Observable<type.DataBaseEntryWithId[]>
 
   constructor(
-    private unpublishedService: UnpublishedService,
+    private deleteService: DeleteService,
     private publishService: PublishService,
     private selectService: SelectService,
+    private unpublishedService: UnpublishedService,
   ) {}
 
   ngOnInit() {
@@ -34,10 +37,17 @@ export class PublishComponent implements OnInit, OnDestroy {
     this.selection$ = this.selectService.getSelectionData()
     this.unpublished$ = this.unpublishedService.unpublished$
     this.loadingUnpublished$ = this.unpublishedService.loading$
+
     this.publishService.processing$
       .pipe(takeUntil(this._ngUnsubscribe))
       .subscribe(status => {
         this.processingPublishing = status
+      })
+
+    this.deleteService.processing$
+      .pipe(takeUntil(this._ngUnsubscribe))
+      .subscribe(status => {
+        this.processingDeleting = status
       })
   }
 
@@ -67,9 +77,20 @@ export class PublishComponent implements OnInit, OnDestroy {
   }
 
   publishSelection = () => {
-    this.publishService.publishPictures(
-      this.selectService.getCurrentSelection(),
-    )
-    this.selectService.clearSelection()
+    this.publishService.publishPictures({
+      pics: this.selectService.getCurrentSelection(),
+      callback: () => {
+        this.selectService.clearSelection()
+      },
+    })
+  }
+
+  deleteSelection = () => {
+    this.deleteService.deletePictures({
+      pics: this.selectService.getCurrentSelection(),
+      callback: () => {
+        this.selectService.clearSelection()
+      },
+    })
   }
 }

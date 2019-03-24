@@ -28,6 +28,7 @@ export interface DataBaseImageObject {
 
 export interface DataBaseEntry {
   name: string;
+  bucket: string;
   published: boolean;
   uploaded: any;
   thumbs: DataBaseImageObject[];

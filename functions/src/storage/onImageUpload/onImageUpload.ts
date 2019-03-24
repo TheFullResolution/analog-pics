@@ -41,7 +41,7 @@ export const onImageUpload = ({
 
       const filePath = object.name
       const newFileName = getFileName()
-
+      const bucketName = object.bucket
       const bucket = storage.bucket(object.bucket)
 
       const tempLocalDir = join(tmpdir(), 'thumbs')
@@ -77,6 +77,7 @@ export const onImageUpload = ({
       await Promise.all(generateAndUpload)
 
       await updateDatabase({
+        bucketName,
         filesArray: filesToGenerate,
         fileName: newFileName,
         fireStore,
