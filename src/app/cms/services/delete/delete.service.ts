@@ -12,13 +12,22 @@ export class DeleteService {
 
   constructor(private db: AngularFirestore) {}
 
-  deletePictures = (pics: types.DataBaseEntryWithId[]) => {
+  deletePictures = ({
+    pics,
+    callback,
+  }: {
+    pics: types.DataBaseEntryWithId[]
+    callback: () => void
+  }) => {
     this._processing.next(true)
+    console.log({ pics })
+
     from(pics)
       .pipe(concatMap(pic => from(this.deleteFromFirebase(pic))))
       .subscribe({
         complete: () => {
           this._processing.next(false)
+          callback()
         },
       })
   }

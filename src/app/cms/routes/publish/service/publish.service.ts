@@ -12,7 +12,13 @@ export class PublishService {
 
   constructor(private db: AngularFirestore) {}
 
-  publishPictures = (pics: types.DataBaseEntryWithId[]) => {
+  publishPictures = ({
+    pics,
+    callback,
+  }: {
+    pics: types.DataBaseEntryWithId[]
+    callback: () => void
+  }) => {
     this._processing.next(true)
     from(pics)
       .pipe(
@@ -22,6 +28,7 @@ export class PublishService {
       .subscribe({
         complete: () => {
           this._processing.next(false)
+          callback()
         },
       })
   }
