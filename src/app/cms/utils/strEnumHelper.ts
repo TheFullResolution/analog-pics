@@ -1,5 +1,5 @@
-export function strEnumHelper<T extends string>(o: Array<T>): { [K in T]: K } {
-  return o.reduce((res, key) => {
+export function strEnumHelper<T extends string>(listToProcess: Array<T>): { [K in T]: K } {
+  return listToProcess.reduce((res, key) => {
     res[key] = key
     return res
   }, Object.create(null))

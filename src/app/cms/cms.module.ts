@@ -17,7 +17,8 @@ import { ImageSelectorComponent } from './components/image-selector/image-select
 import { ImageComponent } from './components/image/image.component'
 import { InputFileComponent } from './components/input-file/input-file.component'
 import { PictureGridComponent } from './components/picture-grid/picture-grid.component'
-import { SidenavListComponent } from './components/sidenav-list/sidenav-list.component'
+import { SidenavListComponent } from './components/sidenav/sidenav-list/sidenav-list.component'
+import { SidenavComponent } from './components/sidenav/sidenav.component'
 import { MaterialModule } from './material.module'
 import { CmsComponent } from './root/cms.component'
 import { DashboardComponent } from './routes/dashboard/dashboard.component'
@@ -49,6 +50,7 @@ import { HoverDirective } from './utils/hover.directive'
     FileUploadComponent,
     HeaderComponent,
     ImageComponent,
+    SidenavComponent,
     ImageSelectorComponent,
     InputFileComponent,
     LoginComponent,

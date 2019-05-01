@@ -1,4 +1,4 @@
-import { Subscription, Subject } from 'rxjs'
+import { Subject } from 'rxjs'
 import {
   Component,
   OnInit,
@@ -28,7 +28,6 @@ import { takeUntil } from 'rxjs/operators'
 })
 export class PictureGridComponent implements OnInit, OnDestroy {
   private _ngUnsubscribe = new Subject()
-  breakpoints: Subscription
   gridCols = 1
 
   @ContentChild(TemplateRef) itemTemplate: TemplateRef<any>
@@ -45,7 +44,7 @@ export class PictureGridComponent implements OnInit, OnDestroy {
   }
 
   listenToBreakPoints() {
-    this.breakpoints = this.breakpointObserver
+    this.breakpointObserver
       .observe([
         Breakpoints.Small,
         Breakpoints.Medium,

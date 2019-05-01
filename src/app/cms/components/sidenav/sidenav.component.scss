@@ -1,0 +1,12 @@
+@import '~src/_variables.scss';
+
+mat-sidenav-container,
+mat-sidenav-content,
+mat-sidenav {
+  height: 100%;
+}
+
+mat-sidenav {
+  background-color: $light-grey;
+  width: 250px;
+}

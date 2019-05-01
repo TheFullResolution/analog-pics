@@ -1,5 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core'
-import { routeNames } from '../../cms-routing.module'
+import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core'
+import { routeNames } from '../../../cms-routing.module'
 import { RouteName } from 'src/app/cms/cms.paths'
 
 @Component({
@@ -10,6 +10,7 @@ import { RouteName } from 'src/app/cms/cms.paths'
 export class SidenavListComponent implements OnInit {
   public routes: RouteName[]
   @Output() closeSidenav = new EventEmitter<void>()
+  @Input() desktop = false
 
   constructor() {
     this.routes = routeNames.filter(el => el.auth)
@@ -18,6 +19,8 @@ export class SidenavListComponent implements OnInit {
   ngOnInit() {}
 
   onClose() {
-    this.closeSidenav.emit()
+    if (!this.desktop) {
+      this.closeSidenav.emit()
+    }
   }
 }
