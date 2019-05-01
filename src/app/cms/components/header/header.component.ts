@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core'
 import { AuthService } from '../../services/auth/auth.service'
 import { Store } from '@ngrx/store'
 import { Observable } from 'rxjs'
@@ -12,6 +12,7 @@ import { getIsAuth } from '../../state/state.selectors'
 })
 export class HeaderComponent implements OnInit {
   @Output() sidenavToggle = new EventEmitter<void>()
+  @Input() sidenavState: Boolean
   isAuth$: Observable<boolean>
 
   constructor(

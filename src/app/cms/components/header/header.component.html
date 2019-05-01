@@ -2,7 +2,7 @@
   <mat-toolbar-row class="row">
     <button *ngIf="(isAuth$ | async)" (click)="onToggleSideNav()"
       mat-icon-button class="nav">
-      <mat-icon>menu</mat-icon>
+      <mat-icon>{{sidenavState ? 'close' : 'menu'}}</mat-icon>
     </button>
     <a routerLink="/" class="heading">
       <h1>
