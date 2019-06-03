@@ -6,7 +6,7 @@ import { Observable } from 'rxjs'
 
 @Component({
   selector: 'app-image-selector',
-  animations: [fadeInOut()],
+  animations: [fadeInOut],
   template: `
     <div
       class="wrapper"
