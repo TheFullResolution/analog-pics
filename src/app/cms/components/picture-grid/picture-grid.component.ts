@@ -30,7 +30,7 @@ export class PictureGridComponent implements OnInit, OnDestroy {
   private _ngUnsubscribe = new Subject()
   gridCols = 1
 
-  @ContentChild(TemplateRef) itemTemplate: TemplateRef<any>
+  @ContentChild(TemplateRef, { static: false }) itemTemplate: TemplateRef<any>
   @Input() images: type.DataBaseEntry[]
 
   constructor(private breakpointObserver: BreakpointObserver) {}
