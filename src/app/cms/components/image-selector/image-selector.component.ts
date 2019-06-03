@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core'
 import type from '_types_'
 import { fadeInOut } from '../../animations/fadeInOut'
-import { MatCheckboxChange } from '@angular/material'
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { Observable } from 'rxjs'
 
 @Component({
