@@ -39,7 +39,6 @@ export class UnpublishedService implements OnDestroy {
           })
           return newList
         }),
-        map(el => el),
         takeUntil(this._ngUnsubscribe),
       )
       .subscribe({
@@ -66,7 +65,10 @@ export class UnpublishedService implements OnDestroy {
         ...obj,
         thumbs,
       })),
-      reduce<type.DataBaseEntryWithId>((acc, val) => [...acc, val], []),
+      reduce<type.DataBaseEntryWithId, type.DataBaseEntryWithId[]>(
+        (acc, val) => [...acc, val],
+        [],
+      ),
     )
   }
   private updateThumbsWithUrl = (thumbs: type.DataBaseImageObject[]) =>
@@ -79,7 +81,10 @@ export class UnpublishedService implements OnDestroy {
         return combineLatest(downloadUrl$, from([thumb]))
       }),
       map(([downloadUrl, thumb]) => ({ ...thumb, downloadUrl })),
-      reduce<type.DataBaseImageObject>((acc, thumb) => [...acc, thumb], []),
+      reduce<type.DataBaseImageObject, type.DataBaseImageObject[]>(
+        (acc, thumb) => [...acc, thumb],
+        [],
+      ),
     )
 
   private getDownloadUrl = (location: string) =>

@@ -9,7 +9,7 @@ import { PublishService } from './service/publish.service'
 import { DeleteService } from '../../services/delete/delete.service'
 
 @Component({
-  animations: [fadeInOut()],
+  animations: [fadeInOut],
   selector: 'app-publish',
   templateUrl: './publish.component.html',
   styleUrls: ['./publish.component.scss'],
