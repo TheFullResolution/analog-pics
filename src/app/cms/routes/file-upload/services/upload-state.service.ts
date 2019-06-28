@@ -54,7 +54,9 @@ const fileUpload = (
   bytesTransferred: number,
   state: UploadState,
 ): Partial<UploadState> => {
-  const currentFileCount = state.currentFileCount + 1
+  const currentFileCount = (state.filesCount = state.currentFileCount
+    ? state.currentFileCount
+    : state.currentFileCount + 1)
   const baseTransferred = state.baseTransferred + bytesTransferred
   return { currentFileCount, baseTransferred }
 }
