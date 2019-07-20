@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core'
-import { HomeComponent } from './components/routes/home/home.component'
-import { GridComponent } from './components/routes/home/grid/grid.component'
-import { HeaderComponent } from './components/common/header/header.component'
-import { GalleryComponent } from './components/gallery-root/gallery.component'
+import { HomeComponent } from './routes/home/home.component'
+import { GridComponent } from './components/grid/grid.component'
+import { HeaderComponent } from './components/header/header.component'
+import { GalleryComponent } from './gallery.component'
 import { GalleryRoutingModule } from './gallery-routing.module'
 import { HttpClientModule } from '@angular/common/http'
 
