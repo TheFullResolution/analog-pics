@@ -9,26 +9,28 @@
     "deploy": "rm -rf lib && firebase deploy --only functions",
     "logs": "firebase functions:log"
   },
+  "engines": {
+    "node": "10"
+  },
   "main": "lib/index.js",
   "dependencies": {
     "@google-cloud/storage": "2.5.0",
     "@types/mime-types": "2.1.0",
+    "@types/ms": "0.7.30",
     "cors": "2.8.5",
     "firebase-admin": "8.2.0",
-    "firebase-functions": "3.0.2",
-    "fs-extra": "8.0.1",
+    "firebase-functions": "3.1.0",
+    "fs-extra": "8.1.0",
     "mime-types": "2.1.24",
-    "request": "^2.88.0",
+    "ms": "2.1.2",
+    "request": "2.88.0",
     "sharp": "0.22.1"
-  },
-  "engines": {
-    "node": "8"
   },
   "devDependencies": {
     "@types/fs-extra": "8.0.0",
     "@types/sharp": "0.22.2",
     "tslint": "5.18.0",
-    "typescript": "3.5.2"
+    "typescript": "3.5.3"
   },
   "private": true
 }

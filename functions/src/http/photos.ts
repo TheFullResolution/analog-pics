@@ -1,5 +1,7 @@
 import * as functions from 'firebase-functions'
 import * as corsCreator from 'cors'
+//@ts-ignore
+import * as ms from 'ms'
 import { Admin, CONSTS, SharedTypes } from '../index'
 import {
   initPhotosDataBase,
@@ -10,11 +12,6 @@ import {
 
 const cors = corsCreator({ origin: true })
 
-const ONE_HOUR_MS = 3600000
-const ONE_MINUTE_S = 60
-const TEN_MINUTE_S = 10 * ONE_MINUTE_S
-const ONE_HOUR_S = 60 * ONE_MINUTE_S
-const ONE_DAY_S = 24 * ONE_HOUR_S
 
 interface Photos {
   admin: Admin
@@ -41,13 +38,13 @@ export const photos = ({ admin }: Photos) =>
 
       res.set(
         'Cache-Control',
-        `public, max-age=${ONE_MINUTE_S}, s-maxage=${ONE_MINUTE_S}`,
+        `public, max-age=${ms('1 min')}, s-maxage=${ms('1 min')}`,
       )
 
       if (
         photosDataBase.items &&
         photosDataBase.items.length > 0 &&
-        elapsed(photosDataBase.date) < ONE_HOUR_MS
+        elapsed(photosDataBase.date) < ms('1 min')
       ) {
         console.log('CASHED')
         return res.status(200).json({ database: photosDataBase })

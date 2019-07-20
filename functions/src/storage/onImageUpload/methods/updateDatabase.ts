@@ -1,4 +1,3 @@
-//@ts-ignore
 import * as admin from 'firebase-admin'
 
 import { FilesArray } from './generateFileNames'
