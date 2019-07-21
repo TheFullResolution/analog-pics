@@ -1,11 +1,8 @@
-export type PhotosDataBase = {
-  date: string,
-  items: null | Array<Object>,
-}
+import { HttpGetResponse } from '../_types_';
 
 export const photosDataBaseDefault = {
   date: '',
-  items: null,
+  items: [],
 }
 
 export const enum UpdateType {
@@ -13,27 +10,29 @@ export const enum UpdateType {
   update = 'update',
 }
 
-export type UpdateTypes = UpdateType.reset | UpdateType.update
-
-interface UpdatePhotosDataBase {
-  type: UpdateTypes
-  payload?: any
+interface UpdatePhotosReset {
+  type: UpdateType.reset
+}
+interface UpdatePhotosUpdate {
+  type: UpdateType.update
+  payload: HttpGetResponse
 }
 
-const photosDataBaseReducer = ({ type, payload }: UpdatePhotosDataBase) => {
-  switch (type) {
+const photosDataBaseReducer = (update: UpdatePhotosUpdate | UpdatePhotosReset) => {
+  switch (update.type) {
     case UpdateType.reset:
       return photosDataBaseDefault
 
     case UpdateType.update:
-      return payload
+      return update.payload
 
     default:
       return photosDataBaseDefault
   }
 }
 
-export let photosDataBase: PhotosDataBase
+export let photosDataBase: HttpGetResponse
+
 
 export const initPhotosDataBase = () => {
   photosDataBase = { ...photosDataBaseDefault }

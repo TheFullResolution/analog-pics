@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module'
 import { GalleryModule } from './gallery/gallery.module'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
