@@ -1,21 +1,14 @@
-import { Component, OnInit } from '@angular/core'
-import { HttpClient } from '@angular/common/http'
+import { Component, OnInit } from '@angular/core';
+import { GetPhotosService } from './services/get-photos.service';
 
 @Component({
   selector: 'app-gallery',
   templateUrl: './gallery.component.html',
-  styleUrls: ['./gallery.component.scss'],
 })
 export class GalleryComponent implements OnInit {
-  constructor(private http: HttpClient) {}
+  constructor(private getPhotos: GetPhotosService) {}
 
   ngOnInit() {
-    console.log('start')
-
-    this.http
-      .get('https://us-central1-analog-pics-a1a3b.cloudfunctions.net/photos')
-      .subscribe(el => {
-        console.log(el)
-      })
+    this.getPhotos.callFirebase()
   }
 }

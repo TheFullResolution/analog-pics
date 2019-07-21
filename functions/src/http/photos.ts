@@ -8,7 +8,7 @@ import {
   photosDataBase,
   updatePhotosDataBase,
   UpdateType,
-} from '../database'
+} from './database'
 
 const cors = corsCreator({ origin: true })
 
@@ -38,7 +38,7 @@ export const photos = ({ admin }: Photos) =>
 
       res.set(
         'Cache-Control',
-        `public, max-age=${ms('1 min')}, s-maxage=${ms('1 min')}`,
+        `public, max-age=${ms('1 min') / 1000}, s-maxage=${ms('1 min') / 1000}`,
       )
 
       if (
@@ -47,7 +47,7 @@ export const photos = ({ admin }: Photos) =>
         elapsed(photosDataBase.date) < ms('1 min')
       ) {
         console.log('CASHED')
-        return res.status(200).json({ database: photosDataBase })
+        return res.status(200).json({ ...photosDataBase })
       }
 
       const where: DataBaseField = 'published'
@@ -77,6 +77,6 @@ export const photos = ({ admin }: Photos) =>
 
       console.log('NOT CASHED')
 
-      return res.status(200).json({ images: photosDataBase })
+      return res.status(200).json({ ...photosDataBase })
     })
   })

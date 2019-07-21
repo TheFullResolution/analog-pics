@@ -1,3 +1,7 @@
-<p>
-  grid works!
-</p>
+<ng-container *ngIf="photos$ | async as images">
+  <ul class="list">
+    <li *ngFor="let image of images">
+      <app-image [image]="image"></app-image>
+    </li>
+  </ul>
+</ng-container>

@@ -9,12 +9,11 @@ import {
 import { AngularFireStorageModule } from '@angular/fire/storage'
 import { FormsModule } from '@angular/forms'
 import { StoreModule } from '@ngrx/store'
-
 import { environment } from '../../environments/environment'
+import { SharedModule } from '../shared/shared.module'
 import { CmsRoutingModule } from './cms-routing.module'
 import { HeaderComponent } from './components/header/header.component'
 import { ImageSelectorComponent } from './components/image-selector/image-selector.component'
-import { ImageComponent } from './components/image/image.component'
 import { InputFileComponent } from './components/input-file/input-file.component'
 import { PictureGridComponent } from './components/picture-grid/picture-grid.component'
 import { SidenavListComponent } from './components/sidenav/sidenav-list/sidenav-list.component'
@@ -49,7 +48,6 @@ import { HoverDirective } from './utils/hover.directive'
     FileSizePipe,
     FileUploadComponent,
     HeaderComponent,
-    ImageComponent,
     SidenavComponent,
     ImageSelectorComponent,
     InputFileComponent,
@@ -69,6 +67,7 @@ import { HoverDirective } from './utils/hover.directive'
     FormsModule,
     MaterialModule,
     CommonModule,
+    SharedModule,
     CmsRoutingModule,
   ],
   providers: [

@@ -38,3 +38,7 @@ export type DataBaseEntryWithId = {
   id: string
 } & DataBaseEntry;
 
+export type HttpGetResponse = {
+  date: string,
+  items: DataBaseEntryWithId[]
+}

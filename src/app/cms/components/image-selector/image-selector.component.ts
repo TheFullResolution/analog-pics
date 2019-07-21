@@ -1,8 +1,7 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core'
-import type from '_types_'
-import { fadeInOut } from '../../animations/fadeInOut'
-import { MatCheckboxChange } from '@angular/material/checkbox';
-import { Observable } from 'rxjs'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Observable } from 'rxjs';
+import type from '_types_';
+import { fadeInOut } from '../../animations/fadeInOut';
 
 @Component({
   selector: 'app-image-selector',

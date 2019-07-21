@@ -10,7 +10,7 @@ import { getFileName } from './methods/getFileName'
 import { generateFileNames } from './methods/generateFileNames'
 import { updateDatabase } from './methods/updateDatabase'
 import { Firestore, Storage, RuntimeOptions, CONSTS, SharedTypes } from '../..'
-import { updatePhotosDataBase, UpdateType } from '../../database'
+import { updatePhotosDataBase, UpdateType } from '../../http/database'
 
 interface OnImageUpload {
   fireStore: Firestore
