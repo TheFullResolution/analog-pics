@@ -24,7 +24,6 @@ import { takeUntil } from 'rxjs/operators'
       </mat-grid-tile>
     </mat-grid-list>
   `,
-  styleUrls: ['./picture-grid.component.scss'],
 })
 export class PictureGridComponent implements OnInit, OnDestroy {
   private _ngUnsubscribe = new Subject()
