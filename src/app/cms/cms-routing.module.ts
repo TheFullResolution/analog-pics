@@ -1,12 +1,12 @@
-import { NgModule, ComponentRef } from '@angular/core'
-import { RouterModule, Routes } from '@angular/router'
-import { LoginComponent } from './routes/login/login.component'
-import { DashboardComponent } from './routes/dashboard/dashboard.component'
-import { AuthGuard } from './services/auth/auth.guard'
-import { CmsComponent } from './root/cms.component'
-import { FileUploadComponent } from './routes/file-upload/file-upload.component'
-import { PublishComponent } from './routes/publish/publish.component'
-import { RouteName, RoutPath } from './cms.paths'
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { RouteName, RoutPath } from './cms.paths';
+import { CmsComponent } from './root/cms.component';
+import { DashboardComponent } from './routes/dashboard/dashboard.component';
+import { FileUploadComponent } from './routes/file-upload/file-upload.component';
+import { LoginComponent } from './routes/login/login.component';
+import { PublishComponent } from './routes/publish/publish.component';
+import { AuthGuard } from './services/auth/auth.guard';
 
 export const routeNames: RouteName[] = [
   {
@@ -50,7 +50,7 @@ const routes: Routes = [
     path: '',
     component: CmsComponent,
     children: childrenRoutes,
-  },
+  }
 ]
 
 @NgModule({

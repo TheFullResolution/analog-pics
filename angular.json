@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "AnalogPics": {
+    "analog-pics": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/AnalogPics",
+            "outputPath": "dist/analog-pics",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -52,18 +52,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "AnalogPics:build"
+            "browserTarget": "analog-pics:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "AnalogPics:build:production"
+              "browserTarget": "analog-pics:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "AnalogPics:build"
+            "browserTarget": "analog-pics:build"
           }
         },
         "test": {
@@ -97,7 +97,7 @@
         }
       }
     },
-    "AnalogPics-e2e": {
+    "analog-pics-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -105,11 +105,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "AnalogPics:serve"
+            "devServerTarget": "analog-pics:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "AnalogPics:serve:production"
+              "devServerTarget": "analog-pics:serve:production"
             }
           }
         },
@@ -125,7 +125,7 @@
       }
     }
   },
-  "defaultProject": "AnalogPics",
+  "defaultProject": "analog-pics",
   "schematics": {
     "@schematics/angular:component": {
       "styleext": "scss"

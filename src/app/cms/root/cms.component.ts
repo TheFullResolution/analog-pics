@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core'
-import { AuthService } from '../services/auth/auth.service'
-import { DatabaseService } from '../services/database/database.service'
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../services/auth/auth.service';
 
 @Component({
   selector: 'app-cms',
@@ -10,7 +9,6 @@ import { DatabaseService } from '../services/database/database.service'
 export class CmsComponent implements OnInit {
   constructor(
     private authService: AuthService,
-    private databaseService: DatabaseService,
   ) {}
 
   ngOnInit() {

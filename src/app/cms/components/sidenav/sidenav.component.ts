@@ -31,9 +31,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
         Breakpoints.XLarge,
       ])
       .pipe(takeUntil(this._ngUnsubscribe))
-      .subscribe(result => {
-        console.log({result: result.breakpoints});
-        
+      .subscribe(result => {        
         if (
           result.breakpoints[Breakpoints.Medium] ||
           result.breakpoints[Breakpoints.Large]  ||
