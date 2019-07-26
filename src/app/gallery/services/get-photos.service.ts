@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core'
-import { Subject } from 'rxjs'
+import { Subject, BehaviorSubject } from 'rxjs'
 import types from '_types_'
 import { HttpClient } from '@angular/common/http'
 import { takeUntil, take, map } from 'rxjs/operators'
@@ -7,8 +7,11 @@ import { takeUntil, take, map } from 'rxjs/operators'
 @Injectable()
 export class GetPhotosService implements OnDestroy {
   private _ngUnsubscribe = new Subject()
+  private _loading = new BehaviorSubject<boolean>(false)
   private _photos: Subject<types.HttpGetResponse> = new Subject()
+
   public photos$ = this._photos.asObservable()
+  public loading$ = this._loading.asObservable()
 
   constructor(private http: HttpClient) {}
 
@@ -18,6 +21,7 @@ export class GetPhotosService implements OnDestroy {
   }
 
   callFirebase() {
+    this._loading.next(true)
     this.http
       .get<types.HttpGetResponse>(
         'https://us-central1-analog-pics-a1a3b.cloudfunctions.net/photos',
@@ -25,6 +29,7 @@ export class GetPhotosService implements OnDestroy {
       .pipe(takeUntil(this._ngUnsubscribe))
       .subscribe(el => {
         this._photos.next(el)
+        this._loading.next(false)
       })
   }
 

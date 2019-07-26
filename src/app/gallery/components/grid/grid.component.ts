@@ -10,9 +10,11 @@ import { Observable } from 'rxjs';
 })
 export class GridComponent implements OnInit {
   photos$: Observable<type.DataBaseEntryWithId[]>
+  loading$: Observable<boolean>
   constructor(private getPhotos: GetPhotosService) {}
 
   ngOnInit() {
     this.photos$ = this.getPhotos.getPhotosArray()
+    this.loading$ = this.getPhotos.loading$
   }
 }
