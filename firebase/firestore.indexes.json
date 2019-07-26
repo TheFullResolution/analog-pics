@@ -10,7 +10,7 @@
         },
         {
           "fieldPath": "uploaded",
-          "order": "ASCENDING"
+          "order": "DESCENDING"
         }
       ]
     }
