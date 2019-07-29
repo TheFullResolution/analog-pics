@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core'
-import { GetPhotosService } from '../../services/get-photos.service';
+import { Observable } from 'rxjs'
 import type from '_types_'
-import { Observable } from 'rxjs';
+import { GetPhotosService } from '../services/get-photos.service'
 
 @Component({
-  selector: 'app-grid',
-  templateUrl: './grid.component.html',
-  styleUrls: ['./grid.component.scss'],
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss'],
 })
-export class GridComponent implements OnInit {
+export class HomeComponent implements OnInit {
   photos$: Observable<type.DataBaseEntryWithId[]>
   loading$: Observable<boolean>
   constructor(private getPhotos: GetPhotosService) {}

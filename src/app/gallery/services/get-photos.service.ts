@@ -1,8 +1,8 @@
-import { Injectable, OnDestroy } from '@angular/core'
-import { Subject, BehaviorSubject } from 'rxjs'
-import types from '_types_'
 import { HttpClient } from '@angular/common/http'
-import { takeUntil, take, map } from 'rxjs/operators'
+import { Injectable, OnDestroy } from '@angular/core'
+import { BehaviorSubject, Subject } from 'rxjs'
+import { map, takeUntil, filter, flatMap } from 'rxjs/operators'
+import types from '_types_'
 
 @Injectable()
 export class GetPhotosService implements OnDestroy {
@@ -35,5 +35,12 @@ export class GetPhotosService implements OnDestroy {
 
   getPhotosArray() {
     return this.photos$.pipe(map(el => el.items))
+  }
+
+  getSpecificPhoto(picId: string) {
+    return this.getPhotosArray().pipe(
+      flatMap(el => el),
+      filter(el => el.id === picId),
+    )
   }
 }
