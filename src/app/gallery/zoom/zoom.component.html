@@ -1,3 +1,4 @@
-<ng-container *ngIf="currentPic$ | async as image">
-  <app-image [image]="image"></app-image>
+<ng-container *ngIf="currentData$ | async as data">
+  <app-image [image]="data.current"></app-image>
+  <a [routerLink]="['/zoom']" [queryParams]="{ picId: data.next.id }">NEXT</a>
 </ng-container>
