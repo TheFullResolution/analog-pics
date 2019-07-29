@@ -1,20 +1,26 @@
 import { Component, OnInit, Input } from '@angular/core'
 import type from '_types_'
+import 'lazysizes'
 
 @Component({
   selector: 'app-image',
   template: `
     <picture>
-      <source type="image/webp" [srcset]="webpSrcset" />
-      <source type="image/jpeg" [srcset]="jpegSrcset" />
-      <img [src]="defaultImg.downloadUrl" [alt]="defaultImg.name" />
+      <source type="image/webp" [attr.data-srcset]="webpSrcset" />
+      <source type="image/jpeg" [attr.data-srcset]="jpegSrcset" />
+      <img
+        data-sizes="auto"
+        [attr.data-src]="defaultImg.downloadUrl"
+        [alt]="defaultImg.name"
+        class="lazyload"
+      />
     </picture>
   `,
   styleUrls: ['./image.component.scss'],
 })
 export class ImageComponent implements OnInit {
   @Input() image: type.DataBaseEntryWithId
-  @Input() defaultSize: type.ImageSizeTypes = 'xs'
+  @Input() defaultSize: type.ImageSizeTypes = 'md'
 
   defaultImg: type.DataBaseImageObject
   webpSrcset: string

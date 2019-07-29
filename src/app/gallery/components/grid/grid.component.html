@@ -5,3 +5,6 @@
     </ng-template>
   </app-picture-grid>
 </ng-container>
+<div class="spinner">
+  <mat-spinner *ngIf="loading$ | async"></mat-spinner>
+</div>

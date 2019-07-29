@@ -1,12 +1,5 @@
-.list {
+.spinner {
   display: flex;
-  flex-wrap: wrap;
-  padding: 0;
-  list-style: none;
-
-  li {
-    flex-basis: calc(100%/3);
-    height: 180px;
-    position: relative;
-  }
+  padding-top: 10vh;
+  justify-content: center;
 }

@@ -57,7 +57,7 @@ export const photos = ({ admin }: Photos) =>
         .firestore()
         .collection(CONSTS.COLLECTION)
         .where(where, '==', true)
-        .orderBy(orderBy)
+        .orderBy(orderBy, "desc")
         .get()
 
       const newData: any = []
