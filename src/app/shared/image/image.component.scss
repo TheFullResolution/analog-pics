@@ -15,10 +15,11 @@ img {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  transition: filter 400ms;
 }
 
 @supports (object-fit: cover) {
-  .image {
+  img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -27,11 +28,23 @@ img {
   }
 }
 
-.lazyload {
-	opacity: 0;
+.lazyloaded {
+  opacity: 1;
 }
 
+.lazyload,
 .lazyloading {
-	opacity: 1;
-	transition: opacity 1000ms;
+  opacity: 0.1;
+}
+
+@supports (filter: blur()) {
+  .lazyloaded {
+    filter: blur(0);
+  }
+
+  .lazyload,
+  .lazyloading {
+    opacity: 1;
+    filter: blur(8px);
+  }
 }

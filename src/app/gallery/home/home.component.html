@@ -8,7 +8,7 @@
         [routerLink]="['/zoom']"
         [queryParams]="{ picId: image.id }"
       >
-        <app-image [image]="image"></app-image>
+        <app-image [image]="image" [imageId]="image.id"></app-image>
       </a>
     </ng-template>
   </app-picture-grid>

@@ -4,12 +4,6 @@ import { BehaviorSubject, Subject, from, combineLatest } from 'rxjs'
 import { map, takeUntil, filter, flatMap } from 'rxjs/operators'
 import types from '_types_'
 
-export type ZoomData = {
-  current: types.DataBaseEntryWithId
-  previous: types.DataBaseEntryWithId | null
-  next: types.DataBaseEntryWithId | null
-}
-
 @Injectable()
 export class GetPhotosService implements OnDestroy {
   private _ngUnsubscribe = new Subject()
@@ -41,28 +35,5 @@ export class GetPhotosService implements OnDestroy {
 
   getPhotosArray() {
     return this.photos$.pipe(map(el => el.items))
-  }
-
-  getSpecificPhoto(picId: string) {
-    return this.getPhotosArray().pipe(
-      flatMap(el => el),
-      filter(el => el.id === picId),
-    )
-  }
-
-  getZoomData(picId: string) {
-    return combineLatest([this.getPhotosArray(), from([picId])]).pipe(
-      map(([array, passId]) => {
-        const currentIndex = array.findIndex(el => el.id === passId)
-        const previous = currentIndex - 1 >= 0 ? array[currentIndex - 1] : null
-        const next =
-          currentIndex + 1 <= array.length ? array[currentIndex + 1] : null
-        return {
-          current: array[currentIndex],
-          previous,
-          next,
-        }
-      }),
-    )
   }
 }

@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { GetPhotosService } from './services/get-photos.service';
+import { Component, OnInit } from '@angular/core'
+import { GetPhotosService } from './services/get-photos.service'
 
 @Component({
   selector: 'app-gallery',
-  templateUrl: './gallery.component.html',
+  template: `
+    <router-outlet></router-outlet>
+  `,
 })
 export class GalleryComponent implements OnInit {
   constructor(private getPhotos: GetPhotosService) {}
