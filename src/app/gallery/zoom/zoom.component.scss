@@ -1,15 +1,26 @@
+@import '~src/_variables.scss';
+
+.container {
+  position: relative;
+  display: flex;
+}
+
+.image-container {
+  flex: 1 1 80%;
+}
+
+.link {
+  img {
+    height: 48px;
+    width: 48px;
+    color: white;
+  }
+}
+
+
 .prev {
-  position: absolute;
-  background-color: white;
   z-index: 1;
-  top: 0;
-  left: 0;
 }
 
 .next {
-  position: absolute;
-  background-color: white;
-  z-index: 1;
-  top: 0;
-  right: 0;
 }

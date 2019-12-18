@@ -1,19 +1,23 @@
 <ng-container *ngIf="currentData$ | async as data">
-  <a
-    [routerLink]="['/zoom']"
-    *ngIf="data.previous"
-    [queryParams]="{ picId: data.previous.id }"
-    class="prev"
-  >
-    PREV
-  </a>
-  <app-image [imageId]="data.current.id" [image]="data.current"></app-image>
-  <a
-    [routerLink]="['/zoom']"
-    *ngIf="data.next"
-    [queryParams]="{ picId: data.next.id }"
-    class="next"
-  >
-    NEXT
-  </a>
+  <div class="container">
+    <a
+      [routerLink]="['/zoom']"
+      *ngIf="data.previous"
+      [queryParams]="{ picId: data.previous.id }"
+      class="link prev"
+    >
+      <img src="assets/left.svg" alt="see previous image" />
+    </a>
+    <div class="image-container">
+      <app-image [imageId]="data.current.id" [image]="data.current"></app-image>
+    </div>
+    <a
+      [routerLink]="['/zoom']"
+      *ngIf="data.next"
+      [queryParams]="{ picId: data.next.id }"
+      class="link next"
+    >
+      <img src="assets/right.svg" alt="see next image" />
+    </a>
+  </div>
 </ng-container>
