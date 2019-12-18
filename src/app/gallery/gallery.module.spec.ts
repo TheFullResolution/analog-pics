@@ -1,13 +1,13 @@
-import { GalleryModule } from './gallery.module'
+import { GalleryModule } from './gallery.module';
 
 describe('GalleryModule', () => {
-  let galleryModule: GalleryModule
+  let galleryModule: GalleryModule;
 
   beforeEach(() => {
-    galleryModule = new GalleryModule()
-  })
+    galleryModule = new GalleryModule();
+  });
 
   it('should create an instance', () => {
-    expect(galleryModule).toBeTruthy()
-  })
-})
+    expect(galleryModule).toBeTruthy();
+  });
+});

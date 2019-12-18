@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -6,21 +6,22 @@ import { takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
-  styleUrls: ['./sidenav.component.scss']
+  styleUrls: ['./sidenav.component.scss'],
 })
 export class SidenavComponent implements OnInit, OnDestroy {
-  private _ngUnsubscribe = new Subject()
-  desktop = false
+  private _ngUnsubscribe = new Subject();
+  desktop = false;
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(private breakpointObserver: BreakpointObserver) {
+  }
 
   ngOnInit() {
-    this.listenToBreakPoints()
+    this.listenToBreakPoints();
   }
 
   ngOnDestroy() {
-    this._ngUnsubscribe.next()
-    this._ngUnsubscribe.complete()
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
   listenToBreakPoints() {
@@ -31,17 +32,17 @@ export class SidenavComponent implements OnInit, OnDestroy {
         Breakpoints.XLarge,
       ])
       .pipe(takeUntil(this._ngUnsubscribe))
-      .subscribe(result => {        
+      .subscribe(result => {
         if (
           result.breakpoints[Breakpoints.Medium] ||
-          result.breakpoints[Breakpoints.Large]  ||
+          result.breakpoints[Breakpoints.Large] ||
           result.breakpoints[Breakpoints.XLarge]
         ) {
-          this.desktop = true
+          this.desktop = true;
         } else {
-          this.desktop = false
+          this.desktop = false;
         }
-      })
+      });
   }
 
 }

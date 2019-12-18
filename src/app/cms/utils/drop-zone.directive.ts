@@ -1,4 +1,4 @@
-import { Directive, HostListener, Output, EventEmitter } from '@angular/core'
+import { Directive, EventEmitter, HostListener, Output } from '@angular/core';
 
 export interface HTMLFileInputEvent extends Event {
   target: HTMLInputElement & EventTarget
@@ -8,27 +8,28 @@ export interface HTMLFileInputEvent extends Event {
   selector: '[appDropZone]',
 })
 export class DropZoneDirective {
-  @Output() dropped = new EventEmitter<HTMLFileInputEvent>()
-  @Output() hovered = new EventEmitter<boolean>()
+  @Output() dropped = new EventEmitter<HTMLFileInputEvent>();
+  @Output() hovered = new EventEmitter<boolean>();
 
-  constructor() {}
+  constructor() {
+  }
 
   @HostListener('drop', ['$event'])
   onDrop($event) {
-    $event.preventDefault()
-    this.dropped.emit($event.dataTransfer.files)
-    this.hovered.emit(false)
+    $event.preventDefault();
+    this.dropped.emit($event.dataTransfer.files);
+    this.hovered.emit(false);
   }
 
   @HostListener('dragover', ['$event'])
   onDragOver($event) {
-    $event.preventDefault()
-    this.hovered.emit(true)
+    $event.preventDefault();
+    this.hovered.emit(true);
   }
 
   @HostListener('dragleave', ['$event'])
   onDragLeave($event) {
-    $event.preventDefault()
-    this.hovered.emit(false)
+    $event.preventDefault();
+    this.hovered.emit(false);
   }
 }

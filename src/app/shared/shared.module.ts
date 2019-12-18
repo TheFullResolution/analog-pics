@@ -1,9 +1,9 @@
-import { CommonModule } from '@angular/common'
-import { NgModule } from '@angular/core'
-import { MatGridListModule } from '@angular/material/grid-list'
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
-import { ImageComponent } from './image/image.component'
-import { PictureGridComponent } from './picture-grid/picture-grid.component'
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ImageComponent } from './image/image.component';
+import { PictureGridComponent } from './picture-grid/picture-grid.component';
 
 @NgModule({
   declarations: [ImageComponent, PictureGridComponent],
@@ -15,4 +15,5 @@ import { PictureGridComponent } from './picture-grid/picture-grid.component'
     MatProgressSpinnerModule,
   ],
 })
-export class SharedModule {}
+export class SharedModule {
+}

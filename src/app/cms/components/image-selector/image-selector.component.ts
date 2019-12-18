@@ -30,43 +30,44 @@ import { fadeInOut } from '../../animations/fadeInOut';
   styleUrls: ['./image-selector.component.scss'],
 })
 export class ImageSelectorComponent implements OnInit {
-  showControls: boolean
-  isHovering: boolean
-  anySelectedValue: boolean
+  showControls: boolean;
+  isHovering: boolean;
+  anySelectedValue: boolean;
 
-  @Output() addSelected = new EventEmitter<type.DataBaseEntryWithId>()
-  @Output() removeSelected = new EventEmitter<type.DataBaseEntryWithId>()
+  @Output() addSelected = new EventEmitter<type.DataBaseEntryWithId>();
+  @Output() removeSelected = new EventEmitter<type.DataBaseEntryWithId>();
 
-  @Input() selected: boolean
-  @Input() anySelected: Observable<boolean>
-  @Input() image: type.DataBaseEntryWithId
+  @Input() selected: boolean;
+  @Input() anySelected: Observable<boolean>;
+  @Input() image: type.DataBaseEntryWithId;
+
   constructor() {}
 
   ngOnInit() {
     this.anySelected.subscribe(val => {
-      this.anySelectedValue = val
-    })
+      this.anySelectedValue = val;
+    });
   }
 
   toggleHover = (event: boolean) => {
-    this.isHovering = event
+    this.isHovering = event;
   }
 
   toggleSelected = (value: boolean) => {
     if (this.anySelectedValue) {
-      this.emitChange(value)
+      this.emitChange(value);
     }
   }
 
   onChangeCheckbox = (value: boolean) => {
-    this.emitChange(value)
+    this.emitChange(value);
   }
 
   emitChange = (value: boolean) => {
     if (value) {
-      this.addSelected.emit(this.image)
+      this.addSelected.emit(this.image);
     } else {
-      this.removeSelected.emit(this.image)
+      this.removeSelected.emit(this.image);
     }
   }
 }

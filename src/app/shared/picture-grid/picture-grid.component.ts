@@ -1,15 +1,8 @@
-import { Subject } from 'rxjs'
-import {
-  Component,
-  OnInit,
-  Input,
-  ContentChild,
-  TemplateRef,
-  OnDestroy,
-} from '@angular/core'
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout'
-import type from '_types_'
-import { takeUntil } from 'rxjs/operators'
+import { Subject } from 'rxjs';
+import { Component, ContentChild, Input, OnDestroy, OnInit, TemplateRef } from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import type from '_types_';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-picture-grid',
@@ -26,20 +19,22 @@ import { takeUntil } from 'rxjs/operators'
   `,
 })
 export class PictureGridComponent implements OnInit, OnDestroy {
-  private _ngUnsubscribe = new Subject()
-  gridCols = 1
+  private _ngUnsubscribe = new Subject();
+  gridCols = 1;
 
-  @ContentChild(TemplateRef, { static: false }) itemTemplate: TemplateRef<any>
-  @Input() images: type.DataBaseEntry[]
+  @ContentChild(TemplateRef, { static: false }) itemTemplate: TemplateRef<any>;
+  @Input() images: type.DataBaseEntry[];
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(private breakpointObserver: BreakpointObserver) {
+  }
 
   ngOnInit() {
-    this.listenToBreakPoints()
+    this.listenToBreakPoints();
   }
+
   ngOnDestroy() {
-    this._ngUnsubscribe.next()
-    this._ngUnsubscribe.complete()
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
   listenToBreakPoints() {
@@ -56,14 +51,14 @@ export class PictureGridComponent implements OnInit, OnDestroy {
           result.breakpoints[Breakpoints.Small] ||
           result.breakpoints[Breakpoints.Medium]
         ) {
-          this.gridCols = 2
+          this.gridCols = 2;
         } else if (result.breakpoints[Breakpoints.Large]) {
-          this.gridCols = 3
+          this.gridCols = 3;
         } else if (result.breakpoints[Breakpoints.XLarge]) {
-          this.gridCols = 4
+          this.gridCols = 4;
         } else {
-          this.gridCols = 1
+          this.gridCols = 1;
         }
-      })
+      });
   }
 }

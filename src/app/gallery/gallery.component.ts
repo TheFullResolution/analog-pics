@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core'
-import { GetPhotosService } from './services/get-photos.service'
+import { Component, OnInit } from '@angular/core';
+import { GetPhotosService } from './services/get-photos.service';
 
 @Component({
   selector: 'app-gallery',
@@ -8,9 +8,10 @@ import { GetPhotosService } from './services/get-photos.service'
   `,
 })
 export class GalleryComponent implements OnInit {
-  constructor(private getPhotos: GetPhotosService) {}
+  constructor(private getPhotos: GetPhotosService) {
+  }
 
   ngOnInit() {
-    this.getPhotos.callFirebase()
+    this.getPhotos.callFirebase();
   }
 }

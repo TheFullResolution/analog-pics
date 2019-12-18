@@ -77,4 +77,5 @@ import { HoverDirective } from './utils/hover.directive';
     { provide: FirestoreSettingsToken, useValue: {} },
   ],
 })
-export class CmsModule {}
+export class CmsModule {
+}

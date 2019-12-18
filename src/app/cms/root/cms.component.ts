@@ -9,9 +9,10 @@ import { AuthService } from '../services/auth/auth.service';
 export class CmsComponent implements OnInit {
   constructor(
     private authService: AuthService,
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
-    this.authService.iniAuthListener()
+    this.authService.iniAuthListener();
   }
 }
