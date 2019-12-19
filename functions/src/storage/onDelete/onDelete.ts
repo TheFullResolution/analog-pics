@@ -1,11 +1,5 @@
-import * as functions from 'firebase-functions'
-import {
-  Storage,
-  RuntimeOptions,
-  CONSTS,
-  SharedTypes,
-  Bucket,
-} from '../../index'
+import * as functions from 'firebase-functions';
+import { Bucket, CONSTS, RuntimeOptions, SharedTypes, Storage } from '../../index';
 
 interface OnImageUpload {
   storage: Storage
@@ -17,7 +11,7 @@ async function deleteAllThumbs(
   thumbsArray: SharedTypes.DataBaseEntry['thumbs'],
 ) {
   for (const thumb of thumbsArray) {
-    await bucket.file(thumb.name).delete()
+    await bucket.file(thumb.name).delete();
   }
 }
 
@@ -26,13 +20,15 @@ export const onDelete = ({ storage, runtimeOpts }: OnImageUpload) =>
     .runWith(runtimeOpts)
     .firestore.document(`${CONSTS.COLLECTION}/{photoId}`)
     .onDelete(async (snap, context) => {
-      const deletedValue = snap.data() as SharedTypes.DataBaseEntry
+      const deletedValue = snap.data() as SharedTypes.DataBaseEntry;
 
-      if (!deletedValue.bucket || deletedValue.thumbs.length === 0) return null
+      if (!deletedValue.bucket || deletedValue.thumbs.length === 0) {
+        return null;
+      }
 
-      const bucket = storage.bucket(deletedValue.bucket)
+      const bucket = storage.bucket(deletedValue.bucket);
 
-      await deleteAllThumbs(bucket, deletedValue.thumbs)
-      console.log('thumbs deleted')
+      await deleteAllThumbs(bucket, deletedValue.thumbs);
+      console.log('thumbs deleted');
       return 'success'
-    })
+    });

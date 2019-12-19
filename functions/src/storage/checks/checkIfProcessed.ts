@@ -1,4 +1,4 @@
-import { ObjectMetadata } from 'firebase-functions/lib/providers/storage'
+import { ObjectMetadata } from 'firebase-functions/lib/providers/storage';
 import { CONSTS } from '../..';
 
 
@@ -8,14 +8,14 @@ interface CheckIfProcessed {
 }
 
 export const checkIfProcessed = function checkIfProcessedFunc({
-  object,
-  IS_PROCESSED,
-}: CheckIfProcessed) {
-  const assertion = object.metadata && object.metadata[IS_PROCESSED]
+                                                                object,
+                                                                IS_PROCESSED,
+                                                              }: CheckIfProcessed) {
+  const assertion = object.metadata && object.metadata[IS_PROCESSED];
 
   if (assertion) {
-    console.log(`Image Already Processed: ${assertion}`)
+    console.log(`Image Already Processed: ${assertion}`);
   }
 
-  return assertion
-}
+  return assertion;
+};

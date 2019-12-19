@@ -1,10 +1,10 @@
-import { extname, join } from 'path'
-import * as sharp from 'sharp'
-import * as mime from 'mime-types'
+import { extname, join } from 'path';
+import * as sharp from 'sharp';
+import * as mime from 'mime-types';
 
-import { FilesArray } from './generateFileNames'
+import { FilesArray } from './generateFileNames';
 
-import { Bucket } from '../../../index'
+import { Bucket } from '../../../index';
 
 interface CreateImageResize {
   readonly tempLocalDir: string
@@ -17,22 +17,22 @@ interface CreateImageResize {
 }
 
 export const createImageResize = ({
-  tempLocalFile,
-  tempLocalDir,
-  bucket,
-  config: { PATH, IS_PROCESSED },
-}: CreateImageResize) => (filesArray: FilesArray) =>
+                                    tempLocalFile,
+                                    tempLocalDir,
+                                    bucket,
+                                    config: { PATH, IS_PROCESSED },
+                                  }: CreateImageResize) => (filesArray: FilesArray) =>
   filesArray.map(async ({ thumbName, format, size }) => {
-    const thumbPath = join(tempLocalDir, thumbName)
-    const destination = join(PATH, thumbName)
+    const thumbPath = join(tempLocalDir, thumbName);
+    const destination = join(PATH, thumbName);
 
     // Resize source image
     await sharp(tempLocalFile)
       .toFormat(format)
       .resize(size, size, { fit: 'inside', withoutEnlargement: true })
-      .toFile(thumbPath)
+      .toFile(thumbPath);
 
-    const contentType = mime.contentType(extname(thumbPath))
+    const contentType = mime.contentType(extname(thumbPath));
 
     // Upload to GCS
     return bucket.upload(
@@ -44,6 +44,6 @@ export const createImageResize = ({
           cacheControl: 'public,max-age=3600',
           metadata: { [IS_PROCESSED]: IS_PROCESSED },
         },
-      }
-    )
-  })
+      },
+    );
+  });

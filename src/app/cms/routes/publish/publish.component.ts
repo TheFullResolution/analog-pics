@@ -1,4 +1,4 @@
-import { SelectService } from './../../services/select/select.service';
+import { SelectService } from '../../services/select/select.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import type from '_types_';
@@ -8,8 +8,10 @@ import { map, takeUntil } from 'rxjs/operators';
 import { PublishService } from './service/publish.service';
 import { DeleteService } from '../../services/delete/delete.service';
 
+const animation = fadeInOut();
+
 @Component({
-  animations: [fadeInOut],
+  animations: [animation],
   selector: 'app-publish',
   templateUrl: './publish.component.html',
   styleUrls: ['./publish.component.scss'],

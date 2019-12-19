@@ -3,9 +3,11 @@ import { Observable } from 'rxjs';
 import type from '_types_';
 import { fadeInOut } from '../../../shared/animations/fadeInOut';
 
+const animation = fadeInOut();
+
 @Component({
   selector: 'app-image-selector',
-  animations: [fadeInOut],
+  animations: [animation],
   template: `
     <div
       class="wrapper"
@@ -51,17 +53,17 @@ export class ImageSelectorComponent implements OnInit {
 
   toggleHover = (event: boolean) => {
     this.isHovering = event;
-  }
+  };
 
   toggleSelected = (value: boolean) => {
     if (this.anySelectedValue) {
       this.emitChange(value);
     }
-  }
+  };
 
   onChangeCheckbox = (value: boolean) => {
     this.emitChange(value);
-  }
+  };
 
   emitChange = (value: boolean) => {
     if (value) {
@@ -69,5 +71,5 @@ export class ImageSelectorComponent implements OnInit {
     } else {
       this.removeSelected.emit(this.image);
     }
-  }
+  };
 }

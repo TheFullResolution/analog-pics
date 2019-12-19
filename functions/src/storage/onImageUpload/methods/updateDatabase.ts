@@ -1,8 +1,8 @@
-import * as admin from 'firebase-admin'
+import * as admin from 'firebase-admin';
 
-import { FilesArray } from './generateFileNames'
-import { Firestore, CONSTS, SharedTypes } from '../../../index'
-import { join } from 'path'
+import { FilesArray } from './generateFileNames';
+import { CONSTS, Firestore, SharedTypes } from '../../../index';
+import { join } from 'path';
 
 interface UpdateDatabase {
   filesArray: FilesArray
@@ -13,17 +13,17 @@ interface UpdateDatabase {
 }
 
 export const updateDatabase = async ({
-  bucketName,
-  filesArray,
-  fileName,
-  fireStore,
-  PATH,
-}: UpdateDatabase) => {
+                                       bucketName,
+                                       filesArray,
+                                       fileName,
+                                       fireStore,
+                                       PATH,
+                                     }: UpdateDatabase) => {
   const thumbsArray = filesArray.map(({ thumbName, ...rest }) => {
-    const pathAndName = join(PATH, thumbName)
+    const pathAndName = join(PATH, thumbName);
 
-    return { ...rest, name: pathAndName }
-  })
+    return { ...rest, name: pathAndName };
+  });
 
   const upload: SharedTypes.DataBaseEntry = {
     name: fileName,
@@ -31,7 +31,7 @@ export const updateDatabase = async ({
     published: false,
     uploaded: admin.firestore.FieldValue.serverTimestamp(),
     thumbs: thumbsArray,
-  }
+  };
 
-  return fireStore.collection(CONSTS.COLLECTION).add(upload)
-}
+  return fireStore.collection(CONSTS.COLLECTION).add(upload);
+};
