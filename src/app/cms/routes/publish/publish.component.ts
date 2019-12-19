@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import type from '_types_';
 import { UnpublishedService } from './service/unpublished.service';
-import { fadeInOut } from '../../animations/fadeInOut';
+import { fadeInOut } from '../../../shared/animations/fadeInOut';
 import { map, takeUntil } from 'rxjs/operators';
 import { PublishService } from './service/publish.service';
 import { DeleteService } from '../../services/delete/delete.service';

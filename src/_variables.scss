@@ -20,8 +20,15 @@ $background: #adcad6;
 $white: #fafafa;
 $transparent-white: rgba(100%, 100%, 100%, 0.9);
 $light-grey: rgb(95.7%, 96.1%, 95.7%);
-$transparent-grey: rgba(95.7%, 96.1%, 95.7%, 0.9);
+$transparent-grey: rgba(95.7%, 96.1%, 95.7%, 0.6);
 $dark-grey: #b3b3b3;
 $black: #000000;
 
 $transition: cubic-bezier(0.23, 1, 0.32, 1);
+
+@mixin md-icon-size($size: 24px) {
+  font-size: $size;
+  height: $size;
+  width: $size;
+  line-height: $size;
+}

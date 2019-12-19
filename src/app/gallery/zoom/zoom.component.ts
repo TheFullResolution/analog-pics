@@ -4,6 +4,9 @@ import { combineLatest, Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import types from '_types_';
 import { GetPhotosService } from '../services/get-photos.service';
+import { fadeInOut } from '../../shared/animations/fadeInOut';
+
+const animations = fadeInOut(0.6);
 
 interface ZoomData {
   current: types.DataBaseEntryWithId;
@@ -13,20 +16,62 @@ interface ZoomData {
 
 @Component({
   selector: 'app-zoom',
-  templateUrl: './zoom.component.html',
+  animations: [animations],
+  template: `
+    <ng-container *ngIf="currentData$ | async as data">
+      <div class="container" appHover (hovered)="toggleHover($event)">
+        <a
+          [routerLink]="['/zoom']"
+          *ngIf="isHovering && data.previous"
+          [queryParams]="{ picId: data.previous.id }"
+          class="link prev"
+          [@fadeInOut]
+        >
+          <mat-icon>fast_rewind</mat-icon>
+        </a>
+        <div class="image-container">
+          <app-image
+            [imageId]="data.current.id"
+            [image]="data.current"
+          ></app-image>
+        </div>
+        <a
+          [routerLink]="['/zoom']"
+          *ngIf="isHovering && data.next"
+          [queryParams]="{ picId: data.next.id }"
+          class="link next"
+          [@fadeInOut]
+        >
+          <mat-icon>fast_forward</mat-icon>
+        </a>
+        <a
+          [routerLink]="['/']"
+          *ngIf="isHovering"
+          class="link close"
+          [@fadeInOut]
+        >
+          <mat-icon>close</mat-icon>
+        </a>
+      </div>
+    </ng-container>
+  `,
   styleUrls: ['./zoom.component.scss'],
 })
 export class ZoomComponent implements OnInit {
   currentData$: Observable<ZoomData>;
+  isHovering: boolean;
 
   constructor(
     private route: ActivatedRoute,
     private getPhotos: GetPhotosService,
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.getCurrentData();
+  }
+
+  toggleHover = (event: boolean) => {
+    this.isHovering = event;
   }
 
   getCurrentData() {

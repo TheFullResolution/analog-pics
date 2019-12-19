@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import type from '_types_';
-import { fadeInOut } from '../../animations/fadeInOut';
+import { fadeInOut } from '../../../shared/animations/fadeInOut';
 
 @Component({
   selector: 'app-image-selector',
@@ -15,7 +15,7 @@ import { fadeInOut } from '../../animations/fadeInOut';
     >
       <mat-checkbox
         class="check"
-        ariaLabel="Select this Image"
+        aria-label="Select this Image"
         *ngIf="selected || isHovering || (anySelected | async)"
         [checked]="selected"
         (change)="onChangeCheckbox(!selected)"
