@@ -37,25 +37,26 @@ export const routeNames: RouteName[] = [
     component: PublishComponent,
     auth: true,
   },
-]
+];
 
 const childrenRoutes = routeNames.map(({ path, component, auth }) => ({
   path,
   component,
   ...(auth ? { canLoad: [AuthGuard] } : {}),
-}))
+}));
 
 const routes: Routes = [
   {
     path: '',
     component: CmsComponent,
     children: childrenRoutes,
-  }
-]
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
   providers: [AuthGuard],
 })
-export class CmsRoutingModule {}
+export class CmsRoutingModule {
+}

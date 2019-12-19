@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core'
-import { UploadStateService } from './services/upload-state.service'
-import { Observable } from 'rxjs'
-import { UploadState } from './services/file-upload.types'
+import { Component, OnInit } from '@angular/core';
+import { UploadStateService } from './services/upload-state.service';
+import { Observable } from 'rxjs';
+import { UploadState } from './services/file-upload.types';
 
 @Component({
   selector: 'app-file-upload',
@@ -15,11 +15,12 @@ import { UploadState } from './services/file-upload.types'
   styleUrls: ['./file-upload.component.scss'],
 })
 export class FileUploadComponent implements OnInit {
-  uploadState$: Observable<UploadState>
+  uploadState$: Observable<UploadState>;
 
-  constructor(private state: UploadStateService) {}
+  constructor(private state: UploadStateService) {
+  }
 
   ngOnInit() {
-    this.uploadState$ = this.state.uploadState$
+    this.uploadState$ = this.state.uploadState$;
   }
 }

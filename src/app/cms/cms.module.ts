@@ -33,14 +33,12 @@ import { SelectService } from './services/select/select.service';
 import { reducers } from './state/state.reducer';
 import { DropZoneDirective } from './utils/drop-zone.directive';
 import { FileSizePipe } from './utils/file-size.pipe';
-import { HoverDirective } from './utils/hover.directive';
 
 @NgModule({
   declarations: [
     CmsComponent,
     DashboardComponent,
     DropZoneDirective,
-    HoverDirective,
     FileSizePipe,
     FileUploadComponent,
     HeaderComponent,
@@ -77,4 +75,5 @@ import { HoverDirective } from './utils/hover.directive';
     { provide: FirestoreSettingsToken, useValue: {} },
   ],
 })
-export class CmsModule {}
+export class CmsModule {
+}

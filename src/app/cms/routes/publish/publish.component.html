@@ -23,15 +23,15 @@
         <mat-icon *ngIf="processingPublishing" class="rotate">cached</mat-icon>
       </button>
       <button
-      mat-raised-button
-      color="warn"
-      [@fadeInOut]
-      [disabled]="processingDeleting"
-      (click)="deleteSelection()"
-    >
-      <span *ngIf="!processingDeleting">Delete</span>
-      <mat-icon *ngIf="processingDeleting" class="rotate">cached</mat-icon>
-    </button>
+        mat-raised-button
+        color="warn"
+        [@fadeInOut]
+        [disabled]="processingDeleting"
+        (click)="deleteSelection()"
+      >
+        <span *ngIf="!processingDeleting">Delete</span>
+        <mat-icon *ngIf="processingDeleting" class="rotate">cached</mat-icon>
+      </button>
     </ng-container>
   </div>
 
@@ -44,7 +44,7 @@
         (addSelected)="addSelected($event)"
         (removeSelected)="removeSelected($event)"
       >
-        <app-image [image]="image"></app-image>
+        <app-image [image]="image" [imageId]="image.id"></app-image>
       </app-image-selector>
     </ng-template>
   </app-picture-grid>

@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core'
-import { UploadState } from './file-upload.types'
-import { BehaviorSubject, Subject, Observable, merge } from 'rxjs'
-import { startWith, scan, refCount, publishReplay } from 'rxjs/operators'
+import { Injectable } from '@angular/core';
+import { UploadState } from './file-upload.types';
+import { Subject } from 'rxjs';
+import { publishReplay, refCount, scan, startWith } from 'rxjs/operators';
 
 const defaultState: UploadState = {
   active: false,
@@ -12,12 +12,13 @@ const defaultState: UploadState = {
   progress: 0,
   size: 0,
   transferred: 0,
-}
+};
 
 interface SetFileNameAction {
   type: 'set-fileName'
   payload: string
 }
+
 interface ResetAction {
   type: 'reset'
 }
@@ -48,7 +49,7 @@ const startUpload = (files: File[]): Partial<UploadState> => ({
   active: true,
   filesCount: files.length,
   size: files.reduce((acc, file) => acc + file.size, 0),
-})
+});
 
 const fileUpload = (
   bytesTransferred: number,
@@ -56,23 +57,23 @@ const fileUpload = (
 ): Partial<UploadState> => {
   const currentFileCount = (state.filesCount = state.currentFileCount
     ? state.currentFileCount
-    : state.currentFileCount + 1)
-  const baseTransferred = state.baseTransferred + bytesTransferred
-  return { currentFileCount, baseTransferred }
-}
+    : state.currentFileCount + 1);
+  const baseTransferred = state.baseTransferred + bytesTransferred;
+  return { currentFileCount, baseTransferred };
+};
 
 const snapshot = (
   bytesTransferred: number,
   state: UploadState,
 ): Partial<UploadState> => {
-  const transferred = state.baseTransferred + bytesTransferred
-  const progress = (transferred / state.size) * 100
-  return { progress, transferred }
-}
+  const transferred = state.baseTransferred + bytesTransferred;
+  const progress = (transferred / state.size) * 100;
+  return { progress, transferred };
+};
 
 @Injectable()
 export class UploadStateService {
-  private actions$: Subject<Action> = new Subject<Action>()
+  private actions$: Subject<Action> = new Subject<Action>();
 
   public uploadState$ = this.actions$.pipe(
     startWith(defaultState),
@@ -80,27 +81,28 @@ export class UploadStateService {
       (state: UploadState, action: Action): UploadState => {
         switch (action.type) {
           case 'set-fileName':
-            return { ...state, currentFileName: action.payload }
+            return { ...state, currentFileName: action.payload };
           case 'start-upload':
-            return { ...state, ...startUpload(action.payload) }
+            return { ...state, ...startUpload(action.payload) };
           case 'file-uploaded':
-            return { ...state, ...fileUpload(action.payload, state) }
+            return { ...state, ...fileUpload(action.payload, state) };
           case 'snapshot':
-            return { ...state, ...snapshot(action.payload, state) }
+            return { ...state, ...snapshot(action.payload, state) };
           case 'reset':
-            return defaultState
+            return defaultState;
           default:
-            return state
+            return state;
         }
       },
     ),
     publishReplay(1),
     refCount(),
-  )
+  );
 
-  constructor() {}
+  constructor() {
+  }
 
   dispatch(action: Action): void {
-    this.actions$.next(action)
+    this.actions$.next(action);
   }
 }

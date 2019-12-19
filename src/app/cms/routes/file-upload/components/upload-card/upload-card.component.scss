@@ -20,7 +20,7 @@ mat-card {
   margin: 10px 0;
   background-color: transparent;
   transition: background-color 500ms $transition, border 500ms $transition 200ms,
-    opacity 100ms $transition;
+  opacity 100ms $transition;
 
   &.hovering {
     border: 2px solid $accent;

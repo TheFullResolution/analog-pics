@@ -1,0 +1,55 @@
+@import 'src/_variables.scss';
+
+$iconSize: 48px;
+
+.container {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.image-container {
+  flex: 1 1 80%;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: $iconSize +  $marginS;
+  height:  $iconSize +  $marginS;
+  background-color: $light-grey;
+  opacity: 0.6;
+  border-radius: 50%;
+  padding: $marginS;
+
+  mat-icon {
+    @include md-icon-size($iconSize);
+  }
+}
+
+.prev {
+  z-index: 1;
+  left: 0;
+  top: 50%;
+  margin-left: $marginM;
+  transform: translateY(-50%);
+}
+
+.next {
+  z-index: 1;
+  right: 0;
+  top: 50%;
+  margin-right: $marginM;
+  transform: translateY(-50%);
+}
+
+.close {
+  z-index: 1;
+  right: 0;
+  top: 0;
+  margin-top: $marginM;
+  margin-right: $marginM;
+}

@@ -3,12 +3,15 @@ import { GetPhotosService } from './services/get-photos.service';
 
 @Component({
   selector: 'app-gallery',
-  templateUrl: './gallery.component.html',
+  template: `
+    <router-outlet></router-outlet>
+  `,
 })
 export class GalleryComponent implements OnInit {
-  constructor(private getPhotos: GetPhotosService) {}
+  constructor(private getPhotos: GetPhotosService) {
+  }
 
   ngOnInit() {
-    this.getPhotos.callFirebase()
+    this.getPhotos.callFirebase();
   }
 }

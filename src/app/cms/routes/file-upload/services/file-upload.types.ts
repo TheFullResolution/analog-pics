@@ -1,4 +1,4 @@
-import { strEnumHelper } from '../../../utils/strEnumHelper'
+import { strEnumHelper } from '../../../utils/strEnumHelper';
 
 export interface UploadState {
   active: boolean
@@ -11,7 +11,7 @@ export interface UploadState {
   transferred: number
 }
 
-export const Controls = strEnumHelper(['pause', 'cancel', 'resume'])
+export const Controls = strEnumHelper(['pause', 'cancel', 'resume']);
 
 export type Controls = keyof typeof Controls
 

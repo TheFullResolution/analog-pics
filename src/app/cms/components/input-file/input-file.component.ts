@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core'
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-input-file',
@@ -20,7 +20,8 @@ import { Component, EventEmitter, Output } from '@angular/core'
   styleUrls: ['./input-file.component.scss'],
 })
 export class InputFileComponent {
-  @Output() changed = new EventEmitter()
+  @Output() changed = new EventEmitter();
 
-  constructor() {}
+  constructor() {
+  }
 }

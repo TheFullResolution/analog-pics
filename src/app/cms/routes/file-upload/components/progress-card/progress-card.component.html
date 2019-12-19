@@ -7,10 +7,10 @@
           <p>Name: {{ state.currentFileName }}</p>
           <div class="details">
             <span
-              >Processed: {{ fileProgress$ | async | number: '1.2-2' }}%
+            >Processed: {{ fileProgress$ | async | number: '1.2-2' }}%
             </span>
             <span
-              >Transferred: {{ snap.bytesTransferred | fileSize }} of
+            >Transferred: {{ snap.bytesTransferred | fileSize }} of
               {{ snap.totalBytes | fileSize }}
             </span>
           </div>
@@ -24,7 +24,7 @@
           <div class="details">
             <span>Processed:{{ state.progress | number: '1.2-2' }}%</span>
             <span
-              >Transferred: {{ state.transferred | fileSize }} of
+            >Transferred: {{ state.transferred | fileSize }} of
               {{ state.size | fileSize }}
             </span>
           </div>
@@ -67,7 +67,7 @@
             mat-raised-button
             color="primary"
             [routerLink]="getFullPath(pathToPublish.path)"
-            >{{ pathToPublish.label }}
+          >{{ pathToPublish.label }}
           </a>
         </ng-container>
       </div>

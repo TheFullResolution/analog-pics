@@ -1,7 +1,15 @@
+<app-header></app-header>
+
 <ng-container *ngIf="photos$ | async as images">
   <app-picture-grid [images]="images">
     <ng-template let-image>
-      <app-image [image]="image"></app-image>
+      <a
+        class="link"
+        [routerLink]="['/zoom']"
+        [queryParams]="{ picId: image.id }"
+      >
+        <app-image [image]="image" [imageId]="image.id"></app-image>
+      </a>
     </ng-template>
   </app-picture-grid>
 </ng-container>

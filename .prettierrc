@@ -3,7 +3,7 @@
   "bracketSpacing": true,
   "insertPragma": false,
   "requirePragma": false,
-  "semi": false,
+  "semi": true,
   "singleQuote": true,
   "tabWidth": 2,
   "trailingComma": "all",
