@@ -1,6 +1,6 @@
-export type ImageSizeTypes = 'xs' | 'sm' | 'md' |'lg' | 'xl';
+export type ImageSizeTypes = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
-type ImagesSizesGeneric<K extends string>  = { [key in K]: number };
+type ImagesSizesGeneric<K extends string> = { [key in K]: number };
 
 export type ImageSizesType = ImagesSizesGeneric<ImageSizeTypes>;
 
@@ -9,6 +9,7 @@ export const enum ImageFormat {
   webp = 'webp',
   jpeg = 'jpeg',
 }
+
 export type ImageFormatsTypes =
   | ImageFormat.webp
   | ImageFormat.jpeg;

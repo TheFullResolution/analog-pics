@@ -3,7 +3,7 @@ import { HttpGetResponse } from '../_types_';
 export const photosDataBaseDefault = {
   date: '',
   items: [],
-}
+};
 
 export const enum UpdateType {
   reset = 'reset',
@@ -13,6 +13,7 @@ export const enum UpdateType {
 interface UpdatePhotosReset {
   type: UpdateType.reset
 }
+
 interface UpdatePhotosUpdate {
   type: UpdateType.update
   payload: HttpGetResponse
@@ -21,27 +22,27 @@ interface UpdatePhotosUpdate {
 const photosDataBaseReducer = (update: UpdatePhotosUpdate | UpdatePhotosReset) => {
   switch (update.type) {
     case UpdateType.reset:
-      return photosDataBaseDefault
+      return photosDataBaseDefault;
 
     case UpdateType.update:
-      return update.payload
+      return update.payload;
 
     default:
-      return photosDataBaseDefault
+      return photosDataBaseDefault;
   }
-}
+};
 
-export let photosDataBase: HttpGetResponse
+export let photosDataBase: HttpGetResponse;
 
 
 export const initPhotosDataBase = () => {
-  photosDataBase = { ...photosDataBaseDefault }
-}
+  photosDataBase = { ...photosDataBaseDefault };
+};
 
 export function updatePhotosDataBase(
   update:
     | { type: UpdateType.reset }
     | { type: UpdateType.update; payload: any },
 ) {
-  photosDataBase = { ...photosDataBaseReducer(update) }
+  photosDataBase = { ...photosDataBaseReducer(update) };
 }
