@@ -2,10 +2,10 @@ import { SelectService } from '../../services/select/select.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import type from '_types_';
-import { UnpublishedService } from './service/unpublished.service';
+import { UnpublishedService } from './services/unpublished.service';
 import { fadeInOut } from '../../../shared/animations/fadeInOut';
 import { map, takeUntil } from 'rxjs/operators';
-import { PublishService } from './service/publish.service';
+import { PublishService } from './services/publish.service';
 import { DeleteService } from '../../services/delete/delete.service';
 
 const animation = fadeInOut();
@@ -31,8 +31,7 @@ export class PublishComponent implements OnInit, OnDestroy {
     private publishService: PublishService,
     private selectService: SelectService,
     private unpublishedService: UnpublishedService,
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.unpublishedService.getUnpublished();

@@ -13,9 +13,9 @@ import { CONSTS, Firestore, RuntimeOptions, SharedTypes, Storage } from '../..';
 import { updatePhotosDataBase, UpdateType } from '../../http/database';
 
 interface OnImageUpload {
-  fireStore: Firestore
-  storage: Storage
-  runtimeOpts: RuntimeOptions
+  fireStore: Firestore;
+  storage: Storage;
+  runtimeOpts: RuntimeOptions;
 }
 
 function isString(x: any): x is string {
@@ -23,10 +23,10 @@ function isString(x: any): x is string {
 }
 
 export const onImageUpload = ({
-                                storage,
-                                fireStore,
-                                runtimeOpts,
-                              }: OnImageUpload) =>
+  storage,
+  fireStore,
+  runtimeOpts,
+}: OnImageUpload) =>
   functions
     .runWith(runtimeOpts)
     .storage.object()
@@ -95,5 +95,5 @@ export const onImageUpload = ({
       updatePhotosDataBase({ type: UpdateType.reset });
       console.log('Update database');
 
-      return fs.remove(tempLocalDir)
+      return fs.remove(tempLocalDir);
     });

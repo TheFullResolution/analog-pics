@@ -10,15 +10,14 @@ export class PublishService {
   private _processing: BehaviorSubject<boolean> = new BehaviorSubject(false);
   public processing$ = this._processing.asObservable();
 
-  constructor(private db: AngularFirestore) {
-  }
+  constructor(private db: AngularFirestore) {}
 
   publishPictures = ({
-                       pics,
-                       callback,
-                     }: {
-    pics: types.DataBaseEntryWithId[]
-    callback: () => void
+    pics,
+    callback,
+  }: {
+    pics: types.DataBaseEntryWithId[];
+    callback: () => void;
   }) => {
     this._processing.next(true);
     from(pics)

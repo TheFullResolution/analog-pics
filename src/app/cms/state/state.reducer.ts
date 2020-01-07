@@ -4,9 +4,9 @@ import * as fromSelect from './select/select.reducer';
 import { ActionReducerMap, createFeatureSelector } from '@ngrx/store';
 
 export interface CmsState {
-  auth: fromAuth.State
-  database: fromDatabase.State
-  select: fromSelect.State
+  auth: fromAuth.State;
+  database: fromDatabase.State;
+  select: fromSelect.State;
 }
 
 export const reducers: ActionReducerMap<CmsState> = {
@@ -20,5 +20,3 @@ export const getDataBaseState = createFeatureSelector<fromDatabase.State>(
   'database',
 );
 export const getSelectState = createFeatureSelector<fromSelect.State>('select');
-
-
