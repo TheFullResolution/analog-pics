@@ -1,11 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { PublishedService } from './services/published.service';
 import { Observable, Subject } from 'rxjs';
 import type from '../../../../../_types_';
 import { SelectService } from '../../services/select/select.service';
 import { DeleteService } from '../../services/delete/delete.service';
 import { map, takeUntil } from 'rxjs/operators';
 import { fadeInOut } from '../../../shared/animations/fadeInOut';
+import { gePublished } from '../../state/state.selectors';
+import { Store } from '@ngrx/store';
+import { CmsState } from '../../state/state.reducer';
 
 const animation = fadeInOut();
 
@@ -24,14 +26,13 @@ export class ManageComponent implements OnInit, OnDestroy {
   selection$: Observable<type.DataBaseEntryWithId[]>;
 
   constructor(
-    private publishedService: PublishedService,
+    private store: Store<CmsState>,
     private selectService: SelectService,
     private deleteService: DeleteService,
   ) {}
 
   ngOnInit() {
-    this.publishedService.getPublished();
-    this.published$ = this.publishedService.published$;
+    this.published$ = this.store.select(gePublished);
     this.anySelected$ = this.selectService.getSelectionActive();
     this.selection$ = this.selectService.getSelectionData();
 

@@ -37,7 +37,6 @@ import { reducers } from './state/state.reducer';
 import { DropZoneDirective } from './utils/drop-zone.directive';
 import { FileSizePipe } from './utils/file-size.pipe';
 import { ManageComponent } from './routes/manage/manage.component';
-import { PublishedService } from './routes/manage/services/published.service';
 
 @NgModule({
   declarations: [
@@ -76,7 +75,6 @@ import { PublishedService } from './routes/manage/services/published.service';
     DatabaseService,
     UnpublishedService,
     PublishService,
-    PublishedService,
     SelectService,
     DeleteService,
     { provide: FirestoreSettingsToken, useValue: {} },
