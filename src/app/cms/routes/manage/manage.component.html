@@ -1,7 +1,41 @@
 <ng-container *ngIf="published$ | async as images">
+  <div class="control">
+    <button mat-raised-button color="accent" (click)="selectAll(images)">
+      Select All
+    </button>
+    <ng-container *ngIf="anySelected$ | async">
+      <button
+        mat-raised-button
+        color="accent"
+        [@fadeInOut]
+        (click)="deselectAll()"
+      >
+        Deselect All
+      </button>
+      <button
+        mat-raised-button
+        color="warn"
+        [@fadeInOut]
+        [disabled]="processingDeleting"
+        (click)="deleteSelection()"
+      >
+        <span *ngIf="!processingDeleting">Delete</span>
+        <mat-icon *ngIf="processingDeleting" class="rotate">cached</mat-icon>
+      </button>
+    </ng-container>
+  </div>
+
   <app-picture-grid [images]="images">
     <ng-template let-image>
-      <app-image [image]="image" [imageId]="image.id"></app-image>
+      <app-image-selector
+        [image]="image"
+        [anySelected]="anySelected$"
+        [selected]="checkSelectionState(image) | async"
+        (addSelected)="addSelected($event)"
+        (removeSelected)="removeSelected($event)"
+      >
+        <app-image [image]="image" [imageId]="image.id"></app-image>
+      </app-image-selector>
     </ng-template>
   </app-picture-grid>
 </ng-container>
