@@ -6,6 +6,7 @@ export const RoutPath = strEnumHelper([
   'login',
   'upload',
   'publish',
+  'manage'
 ]);
 export type RoutPath = keyof typeof RoutPath
 

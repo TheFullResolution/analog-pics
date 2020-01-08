@@ -1,50 +1,40 @@
-import { SelectService } from '../../services/select/select.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import type from '_types_';
-import { UnpublishedService } from './services/unpublished.service';
-import { fadeInOut } from '../../../shared/animations/fadeInOut';
-import { map, takeUntil } from 'rxjs/operators';
-import { PublishService } from './services/publish.service';
+import type from '../../../../../_types_';
+import { SelectService } from '../../services/select/select.service';
 import { DeleteService } from '../../services/delete/delete.service';
+import { map, takeUntil } from 'rxjs/operators';
+import { fadeInOut } from '../../../shared/animations/fadeInOut';
+import { gePublished } from '../../state/state.selectors';
+import { Store } from '@ngrx/store';
+import { CmsState } from '../../state/state.reducer';
 
 const animation = fadeInOut();
 
 @Component({
   animations: [animation],
-  selector: 'app-publish',
-  templateUrl: './publish.component.html',
-  styleUrls: ['./publish.component.scss'],
+  selector: 'app-manage',
+  templateUrl: './manage.component.html',
+  styleUrls: ['./manage.component.scss'],
 })
-export class PublishComponent implements OnInit, OnDestroy {
+export class ManageComponent implements OnInit, OnDestroy {
   private _ngUnsubscribe = new Subject();
 
-  loadingUnpublished$: Observable<boolean>;
+  published$: Observable<type.DataBaseEntryWithId[]>;
   anySelected$: Observable<boolean>;
-  processingPublishing: boolean;
   processingDeleting: boolean;
   selection$: Observable<type.DataBaseEntryWithId[]>;
-  unpublished$: Observable<type.DataBaseEntryWithId[]>;
 
   constructor(
-    private deleteService: DeleteService,
-    private publishService: PublishService,
+    private store: Store<CmsState>,
     private selectService: SelectService,
-    private unpublishedService: UnpublishedService,
+    private deleteService: DeleteService,
   ) {}
 
   ngOnInit() {
-    this.unpublishedService.getUnpublished();
+    this.published$ = this.store.select(gePublished);
     this.anySelected$ = this.selectService.getSelectionActive();
     this.selection$ = this.selectService.getSelectionData();
-    this.unpublished$ = this.unpublishedService.unpublished$;
-    this.loadingUnpublished$ = this.unpublishedService.loading$;
-
-    this.publishService.processing$
-      .pipe(takeUntil(this._ngUnsubscribe))
-      .subscribe(status => {
-        this.processingPublishing = status;
-      });
 
     this.deleteService.processing$
       .pipe(takeUntil(this._ngUnsubscribe))
@@ -76,15 +66,6 @@ export class PublishComponent implements OnInit, OnDestroy {
 
   deselectAll = () => {
     this.selectService.clearSelection();
-  };
-
-  publishSelection = () => {
-    this.publishService.publishPictures({
-      pics: this.selectService.getCurrentSelection(),
-      callback: () => {
-        this.selectService.clearSelection();
-      },
-    });
   };
 
   deleteSelection = () => {

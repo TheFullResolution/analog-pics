@@ -5,20 +5,20 @@ import { CONSTS, Firestore, SharedTypes } from '../../../index';
 import { join } from 'path';
 
 interface UpdateDatabase {
-  filesArray: FilesArray
-  fileName: string
-  fireStore: Firestore
-  bucketName: string
-  PATH: string
+  filesArray: FilesArray;
+  fileName: string;
+  fireStore: Firestore;
+  bucketName: string;
+  PATH: string;
 }
 
 export const updateDatabase = async ({
-                                       bucketName,
-                                       filesArray,
-                                       fileName,
-                                       fireStore,
-                                       PATH,
-                                     }: UpdateDatabase) => {
+  bucketName,
+  filesArray,
+  fileName,
+  fireStore,
+  PATH,
+}: UpdateDatabase) => {
   const thumbsArray = filesArray.map(({ thumbName, ...rest }) => {
     const pathAndName = join(PATH, thumbName);
 

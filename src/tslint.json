@@ -7,7 +7,6 @@
             "app",
             "camelCase"
         ],
-        "semicolon": [true, "always"],
         "component-selector": [
             true,
             "element",

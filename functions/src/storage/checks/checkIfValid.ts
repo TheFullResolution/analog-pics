@@ -1,12 +1,12 @@
 import { ObjectMetadata } from 'firebase-functions/lib/providers/storage';
 
 interface CheckIfImage {
-  readonly object: ObjectMetadata
+  readonly object: ObjectMetadata;
 }
 
 export const checkIfValid = function checkIfImageFunction({
-                                                            object,
-                                                          }: CheckIfImage): boolean {
+  object,
+}: CheckIfImage): boolean {
   const assertion = !!(
     object &&
     object.contentType &&

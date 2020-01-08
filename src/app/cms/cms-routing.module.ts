@@ -7,6 +7,7 @@ import { FileUploadComponent } from './routes/file-upload/file-upload.component'
 import { LoginComponent } from './routes/login/login.component';
 import { PublishComponent } from './routes/publish/publish.component';
 import { AuthGuard } from './services/auth/auth.guard';
+import { ManageComponent } from './routes/manage/manage.component';
 
 export const routeNames: RouteName[] = [
   {
@@ -21,6 +22,13 @@ export const routeNames: RouteName[] = [
     label: 'Dashboard',
     icon: 'data_usage',
     component: DashboardComponent,
+    auth: true,
+  },
+  {
+    path: RoutPath.manage,
+    label: 'Manage Pictures',
+    icon: 'dynamic_feed',
+    component: ManageComponent,
     auth: true,
   },
   {

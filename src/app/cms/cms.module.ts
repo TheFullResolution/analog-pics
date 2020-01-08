@@ -2,7 +2,10 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
+import {
+  AngularFirestoreModule,
+  FirestoreSettingsToken,
+} from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { FormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
@@ -24,8 +27,8 @@ import { StorageService } from './routes/file-upload/services/storage.service';
 import { UploadStateService } from './routes/file-upload/services/upload-state.service';
 import { LoginComponent } from './routes/login/login.component';
 import { PublishComponent } from './routes/publish/publish.component';
-import { PublishService } from './routes/publish/service/publish.service';
-import { UnpublishedService } from './routes/publish/service/unpublished.service';
+import { PublishService } from './routes/publish/services/publish.service';
+import { UnpublishedService } from './routes/publish/services/unpublished.service';
 import { AuthService } from './services/auth/auth.service';
 import { DatabaseService } from './services/database/database.service';
 import { DeleteService } from './services/delete/delete.service';
@@ -33,6 +36,7 @@ import { SelectService } from './services/select/select.service';
 import { reducers } from './state/state.reducer';
 import { DropZoneDirective } from './utils/drop-zone.directive';
 import { FileSizePipe } from './utils/file-size.pipe';
+import { ManageComponent } from './routes/manage/manage.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +54,7 @@ import { FileSizePipe } from './utils/file-size.pipe';
     PublishComponent,
     SidenavListComponent,
     UploadCardComponent,
+    ManageComponent,
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
@@ -75,5 +80,4 @@ import { FileSizePipe } from './utils/file-size.pipe';
     { provide: FirestoreSettingsToken, useValue: {} },
   ],
 })
-export class CmsModule {
-}
+export class CmsModule {}

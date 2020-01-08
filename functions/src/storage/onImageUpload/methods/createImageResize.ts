@@ -7,21 +7,21 @@ import { FilesArray } from './generateFileNames';
 import { Bucket } from '../../../index';
 
 interface CreateImageResize {
-  readonly tempLocalDir: string
-  readonly tempLocalFile: string
-  readonly bucket: Bucket
+  readonly tempLocalDir: string;
+  readonly tempLocalFile: string;
+  readonly bucket: Bucket;
   readonly config: {
-    PATH: string,
-    IS_PROCESSED: string
-  }
+    PATH: string;
+    IS_PROCESSED: string;
+  };
 }
 
 export const createImageResize = ({
-                                    tempLocalFile,
-                                    tempLocalDir,
-                                    bucket,
-                                    config: { PATH, IS_PROCESSED },
-                                  }: CreateImageResize) => (filesArray: FilesArray) =>
+  tempLocalFile,
+  tempLocalDir,
+  bucket,
+  config: { PATH, IS_PROCESSED },
+}: CreateImageResize) => (filesArray: FilesArray) =>
   filesArray.map(async ({ thumbName, format, size }) => {
     const thumbPath = join(tempLocalDir, thumbName);
     const destination = join(PATH, thumbName);
@@ -35,15 +35,12 @@ export const createImageResize = ({
     const contentType = mime.contentType(extname(thumbPath));
 
     // Upload to GCS
-    return bucket.upload(
-      thumbPath,
-      {
-        destination,
-        ...(contentType ? { contentType } : {}),
-        metadata: {
-          cacheControl: 'public,max-age=3600',
-          metadata: { [IS_PROCESSED]: IS_PROCESSED },
-        },
+    return bucket.upload(thumbPath, {
+      destination,
+      ...(contentType ? { contentType } : {}),
+      metadata: {
+        cacheControl: 'public,max-age=3600',
+        metadata: { [IS_PROCESSED]: IS_PROCESSED },
       },
-    );
+    });
   });
