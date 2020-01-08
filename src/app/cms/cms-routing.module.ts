@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RouteName, RoutPath } from './cms.paths';
+import { getFullPath, RouteName, RoutPath } from './cms.paths';
 import { CmsComponent } from './root/cms.component';
 import { DashboardComponent } from './routes/dashboard/dashboard.component';
 import { FileUploadComponent } from './routes/file-upload/file-upload.component';
@@ -54,6 +54,7 @@ const childrenRoutes = routeNames.map(({ path, component, auth }) => ({
 }));
 
 const routes: Routes = [
+  { path: '', redirectTo: RoutPath.dashboard, pathMatch: 'full' },
   {
     path: '',
     component: CmsComponent,
@@ -66,5 +67,4 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [AuthGuard],
 })
-export class CmsRoutingModule {
-}
+export class CmsRoutingModule {}

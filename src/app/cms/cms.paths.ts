@@ -6,16 +6,16 @@ export const RoutPath = strEnumHelper([
   'login',
   'upload',
   'publish',
-  'manage'
+  'manage',
 ]);
-export type RoutPath = keyof typeof RoutPath
+export type RoutPath = keyof typeof RoutPath;
 
 export const getFullPath = (path_string: RoutPath) => `/${BASE}/${path_string}`;
 
 export interface RouteName {
-  path: RoutPath
-  label: string
-  icon: string
-  component: any
-  auth: boolean
+  path: RoutPath;
+  label: string;
+  icon: string;
+  component: any;
+  auth: boolean;
 }

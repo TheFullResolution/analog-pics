@@ -1,4 +1,4 @@
-import { CmsState } from './../../state/state.reducer';
+import { CmsState } from '../../state/state.reducer';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanLoad, Route, RouterStateSnapshot } from '@angular/router';
 import { getIsAuth } from '../../state/state.selectors';

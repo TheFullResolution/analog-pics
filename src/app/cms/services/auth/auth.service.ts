@@ -1,4 +1,4 @@
-import { CmsState, getDataBaseState } from './../../state/state.reducer';
+import { CmsState, getDataBaseState } from '../../state/state.reducer';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthData } from '../../state/auth/auth-data.types';
@@ -27,7 +27,7 @@ export class AuthService {
 
         this.database.fetchDatabase();
       } else {
-        this.router.navigate([getFullPath(RoutPath.login)]);
+       void this.router.navigate([getFullPath(RoutPath.login)]);
 
         this.store.dispatch(new Auth.SetUnauthenticated());
         this.store
@@ -54,6 +54,7 @@ export class AuthService {
   }
 
   logout() {
-    this.afAuth.auth.signOut();
+   void this.afAuth.auth.signOut();
+   void this.router.navigate([getFullPath(RoutPath.login)]);
   }
 }
