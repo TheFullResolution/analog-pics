@@ -1,5 +1,4 @@
 <app-header></app-header>
-
 <ng-container *ngIf="photos$ | async as images">
   <app-picture-grid [images]="images">
     <ng-template let-image>
@@ -7,7 +6,7 @@
         class="link"
         [routerLink]="['/zoom']"
         [queryParams]="{ picId: image.id }"
-        (click)="setScrollPosition()"
+        (click)="onClick()"
       >
         <app-image [image]="image" [imageId]="image.id"></app-image>
       </a>

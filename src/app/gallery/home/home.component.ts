@@ -9,13 +9,13 @@ import { ScrollPositionService } from '../services/scroll-position.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit {
   photos$: Observable<type.DataBaseEntryWithId[]>;
   loading$: Observable<boolean>;
 
   constructor(
     private getPhotos: GetPhotosService,
-    private scrollPosition: ScrollPositionService,
+    private scrollPosition: ScrollPositionService
   ) {}
 
   ngOnInit() {
@@ -23,7 +23,11 @@ export class HomeComponent implements OnInit {
     this.loading$ = this.getPhotos.loading$;
   }
 
-  setScrollPosition() {
-    this.scrollPosition.setScrollPosition(window.pageYOffset);
+  ngAfterViewInit() {
+    this.scrollPosition.restoreScrollPosition()
+  }
+
+  onClick() {
+    this.scrollPosition.setScrollPosition()
   }
 }

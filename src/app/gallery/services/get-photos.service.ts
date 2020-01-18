@@ -1,20 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { filter, map, takeUntil } from 'rxjs/operators';
 import types from '_types_';
 
 @Injectable()
 export class GetPhotosService implements OnDestroy {
   private _ngUnsubscribe = new Subject();
   private _loading = new BehaviorSubject<boolean>(false);
-  private _photos: Subject<types.HttpGetResponse> = new Subject();
+  private _photos: Subject<
+    types.HttpGetResponse | { items: [] }
+  > = new BehaviorSubject({ items: [] });
 
   public photos$ = this._photos.asObservable();
   public loading$ = this._loading.asObservable();
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   ngOnDestroy() {
     this._ngUnsubscribe.next();

@@ -72,7 +72,7 @@ export class ZoomComponent implements OnInit {
 
   toggleHover = (event: boolean) => {
     this.isHovering = event;
-  }
+  };
 
   getCurrentData() {
     this.currentData$ = combineLatest([
