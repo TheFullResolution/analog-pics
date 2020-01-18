@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { getFullPath, RouteName, RoutPath } from './cms.paths';
+import { RouteName, RoutPath } from './cms.paths';
 import { CmsComponent } from './root/cms.component';
 import { DashboardComponent } from './routes/dashboard/dashboard.component';
 import { FileUploadComponent } from './routes/file-upload/file-upload.component';
