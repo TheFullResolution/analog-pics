@@ -14,7 +14,6 @@ import { Component, OnInit } from '@angular/core';
           Gallery of my analog pictures, taken using Zenit 12xp and Practica
           MTL-5
         </p>
-        <p>Project build using Angular 6 and Firebase</p>
       </section>
     </header>
   `,

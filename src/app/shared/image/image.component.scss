@@ -1,4 +1,4 @@
-@import '~src/_variables.scss';
+@import 'src/_variables.scss';
 
 :host {
   width: 100%;
@@ -10,41 +10,31 @@
 }
 
 img {
-  position: absolute;
   width: 100%;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  height: 100%;
+  position: static;
   transition: filter 400ms;
+  transform: none;
 }
 
-@supports (object-fit: cover) {
+.cover {
   img {
-    width: 100%;
-    height: 100%;
     object-fit: cover;
-    position: static;
-    transform: none;
+  }
+}
+
+.contain {
+  img {
+    object-fit: contain;
   }
 }
 
 .lazyloaded {
-  opacity: 1;
+  filter: blur(0);
 }
 
 .lazyload,
 .lazyloading {
-  opacity: 0.1;
-}
-
-@supports (filter: blur()) {
-  .lazyloaded {
-    filter: blur(0);
-  }
-
-  .lazyload,
-  .lazyloading {
-    opacity: 1;
-    filter: blur(8px);
-  }
+  opacity: 1;
+  filter: blur(8px);
 }

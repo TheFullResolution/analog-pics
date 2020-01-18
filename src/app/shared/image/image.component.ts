@@ -1,4 +1,12 @@
-import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import type from '_types_';
 import lazySizes from 'lazysizes';
 
@@ -7,7 +15,7 @@ const LAZYLOAD = 'lazyload';
 @Component({
   selector: 'app-image',
   template: `
-    <picture>
+    <picture [className]="objectFit">
       <source type="image/webp" [attr.data-srcset]="webpSrcset" />
       <source type="image/jpeg" [attr.data-srcset]="jpegSrcset" />
       <img
@@ -21,19 +29,20 @@ const LAZYLOAD = 'lazyload';
   styleUrls: ['./image.component.scss'],
 })
 export class ImageComponent implements OnInit, OnChanges {
-  @ViewChild('imageEl', { static: true }) imageElRef: ElementRef<HTMLImageElement>;
+  @ViewChild('imageEl', { static: true }) imageElRef: ElementRef<
+    HTMLImageElement
+  >;
 
   @Input() image: type.DataBaseEntryWithId;
   @Input() imageId: type.DataBaseEntryWithId['id'];
   @Input() defaultSize: type.ImageSizeTypes = 'md';
+  @Input() objectFit: 'cover' | 'contain' = 'cover';
 
   defaultImg: type.DataBaseImageObject;
-  loadClass = true;
   webpSrcset: string;
   jpegSrcset: string;
 
-  constructor() {
-  }
+  constructor() {}
 
   ngOnInit() {
     this.getDataForImages();

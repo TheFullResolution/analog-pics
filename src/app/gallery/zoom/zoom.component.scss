@@ -4,13 +4,9 @@ $iconSize: 48px;
 
 .container {
   position: relative;
-  display: flex;
   width: 100%;
   height: 100%;
-}
-
-.image-container {
-  flex: 1 1 80%;
+  background-color: $white;
 }
 
 .link {
@@ -18,8 +14,8 @@ $iconSize: 48px;
   align-items: center;
   justify-content: center;
   position: absolute;
-  width: $iconSize +  $marginS;
-  height:  $iconSize +  $marginS;
+  width: $iconSize + $marginS;
+  height: $iconSize + $marginS;
   background-color: $light-grey;
   opacity: 0.6;
   border-radius: 50%;

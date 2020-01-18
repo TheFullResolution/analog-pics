@@ -9,7 +9,7 @@ import { fadeInOut } from '../../shared/animations/fadeInOut';
 const animations = fadeInOut(0.6);
 
 interface ZoomData {
-  current: types.DataBaseEntryWithId;
+  current: types.DataBaseEntryWithId | undefined;
   previous: types.DataBaseEntryWithId | null;
   next: types.DataBaseEntryWithId | null;
 }
@@ -29,12 +29,12 @@ interface ZoomData {
         >
           <mat-icon>fast_rewind</mat-icon>
         </a>
-        <div class="image-container">
-          <app-image
-            [imageId]="data.current.id"
-            [image]="data.current"
-          ></app-image>
-        </div>
+        <app-image
+          *ngIf="data.current"
+          [imageId]="data.current.id"
+          [image]="data.current"
+          objectFit="contain"
+        ></app-image>
         <a
           [routerLink]="['/zoom']"
           *ngIf="isHovering && data.next"
