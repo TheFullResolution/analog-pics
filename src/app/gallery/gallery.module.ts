@@ -6,8 +6,9 @@ import { GalleryRoutingModule } from './gallery-routing.module';
 import { GalleryComponent } from './gallery.component';
 import { HeaderComponent } from './home/header/header.component';
 import { HomeComponent } from './home/home.component';
-import { GetPhotosService } from './services/get-photos.service';
 import { ZoomComponent } from './zoom/zoom.component';
+import { GetPhotosService } from './services/get-photos.service';
+import { ScrollPositionService } from './services/scroll-position.service';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,6 @@ import { ZoomComponent } from './zoom/zoom.component';
     GalleryComponent,
   ],
   imports: [GalleryRoutingModule, CommonModule, HttpClientModule, SharedModule],
-  providers: [GetPhotosService],
+  providers: [GetPhotosService, ScrollPositionService],
 })
-export class GalleryModule {
-}
+export class GalleryModule {}

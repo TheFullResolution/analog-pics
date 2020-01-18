@@ -1,4 +1,4 @@
-import { CmsState } from './../../state/state.reducer';
+import { CmsState } from '../../state/state.reducer';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import types from '_types_';
