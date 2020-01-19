@@ -9,6 +9,7 @@ import { HomeComponent } from './home/home.component';
 import { ZoomComponent } from './zoom/zoom.component';
 import { GetPhotosService } from './services/get-photos.service';
 import { ScrollPositionService } from './services/scroll-position.service';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { ScrollPositionService } from './services/scroll-position.service';
     HomeComponent,
     ZoomComponent,
     GalleryComponent,
+    AboutComponent,
   ],
   imports: [GalleryRoutingModule, CommonModule, HttpClientModule, SharedModule],
   providers: [GetPhotosService, ScrollPositionService],

@@ -1,6 +1,21 @@
-img {
-  border-radius: 5%;
-  max-width: 100px;
+@import 'src/_variables.scss';
+
+header {
+  padding: $marginM;
+  text-align: center;
+  position: relative;
+}
+
+nav {
+  a {
+    padding: $marginS;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  a + a {
+    margin-left: $marginS;
+  }
 }
 
 section {

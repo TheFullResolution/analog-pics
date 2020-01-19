@@ -1,0 +1,17 @@
+@import 'src/_variables.scss';
+
+h1 {
+  font-size: 42px;
+  font-family: cursive;
+  margin: {
+    bottom: $marginM;
+    left: 0;
+    right: 0;
+    top: 0;
+  }
+}
+
+img {
+  border-radius: 5%;
+  max-width: 150px;
+}

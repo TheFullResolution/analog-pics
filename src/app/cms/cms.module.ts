@@ -18,7 +18,7 @@ import { InputFileComponent } from './components/input-file/input-file.component
 import { SidenavListComponent } from './components/sidenav/sidenav-list/sidenav-list.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { MaterialModule } from './material.module';
-import { CmsComponent } from './root/cms.component';
+import { CmsComponent } from './cms.component';
 import { DashboardComponent } from './routes/dashboard/dashboard.component';
 import { ProgressCardComponent } from './routes/file-upload/components/progress-card/progress-card.component';
 import { UploadCardComponent } from './routes/file-upload/components/upload-card/upload-card.component';

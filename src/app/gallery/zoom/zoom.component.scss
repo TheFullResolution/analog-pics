@@ -2,11 +2,20 @@
 
 $iconSize: 48px;
 
+:host {
+  margin: 0 auto;
+  display: block;
+  max-width: $max-width * 2;
+  width: 100%;
+  height: 100%;
+  background-color: $white;
+}
+
+
 .container {
   position: relative;
   width: 100%;
   height: 100%;
-  background-color: $white;
 }
 
 .link {

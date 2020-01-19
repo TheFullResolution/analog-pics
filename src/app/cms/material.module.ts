@@ -9,6 +9,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatAutocompleteModule } from '@angular/material';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatDividerModule,
     MatFormFieldModule,
     MatInputModule,
+    MatAutocompleteModule,
     MatListModule,
     MatProgressBarModule,
     MatSidenavModule,
@@ -25,6 +27,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
   ],
   exports: [
     MatButtonModule,
+    MatAutocompleteModule,
     MatCardModule,
     MatCheckboxModule,
     MatDividerModule,

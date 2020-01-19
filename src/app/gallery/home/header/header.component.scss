@@ -1,24 +1,21 @@
+@import 'src/_variables.scss';
+
 .header {
-  padding: 15px;
+  padding: $marginM;
   text-align: center;
-
-  h1 {
-    font-size: 42px;
-    font-family: cursive;
-    margin: {
-      bottom: 15px;
-      left: 0;
-      right: 0;
-      top: 0;
-    };
-  }
-
-  img {
-    border-radius: 5%;
-    max-width: 150px;
-  }
+  position: relative;
 }
 
+.edit {
+  position: absolute;
+  right: 0;
+  top: $marginS;
+}
 
-
-
+.about {
+  font-weight: 500;
+  text-decoration: underline;
+  &:hover {
+    text-decoration: none;
+  }
+}
