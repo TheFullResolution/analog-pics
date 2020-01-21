@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   constructor(
     private getPhotos: GetPhotosService,
-    private scrollPosition: ScrollPositionService
+    private scrollPosition: ScrollPositionService,
   ) {}
 
   ngOnInit() {
@@ -24,10 +24,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.scrollPosition.restoreScrollPosition()
+    this.scrollPosition.restoreScrollPosition();
   }
 
   onClick() {
-    this.scrollPosition.setScrollPosition()
+    this.scrollPosition.setScrollPosition();
   }
 }

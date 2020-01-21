@@ -1,5 +1,5 @@
 <mat-toolbar color="primary" *ngIf="isAuth$ | async">
-  <mat-toolbar-row class="row">
+  <mat-toolbar-row>
     <button (click)="onToggleSideNav()" mat-icon-button class="nav">
       <mat-icon>{{ sidenavState ? 'close' : 'menu' }}</mat-icon>
     </button>

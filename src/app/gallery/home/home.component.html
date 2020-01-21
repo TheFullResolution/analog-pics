@@ -1,4 +1,14 @@
-<app-header></app-header>
+<header class="header">
+  <app-logo></app-logo>
+  <section class="mat-typography">
+    <p>
+      Gallery of my analog pictures, taken using Zenit 12xp and Practica
+      MTL-5
+    </p>
+    Go to <a routerLink="/about" class="about">About Page</a> to read more.
+  </section>
+  <a routerLink="/cms" class="edit">Edit</a>
+</header>
 <ng-container *ngIf="photos$ | async as images">
   <app-picture-grid [images]="images">
     <ng-template let-image>

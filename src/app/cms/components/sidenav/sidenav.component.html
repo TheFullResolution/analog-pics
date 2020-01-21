@@ -4,8 +4,17 @@
   [sidenavState]="sidenav.opened"
 >
 </app-header-cms>
-<mat-sidenav-container [hasBackdrop]="!desktop">
-  <mat-sidenav #sidenav role="navigation" [mode]="desktop ? 'side' : 'over'">
+<mat-sidenav-container
+  [hasBackdrop]="!desktop"
+  [style.paddingTop.px]="desktop ? 64 : 56"
+>
+  <mat-sidenav
+    #sidenav
+    role="navigation"
+    [mode]="desktop ? 'side' : 'over'"
+    fixedInViewport
+    [fixedTopGap]="desktop ? 64 : 56"
+  >
     <app-sidenav-list (closeSidenav)="sidenav.close()" [desktop]="desktop">
     </app-sidenav-list>
   </mat-sidenav>

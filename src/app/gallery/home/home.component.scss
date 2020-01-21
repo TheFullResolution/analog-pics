@@ -9,6 +9,25 @@
   padding: 0 $marginS;
 }
 
+.header {
+  padding: $marginM;
+  text-align: center;
+  position: relative;
+}
+
+.edit {
+  position: absolute;
+  right: 0;
+  top: $marginS;
+}
+
+.about {
+  font-weight: 500;
+  text-decoration: underline;
+  &:hover {
+    text-decoration: none;
+  }
+}
 
 .spinner {
   display: flex;

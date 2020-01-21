@@ -1,7 +1,8 @@
-@import '~src/_variables.scss';
+@import 'src/_variables.scss';
 
-.row {
-  position: relative;
+mat-toolbar {
+  position: fixed;
+  z-index: 2;
 }
 
 .nav {
