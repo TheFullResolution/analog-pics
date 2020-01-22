@@ -30,7 +30,7 @@ export class PictureGridComponent implements OnInit, OnDestroy {
   gridCols = 1;
 
   @ContentChild(TemplateRef, { static: false }) itemTemplate: TemplateRef<any>;
-  @Input() images: type.DataBaseEntry[];
+  @Input() images: type.DataBaseEntryWithId[];
 
   constructor(private breakpointObserver: BreakpointObserver) {}
 
@@ -43,7 +43,7 @@ export class PictureGridComponent implements OnInit, OnDestroy {
     this._ngUnsubscribe.complete();
   }
 
-  trackByName = (index, img: type.DataBaseEntry) => img.name;
+  trackByName = (index, img: type.DataBaseEntryWithId) => img.id;
 
   listenToBreakPoints() {
     this.breakpointObserver

@@ -54,8 +54,8 @@ interface ZoomData {
         </a>
       </div>
     </ng-container>
-    <div class="spinner">
-      <mat-spinner *ngIf="loading$ | async"></mat-spinner>
+    <div class="spinner" *ngIf="loading$ | async">
+      <mat-spinner></mat-spinner>
     </div>
   `,
   styleUrls: ['./zoom.component.scss'],

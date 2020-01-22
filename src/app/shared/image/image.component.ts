@@ -17,7 +17,6 @@ const LAZYLOAD = 'lazyload';
   template: `
     <picture
       [classList]="[objectFit]"
-      [style]=""
     >
       <source type="image/webp" [attr.data-srcset]="webpSrcset" />
       <source type="image/jpeg" [attr.data-srcset]="jpegSrcset" />
