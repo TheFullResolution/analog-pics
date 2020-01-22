@@ -1,14 +1,22 @@
 <app-header-cms
+  *ngIf="isAuth$ | async"
   (sidenavToggle)="sidenav.toggle()"
   [sidenavState]="sidenav.opened"
 >
 </app-header-cms>
-<mat-sidenav-container [hasBackdrop]="!desktop">
-  <mat-sidenav #sidenav role="navigation" [mode]="desktop ? 'side' : 'over'">
-    <app-sidenav-list
-      (closeSidenav)="sidenav.close()"
-      [desktop]="desktop"
-    ></app-sidenav-list>
+<mat-sidenav-container
+  [hasBackdrop]="!desktop"
+  [style.paddingTop.px]="desktop ? 64 : 56"
+>
+  <mat-sidenav
+    #sidenav
+    role="navigation"
+    [mode]="desktop ? 'side' : 'over'"
+    fixedInViewport
+    [fixedTopGap]="desktop ? 64 : 56"
+  >
+    <app-sidenav-list (closeSidenav)="sidenav.close()" [desktop]="desktop">
+    </app-sidenav-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <ng-content></ng-content>

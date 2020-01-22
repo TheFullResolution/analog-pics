@@ -54,11 +54,15 @@ interface ZoomData {
         </a>
       </div>
     </ng-container>
+    <div class="spinner" *ngIf="loading$ | async">
+      <mat-spinner></mat-spinner>
+    </div>
   `,
   styleUrls: ['./zoom.component.scss'],
 })
 export class ZoomComponent implements OnInit {
   currentData$: Observable<ZoomData>;
+  loading$: Observable<boolean>;
   isHovering: boolean;
 
   constructor(
@@ -68,6 +72,7 @@ export class ZoomComponent implements OnInit {
 
   ngOnInit() {
     this.getCurrentData();
+    this.loading$ = this.getPhotos.loading$;
   }
 
   toggleHover = (event: boolean) => {

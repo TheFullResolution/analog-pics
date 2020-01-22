@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RouteName, RoutPath } from './cms.paths';
-import { CmsComponent } from './root/cms.component';
+import { CmsComponent } from './cms.component';
 import { DashboardComponent } from './routes/dashboard/dashboard.component';
 import { FileUploadComponent } from './routes/file-upload/file-upload.component';
 import { LoginComponent } from './routes/login/login.component';

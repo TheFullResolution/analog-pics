@@ -4,18 +4,18 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { GalleryRoutingModule } from './gallery-routing.module';
 import { GalleryComponent } from './gallery.component';
-import { HeaderComponent } from './home/header/header.component';
 import { HomeComponent } from './home/home.component';
 import { ZoomComponent } from './zoom/zoom.component';
 import { GetPhotosService } from './services/get-photos.service';
 import { ScrollPositionService } from './services/scroll-position.service';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
-    HeaderComponent,
     HomeComponent,
     ZoomComponent,
     GalleryComponent,
+    AboutComponent,
   ],
   imports: [GalleryRoutingModule, CommonModule, HttpClientModule, SharedModule],
   providers: [GetPhotosService, ScrollPositionService],

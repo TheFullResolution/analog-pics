@@ -1,7 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatSidenav } from '@angular/material';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
+import { getIsAuth } from '../../state/state.selectors';
+import { Store } from '@ngrx/store';
+import { CmsState } from '../../state/state.reducer';
 
 @Component({
   selector: 'app-sidenav',
@@ -9,14 +13,21 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./sidenav.component.scss'],
 })
 export class SidenavComponent implements OnInit, OnDestroy {
+  @ViewChild('sidenav', { static: true }) sidenav: MatSidenav;
+
   private _ngUnsubscribe = new Subject();
+  isAuth$: Observable<boolean>;
   desktop = false;
 
-  constructor(private breakpointObserver: BreakpointObserver) {
-  }
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private store: Store<CmsState>,
+  ) {}
 
   ngOnInit() {
+    this.isAuth$ = this.store.select(getIsAuth);
     this.listenToBreakPoints();
+    this.listenToAuth();
   }
 
   ngOnDestroy() {
@@ -24,25 +35,23 @@ export class SidenavComponent implements OnInit, OnDestroy {
     this._ngUnsubscribe.complete();
   }
 
-  listenToBreakPoints() {
-    this.breakpointObserver
-      .observe([
-        Breakpoints.Medium,
-        Breakpoints.Large,
-        Breakpoints.XLarge,
-      ])
-      .pipe(takeUntil(this._ngUnsubscribe))
-      .subscribe(result => {
-        if (
-          result.breakpoints[Breakpoints.Medium] ||
-          result.breakpoints[Breakpoints.Large] ||
-          result.breakpoints[Breakpoints.XLarge]
-        ) {
-          this.desktop = true;
-        } else {
-          this.desktop = false;
-        }
-      });
+  listenToAuth() {
+    this.isAuth$.pipe(takeUntil(this._ngUnsubscribe)).subscribe(auth => {
+      if (!auth) {
+        this.sidenav.close();
+      }
+    });
   }
 
+  listenToBreakPoints() {
+    this.breakpointObserver
+      .observe([Breakpoints.Medium, Breakpoints.Large, Breakpoints.XLarge])
+      .pipe(takeUntil(this._ngUnsubscribe))
+      .subscribe(result => {
+        this.desktop =
+          result.breakpoints[Breakpoints.Medium] ||
+          result.breakpoints[Breakpoints.Large] ||
+          result.breakpoints[Breakpoints.XLarge];
+      });
+  }
 }

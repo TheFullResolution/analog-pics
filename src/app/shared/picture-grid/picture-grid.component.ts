@@ -1,5 +1,12 @@
 import { Subject } from 'rxjs';
-import { Component, ContentChild, Input, OnDestroy, OnInit, TemplateRef } from '@angular/core';
+import {
+  Component,
+  ContentChild,
+  Input,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+} from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import type from '_types_';
 import { takeUntil } from 'rxjs/operators';
@@ -8,7 +15,7 @@ import { takeUntil } from 'rxjs/operators';
   selector: 'app-picture-grid',
   template: `
     <mat-grid-list [cols]="gridCols" rowHeight="3:2" gutterSize="16px">
-      <mat-grid-tile *ngFor="let image of images">
+      <mat-grid-tile *ngFor="let image of images; trackBy: trackByName">
         <ng-template
           [ngTemplateOutlet]="itemTemplate"
           [ngTemplateOutletContext]="{ $implicit: image }"
@@ -23,10 +30,9 @@ export class PictureGridComponent implements OnInit, OnDestroy {
   gridCols = 1;
 
   @ContentChild(TemplateRef, { static: false }) itemTemplate: TemplateRef<any>;
-  @Input() images: type.DataBaseEntry[];
+  @Input() images: type.DataBaseEntryWithId[];
 
-  constructor(private breakpointObserver: BreakpointObserver) {
-  }
+  constructor(private breakpointObserver: BreakpointObserver) {}
 
   ngOnInit() {
     this.listenToBreakPoints();
@@ -36,6 +42,8 @@ export class PictureGridComponent implements OnInit, OnDestroy {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
   }
+
+  trackByName = (index, img: type.DataBaseEntryWithId) => img.id;
 
   listenToBreakPoints() {
     this.breakpointObserver

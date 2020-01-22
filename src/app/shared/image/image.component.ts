@@ -15,7 +15,9 @@ const LAZYLOAD = 'lazyload';
 @Component({
   selector: 'app-image',
   template: `
-    <picture [className]="objectFit">
+    <picture
+      [classList]="[objectFit]"
+    >
       <source type="image/webp" [attr.data-srcset]="webpSrcset" />
       <source type="image/jpeg" [attr.data-srcset]="jpegSrcset" />
       <img
@@ -57,7 +59,7 @@ export class ImageComponent implements OnInit, OnChanges {
 
   getDataForImages() {
     const { thumbs } = this.image;
-    this.defaultImg = this.getDefault(thumbs);
+    this.defaultImg = this.getSpecificSize(thumbs, this.defaultSize);
     this.jpegSrcset = this.getSrcset(type.ImageFormat.jpeg, thumbs);
     this.webpSrcset = this.getSrcset(type.ImageFormat.webp, thumbs);
     this.imageElRef.nativeElement.classList.add(LAZYLOAD);
@@ -72,6 +74,8 @@ export class ImageComponent implements OnInit, OnChanges {
       .filter(img => img.format === format)
       .reduce((acc, el) => acc + `${el.downloadUrl} ${el.size}w,`, '');
 
-  getDefault = (list: type.DataBaseImageObject[]) =>
-    list.find(img => img.type === this.defaultSize);
+  getSpecificSize = (
+    list: type.DataBaseImageObject[],
+    size: type.ImageSizeTypes,
+  ) => list.find(img => img.type === size);
 }

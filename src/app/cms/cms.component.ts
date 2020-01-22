@@ -1,10 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../services/auth/auth.service';
+import { AuthService } from './services/auth/auth.service';
 
 @Component({
   selector: 'app-cms',
   styleUrls: ['./cms.component.scss'],
-  templateUrl: './cms.component.html',
+  template: `
+    <app-sidenav>
+      <main class="main">
+        <router-outlet></router-outlet>
+      </main>
+    </app-sidenav>
+  `,
 })
 export class CmsComponent implements OnInit {
   constructor(
