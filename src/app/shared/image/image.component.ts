@@ -15,9 +15,7 @@ const LAZYLOAD = 'lazyload';
 @Component({
   selector: 'app-image',
   template: `
-    <picture
-      [classList]="[objectFit]"
-    >
+    <picture [classList]="[objectFit]">
       <source type="image/webp" [attr.data-srcset]="webpSrcset" />
       <source type="image/jpeg" [attr.data-srcset]="jpegSrcset" />
       <img
@@ -51,9 +49,11 @@ export class ImageComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const { imageId } = changes;
-    if (imageId.currentValue !== imageId.previousValue) {
-      this.getDataForImages();
+    if (changes && changes.imageId) {
+      const { imageId } = changes;
+      if (imageId.currentValue !== imageId.previousValue) {
+        this.getDataForImages();
+      }
     }
   }
 
