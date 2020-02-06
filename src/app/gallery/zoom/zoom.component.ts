@@ -1,7 +1,7 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { combineLatest, Observable } from 'rxjs';
-import { filter, map, take } from 'rxjs/operators';
+import { combineLatest, Observable, Subject } from 'rxjs';
+import { filter, map, take, takeUntil } from 'rxjs/operators';
 import types from '_types_';
 import { GetPhotosService } from '../services/get-photos.service';
 import { fadeInOut } from '../../shared/animations/fadeInOut';
@@ -60,7 +60,8 @@ interface ZoomData {
   `,
   styleUrls: ['./zoom.component.scss'],
 })
-export class ZoomComponent implements OnInit {
+export class ZoomComponent implements OnInit, OnDestroy {
+  private _ngUnsubscribe = new Subject();
   currentData$: Observable<ZoomData>;
   loading$: Observable<boolean>;
   isHovering: boolean;
@@ -77,12 +78,16 @@ export class ZoomComponent implements OnInit {
     this.loading$ = this.getPhotos.loading$;
   }
 
+  ngOnDestroy() {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
+  }
+
   @HostListener('touchstart', ['$event'])
   @HostListener('touchend', ['$event'])
   @HostListener('touchcancel', ['$event'])
   handleTouch(event) {
     const touch = event.touches[0] || event.changedTouches[0];
-    console.log({ touch });
     // check the events
     if (event.type === 'touchstart') {
       this.defaultTouch.x = touch.pageX;
@@ -97,12 +102,31 @@ export class ZoomComponent implements OnInit {
         if (Math.abs(deltaX) > 60) {
           // delta x is at least 60 pixels
           if (deltaX > 0) {
-            this.navigate('back');
+            this.navigateNextPicture('back');
           } else {
-            this.navigate('forward');
+            this.navigateNextPicture('forward');
           }
         }
       }
+    }
+  }
+
+  @HostListener('document:keydown.escape', ['$event.key'])
+  @HostListener('document:keydown.ArrowRight', ['$event.key'])
+  @HostListener('document:keydown.ArrowLeft', ['$event.key'])
+  handleKeyDown(key) {
+    switch (key) {
+      case 'Escape':
+        void this.router.navigate(['/']);
+        break;
+
+      case 'ArrowRight':
+        this.navigateNextPicture('forward');
+        break;
+
+      case 'ArrowLeft':
+        this.navigateNextPicture('back');
+        break;
     }
   }
 
@@ -110,13 +134,16 @@ export class ZoomComponent implements OnInit {
     this.isHovering = event;
   };
 
-  navigate(where: 'forward' | 'back') {
-    this.currentData$.subscribe(({ previous, next }) => {
-      const picId = where === 'forward' ? next.id : previous.id;
-      if (!picId) {
+  navigateNextPicture(where: 'forward' | 'back') {
+    this.currentData$.pipe(take(1)).subscribe(state => {
+      const nextPicture = where === 'forward' ? state.next : state.previous;
+
+      if (!nextPicture) {
         return;
       }
-      void this.router.navigate(['/zoom'], { queryParams: { picId } });
+      void this.router.navigate(['/zoom'], {
+        queryParams: { picId: nextPicture.id },
+      });
     });
   }
 
@@ -125,6 +152,7 @@ export class ZoomComponent implements OnInit {
       this.route.queryParams.pipe(filter(params => params.picId)),
       this.getPhotos.getPhotosArray(),
     ]).pipe(
+      takeUntil(this._ngUnsubscribe),
       map(([param, array]) => {
         const currentIndex = array.findIndex(el => el.id === param.picId);
         const previous = currentIndex - 1 >= 0 ? array[currentIndex - 1] : null;
