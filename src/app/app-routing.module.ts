@@ -4,14 +4,14 @@ import { AppComponent } from './app.component';
 
 const routes: Routes = [
   {
-    path: '',
-    loadChildren: () =>
-      import('./gallery/gallery.module').then(m => m.GalleryModule),
-  },
-  {
     path: 'cms',
     loadChildren: () => import('./cms/cms.module').then(m => m.CmsModule),
   },
+  {
+    path: '',
+    loadChildren: () =>
+      import('./gallery/gallery.module').then(m => m.GalleryModule),
+  }
 ];
 
 @NgModule({
