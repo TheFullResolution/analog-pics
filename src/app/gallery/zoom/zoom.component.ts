@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, take } from 'rxjs/operators';
 import types from '_types_';
 import { GetPhotosService } from '../services/get-photos.service';
 import { fadeInOut } from '../../shared/animations/fadeInOut';
@@ -64,9 +64,11 @@ export class ZoomComponent implements OnInit {
   currentData$: Observable<ZoomData>;
   loading$: Observable<boolean>;
   isHovering: boolean;
+  defaultTouch = { x: 0, y: 0, time: 0 };
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private getPhotos: GetPhotosService,
   ) {}
 
@@ -75,9 +77,48 @@ export class ZoomComponent implements OnInit {
     this.loading$ = this.getPhotos.loading$;
   }
 
+  @HostListener('touchstart', ['$event'])
+  @HostListener('touchend', ['$event'])
+  @HostListener('touchcancel', ['$event'])
+  handleTouch(event) {
+    const touch = event.touches[0] || event.changedTouches[0];
+    console.log({ touch });
+    // check the events
+    if (event.type === 'touchstart') {
+      this.defaultTouch.x = touch.pageX;
+      this.defaultTouch.time = event.timeStamp;
+    } else if (event.type === 'touchend') {
+      const deltaX = touch.pageX - this.defaultTouch.x;
+      const deltaTime = event.timeStamp - this.defaultTouch.time;
+
+      // simulte a swipe -> less than 500 ms and more than 60 px
+      if (deltaTime < 500) {
+        // touch movement lasted less than 500 ms
+        if (Math.abs(deltaX) > 60) {
+          // delta x is at least 60 pixels
+          if (deltaX > 0) {
+            this.navigate('back');
+          } else {
+            this.navigate('forward');
+          }
+        }
+      }
+    }
+  }
+
   toggleHover = (event: boolean) => {
     this.isHovering = event;
   };
+
+  navigate(where: 'forward' | 'back') {
+    this.currentData$.subscribe(({ previous, next }) => {
+      const picId = where === 'forward' ? next.id : previous.id;
+      if (!picId) {
+        return;
+      }
+      void this.router.navigate(['/zoom'], { queryParams: { picId } });
+    });
+  }
 
   getCurrentData() {
     this.currentData$ = combineLatest([
