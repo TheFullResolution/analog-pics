@@ -17,7 +17,7 @@ import { AboutComponent } from './about/about.component';
     GalleryComponent,
     AboutComponent,
   ],
-  imports: [GalleryRoutingModule, CommonModule, HttpClientModule, SharedModule],
+  imports: [CommonModule, HttpClientModule, SharedModule, GalleryRoutingModule],
   providers: [GetPhotosService, ScrollPositionService],
 })
 export class GalleryModule {}

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -11,12 +12,15 @@ const routes: Routes = [
     path: '',
     loadChildren: () =>
       import('./gallery/gallery.module').then(m => m.GalleryModule),
-  }
+  },
+  { path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }),
+    RouterModule.forRoot(routes, {
+      scrollPositionRestoration: 'enabled',
+    }),
   ],
   exports: [RouterModule],
   providers: [],

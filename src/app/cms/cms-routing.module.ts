@@ -47,7 +47,7 @@ export const routeNames: RouteName[] = [
   },
 ];
 
-const childrenRoutes = routeNames.map(({ path, component, auth }) => ({
+const childrenRoutes: Routes = routeNames.map(({ path, component, auth }) => ({
   path,
   component,
   ...(auth ? { canLoad: [AuthGuard] } : {}),
