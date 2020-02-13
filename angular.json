@@ -13,6 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/analog-pics",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -31,6 +32,12 @@
           },
           "configurations": {
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -128,7 +135,10 @@
   "defaultProject": "analog-pics",
   "schematics": {
     "@schematics/angular:component": {
-      "styleext": "scss"
+      "style": "scss"
     }
+  },
+  "cli": {
+    "analytics": "5b65ff51-fb3c-4f84-8a0e-4b9a62599453"
   }
 }

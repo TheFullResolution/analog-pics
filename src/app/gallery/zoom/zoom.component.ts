@@ -154,7 +154,9 @@ export class ZoomComponent implements OnInit, OnDestroy {
     ]).pipe(
       takeUntil(this._ngUnsubscribe),
       map(([param, array]) => {
-        const currentIndex = array.findIndex(el => el.id === param.picId);
+        const currentIndex = (array as types.DataBaseEntryWithId[]).findIndex(
+          el => el.id === param.picId,
+        );
         const previous = currentIndex - 1 >= 0 ? array[currentIndex - 1] : null;
         const next =
           currentIndex + 1 <= array.length ? array[currentIndex + 1] : null;
