@@ -7,6 +7,7 @@
     "start": "ng serve",
     "stats": "webpack-bundle-analyzer dist/analog-pics/stats-es2015.json",
     "build": "ng build --prod --stats-json",
+    "deploy": "firebase deploy --only hosting",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -33,8 +34,8 @@
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.803.23",
-    "@angular/cli": "~8.3.23",
+    "@angular-devkit/build-angular": "~0.803.25",
+    "@angular/cli": "~8.3.25",
     "@angular/compiler-cli": "8.2.14",
     "@angular/language-service": "8.2.14",
     "@types/jasmine": "~3.3.14",

@@ -10,7 +10,7 @@ const routes: Routes = [
     path: '',
     component: GalleryComponent,
     children: [
-      { path: '', component: HomeComponent,  pathMatch: 'full' },
+      { path: '', component: HomeComponent },
       { path: 'zoom', component: ZoomComponent },
       { path: 'about', component: AboutComponent },
     ],

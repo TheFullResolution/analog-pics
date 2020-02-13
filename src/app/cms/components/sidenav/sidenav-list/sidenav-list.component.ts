@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { routeNames } from '../../../cms-routing.module';
-import { RouteName } from 'src/app/cms/cms.paths';
+import { RouteName, routeNames } from 'src/app/cms/cms.paths';
 
 @Component({
   selector: 'app-sidenav-list',
@@ -13,7 +12,7 @@ export class SidenavListComponent implements OnInit {
   @Input() desktop = false;
 
   constructor() {
-    this.routes = routeNames.filter(el => el.auth);
+    this.routes = routeNames.filter(el => !el.noSideNav);
   }
 
   ngOnInit() {
