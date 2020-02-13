@@ -12,7 +12,7 @@ export class SidenavListComponent implements OnInit {
   @Input() desktop = false;
 
   constructor() {
-    this.routes = routeNames.filter(el => el.auth);
+    this.routes = routeNames.filter(el => !el.noSideNav);
   }
 
   ngOnInit() {

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Route } from '@angular/router';
 import { CmsComponent } from './cms.component';
 import { DashboardComponent } from './routes/dashboard/dashboard.component';
 import { FileUploadComponent } from './routes/file-upload/file-upload.component';
@@ -7,8 +7,17 @@ import { LoginComponent } from './routes/login/login.component';
 import { PublishComponent } from './routes/publish/publish.component';
 import { AuthGuard } from './services/auth/auth.guard';
 import { ManageComponent } from './routes/manage/manage.component';
+import { RoutPath } from './cms.paths';
 
-const routes: Routes = [
+interface ChildRoutes extends Route {
+  path: RoutPath;
+}
+
+interface MyRoutes extends Route {
+  children?: ChildRoutes[];
+}
+
+const routes: MyRoutes[] = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   {
     path: '',
@@ -36,7 +45,7 @@ const routes: Routes = [
       {
         path: 'publish',
         component: PublishComponent,
-        canLoad: [AuthGuard]
+        canLoad: [AuthGuard],
       },
     ],
   },

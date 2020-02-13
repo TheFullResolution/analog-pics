@@ -7,6 +7,7 @@
     "start": "ng serve",
     "stats": "webpack-bundle-analyzer dist/analog-pics/stats-es2015.json",
     "build": "ng build --prod --stats-json",
+    "deploy": "firebase deploy --only hosting",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

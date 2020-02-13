@@ -17,7 +17,7 @@ export interface RouteName {
   path: RoutPath;
   label: string;
   icon: string;
-  auth: boolean;
+  noSideNav?: boolean;
 }
 
 export const routeNames: RouteName[] = [
@@ -25,30 +25,26 @@ export const routeNames: RouteName[] = [
     path: RoutPath.login,
     label: 'Login',
     icon: '',
-    auth: false,
+    noSideNav: true
   },
   {
     path: RoutPath.dashboard,
     label: 'Dashboard',
-    icon: 'data_usage',
-    auth: true,
+    icon: 'data_usage'
   },
   {
     path: RoutPath.manage,
     label: 'Manage Pictures',
-    icon: 'dynamic_feed',
-    auth: true,
+    icon: 'dynamic_feed'
   },
   {
     path: RoutPath.upload,
     label: 'Picture Upload',
-    icon: 'cloud_upload',
-    auth: true,
+    icon: 'cloud_upload'
   },
   {
     path: RoutPath.publish,
     label: 'Publish Pictures',
-    icon: 'publish',
-    auth: true,
+    icon: 'publish'
   },
 ];
