@@ -1,27 +1,20 @@
-# AnalogPics
+# Analog Pics
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.2.
+## About
 
-## Development server
+This goal of this project was to explore recent technologies and build a version of the simple picture gallery which can be managed by custom build CMS. 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+It could be divided into three separate modules: frontend part, CMS part, and cloud functions. 
 
-## Code scaffolding
+* Frontend Part - the simplest possible gallery/image viewer. With some basic functionality. Made to be as small as possible and performant.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+* CMS Part - the advanced user interface to upload, remove and publish pictures. Lazy loaded with all the added packages like firebase and angular material components. 
 
-## Build
+* Cloud Functions - these handle the creation of thumbnails and putting information into the database. Additionally, there is a function which would serve the list of images to Frontend Part, so I do not have to use Firebase package to retrieve the images. 
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## How to run the Project
 
-## Running unit tests
+There is no easy way to run the CMS part without a login, of course, it should be easy to make it this project work on somebody’s else account. 
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+### Deploying to other Firebase account
+Assuming you know how firebase works, you only need to create a new project, pass to right firebase config `src/environments`, deploy this project using firebase CLI (so all the rules get uploaded and functions). Finally, create a user account via Firebase console. 
