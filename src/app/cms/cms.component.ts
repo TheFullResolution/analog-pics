@@ -5,7 +5,7 @@ import { AuthService } from './services/auth/auth.service';
   selector: 'app-cms',
   styleUrls: ['./cms.component.scss'],
   template: `
-    <app-sidenav>
+    <app-sidenav class="mat-typography">
       <main class="main">
         <router-outlet></router-outlet>
       </main>

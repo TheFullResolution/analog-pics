@@ -1,0 +1,34 @@
+@import 'src/_variables.scss';
+
+.header {
+  text-align: center;
+  margin-top: $marginXL;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: $marginXL;
+}
+
+.card {
+  max-width: 200px;
+  display: flex;
+  flex-direction: column;
+  > mat-card-header {
+    margin-bottom: auto;
+  }
+
+  + .card {
+    margin-left: $marginM;
+  }
+}
+
+.number {
+  font-size: 40px;
+  padding: $marginL;
+  border: solid $accent 5px;
+  border-radius: 100%;
+  display: inline-block;
+}
