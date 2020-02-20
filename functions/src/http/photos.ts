@@ -33,13 +33,13 @@ export const photos = ({ admin }: Photos) =>
 
       res.set(
         'Cache-Control',
-        `public, max-age=${ms('1 min') / 1000}, s-maxage=${ms('1 min') / 1000}`,
+        `public, max-age=${ms('10 min') / 1000}, s-maxage=${ms('10 min') / 1000}`,
       );
 
       if (
         photosDataBase.items &&
         photosDataBase.items.length > 0 &&
-        elapsed(photosDataBase.date) < ms('1 min')
+        elapsed(photosDataBase.date) < ms('10 min')
       ) {
         console.log('CASHED');
         return res.status(200).json({ ...photosDataBase });
