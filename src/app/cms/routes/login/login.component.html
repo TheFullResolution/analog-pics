@@ -6,18 +6,18 @@
   </nav>
 </header>
 <section>
-  <form #f="ngForm" (ngSubmit)="onSubmit(f)" class="form">
-    <mat-form-field appearance="outline">
+  <form  #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" autocomplete="on" class="form">
+    <mat-form-field appearance="outline" >
       <mat-label>Email</mat-label>
       <input
+        matInput
         type="email"
+        name="email"
         placeholder="email@email.com"
         ngModel
-        name="email"
-        email
         required
         #emailInput="ngModel"
-        matInput
+        autocomplete="on"
       />
       <mat-error
         *ngIf="emailInput.hasError('email') && !emailInput.hasError('required')"
@@ -37,7 +37,7 @@
       type="submit"
       mat-raised-button
       color="primary"
-      [disabled]="f.invalid"
+      [disabled]="loginForm.invalid"
     >
       Submit
     </button>

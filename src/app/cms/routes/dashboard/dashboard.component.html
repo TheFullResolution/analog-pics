@@ -1,1 +1,81 @@
-<p>Future Dashboard</p>
+<section>
+  <div class="header">
+    <h1>Dashboard</h1>
+    <p>Welcome back!</p>
+  </div>
+  <div class="cards">
+    <mat-card class="card">
+      <div class="card-header">
+        <mat-card-title>Unpublished</mat-card-title>
+        <mat-card-subtitle>
+          Number of pictures uploaded to database, but not visible
+        </mat-card-subtitle>
+      </div>
+      <mat-card-content>
+        <div class="number" *ngIf="unpublished$ | async as unpublished">
+          {{ unpublished }}
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <a
+          mat-flat-button
+          color="accent"
+          [routerLink]="getFullPath(pathToPublish.path)"
+        >
+          Publish them!
+        </a>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="card">
+      <div class="card-header">
+        <mat-card-title>Published</mat-card-title>
+        <mat-card-subtitle>
+          Number of pictures visible
+        </mat-card-subtitle>
+      </div>
+      <mat-card-content>
+        <div class="number" *ngIf="published$ | async as published">
+          {{ published }}
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <a
+          mat-flat-button
+          color="accent"
+          [routerLink]="getFullPath(pathPublished.path)"
+        >
+          Check Them!
+        </a>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="card">
+      <div class="card-header">
+        <mat-card-title>Last Upload</mat-card-title>
+        <mat-card-subtitle>
+          When last picture was uploaded
+        </mat-card-subtitle>
+      </div>
+      <mat-card-content class="card-header">
+        <div class="date" *ngIf="lastUpload$ | async as lastUpload">
+          {{ lastUpload * 1000 | date:'medium' }}
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="card">
+      <div class="card-header">
+        <mat-card-title>Last Sign In</mat-card-title>
+        <mat-card-subtitle>
+          You were here last time
+        </mat-card-subtitle>
+      </div>
+      <mat-card-content class="card-header">
+        <div class="date" *ngIf="lastSignIn$ | async as lastSignIn">
+          {{ lastSignIn | date:'medium' }}
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</section>

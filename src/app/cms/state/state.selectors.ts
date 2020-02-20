@@ -1,9 +1,5 @@
 import { createSelector } from '@ngrx/store';
-import {
-  getAuthState,
-  getDataBaseState,
-  getSelectState,
-} from './state.reducer';
+import { getAuthState, getDataBaseState, getSelectState } from './state.reducer';
 
 export const getIsAuth = createSelector(
   getAuthState,
@@ -18,9 +14,11 @@ export const getDataBaseData = createSelector(
 export const getUnpublished = createSelector(getDataBaseData, data =>
   data.filter(el => !el.published),
 );
+
 export const gePublished = createSelector(getDataBaseData, data =>
   data.filter(el => !!el.published),
 );
+
 export const getSelectedActive = createSelector(
   getSelectState,
   state => state.active,
