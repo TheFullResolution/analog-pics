@@ -12,17 +12,26 @@
   margin-top: $marginXL;
 }
 
+.mat-card-title {
+  margin-bottom:  $marginM;
+}
+
 .card {
   max-width: 200px;
   display: flex;
   flex-direction: column;
-  > mat-card-header {
+
+  > .card-header {
     margin-bottom: auto;
   }
 
   + .card {
     margin-left: $marginM;
   }
+}
+
+.date {
+  font-size: 20px;
 }
 
 .number {

@@ -21,6 +21,8 @@ export class AuthService {
   }
 
   iniAuthListener() {
+
+
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.store.dispatch(new Auth.SetAuthenticated());
