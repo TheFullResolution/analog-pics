@@ -10,6 +10,8 @@ It could be divided into three separate modules: frontend part, CMS part, and cl
 
 * CMS Part - the advanced user interface to upload, remove and publish pictures. Lazy loaded with all the added packages like firebase and angular material components. 
 
+!['cms part'](docs/admin.gif)
+
 * Cloud Functions - these handle the creation of thumbnails and putting information into the database. Additionally, there is a function which would serve the list of images to Frontend Part, so I do not have to use Firebase package to retrieve the images. 
 
 ## How to run the Project
