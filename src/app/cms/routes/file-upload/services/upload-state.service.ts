@@ -15,27 +15,27 @@ const defaultState: UploadState = {
 };
 
 interface SetFileNameAction {
-  type: 'set-fileName'
-  payload: string
+  type: 'set-fileName';
+  payload: string;
 }
 
 interface ResetAction {
-  type: 'reset'
+  type: 'reset';
 }
 
 interface FileUploadedAction {
-  type: 'file-uploaded'
-  payload: number
+  type: 'file-uploaded';
+  payload: number;
 }
 
 interface SnapshotAction {
-  type: 'snapshot'
-  payload: number
+  type: 'snapshot';
+  payload: number;
 }
 
 interface StartUpload {
-  type: 'start-upload'
-  payload: File[]
+  type: 'start-upload';
+  payload: File[];
 }
 
 type Action =
@@ -43,7 +43,7 @@ type Action =
   | FileUploadedAction
   | ResetAction
   | SnapshotAction
-  | StartUpload
+  | StartUpload;
 
 const startUpload = (files: File[]): Partial<UploadState> => ({
   active: true,
@@ -55,9 +55,10 @@ const fileUpload = (
   bytesTransferred: number,
   state: UploadState,
 ): Partial<UploadState> => {
-  const currentFileCount = (state.filesCount = state.currentFileCount
-    ? state.currentFileCount
-    : state.currentFileCount + 1);
+  const currentFileCount =
+    state.filesCount === state.currentFileCount
+      ? state.currentFileCount
+      : state.currentFileCount + 1;
   const baseTransferred = state.baseTransferred + bytesTransferred;
   return { currentFileCount, baseTransferred };
 };
@@ -99,8 +100,7 @@ export class UploadStateService {
     refCount(),
   );
 
-  constructor() {
-  }
+  constructor() {}
 
   dispatch(action: Action): void {
     this.actions$.next(action);
