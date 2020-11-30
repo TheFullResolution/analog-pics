@@ -4,7 +4,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import {
   AngularFirestoreModule,
-  FirestoreSettingsToken,
+  SETTINGS,
 } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { FormsModule } from '@angular/forms';
@@ -77,7 +77,7 @@ import { ManageComponent } from './routes/manage/manage.component';
     PublishService,
     SelectService,
     DeleteService,
-    { provide: FirestoreSettingsToken, useValue: {} },
+    { provide: SETTINGS, useValue: {} },
   ],
 })
 export class CmsModule {}
