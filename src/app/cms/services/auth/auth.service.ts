@@ -9,7 +9,6 @@ import { DatabaseService } from '../database/database.service';
 import { take } from 'rxjs/operators';
 import { getFullPath, RoutPath } from '../../cms.paths';
 
-
 @Injectable()
 export class AuthService {
   constructor(
@@ -17,19 +16,16 @@ export class AuthService {
     private afAuth: AngularFireAuth,
     private database: DatabaseService,
     private store: Store<CmsState>,
-  ) {
-  }
+  ) {}
 
   iniAuthListener() {
-
-
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.store.dispatch(new Auth.SetAuthenticated());
 
         this.database.fetchDatabase();
       } else {
-       void this.router.navigate([getFullPath(RoutPath.login)]);
+        void this.router.navigate([getFullPath(RoutPath.login)]);
 
         this.store.dispatch(new Auth.SetUnauthenticated());
         this.store
@@ -45,7 +41,7 @@ export class AuthService {
   }
 
   login(authData: AuthData) {
-    this.afAuth.auth
+    this.afAuth
       .signInWithEmailAndPassword(authData.email, authData.password)
       .then(() => {
         return this.router.navigate([getFullPath(RoutPath.dashboard)]);
@@ -56,7 +52,7 @@ export class AuthService {
   }
 
   logout() {
-   void this.afAuth.auth.signOut();
-   void this.router.navigate([getFullPath(RoutPath.login)]);
+    void this.afAuth.signOut();
+    void this.router.navigate([getFullPath(RoutPath.login)]);
   }
 }

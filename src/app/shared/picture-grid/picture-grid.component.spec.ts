@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { PictureGridComponent } from './picture-grid.component';
 
@@ -6,7 +6,7 @@ describe('PictureGridComponent', () => {
   let component: PictureGridComponent;
   let fixture: ComponentFixture<PictureGridComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [PictureGridComponent],
     })
