@@ -1,5 +1,5 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ImageSelectorComponent } from './image-selector.component';
 
@@ -7,7 +7,7 @@ describe('ImageSelectorComponent', () => {
   let component: ImageSelectorComponent;
   let fixture: ComponentFixture<ImageSelectorComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ImageSelectorComponent],
     })
